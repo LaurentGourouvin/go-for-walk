@@ -26,7 +26,11 @@ Des réunions seront effectuées chaque semaine afin de partager nos difficulté
 
 
 ####  La définition des besoins et des objectifs du projet :
-  
+
+Le projet permet de répondre à une demande spécifique : 
+- Trouver des itinéraires pour effectuer des randonnées.
+- Permettre aux randonneurs chevronnés de créer des randonnées afin de partager des itinéraires
+- Mettre en relation la communauté de randonneurs
 
 #### Les fonctionnalités du projet (spécifications fonctionnelles) :
 
@@ -43,6 +47,7 @@ page membre
 Modification d'une randonnée. 
 Suppression d'une rando.
 Recherche de randonnée via ville.
+login/Token jwt(JsonWebToken)
 
 v3 :
 API MAPS via google maps.
@@ -69,8 +74,10 @@ Websocket (amélioration du contact entre membre)
  
 
 #### Public visé : 
-
-  
+    - randonneur occasionnel : 
+       
+    - randonneur chevronné 
+        
   
   
 
@@ -78,17 +85,21 @@ Websocket (amélioration du contact entre membre)
 
 #### Les navigateurs compatibles :
 
-  
+  Chrome , Firefox .
 
 
 
 ####  L'arborescence de l'application (le chemin de l'utilisateur) :
 
-
+/
+Accueil (Login register-profil-recherche)
+Resultat recherche
+liste rando
+Détail rando
 
 #### La liste des routes prévues :
 
-  
+  /API/getAllRando
  
 ####  La liste des User stories : 
 
@@ -101,3 +112,4 @@ Voir fichier **[userstories.md](./userstories.md)**
  - [x] Lead Dev Front : Dorian
  - [x] Lead Dev Back : Léo
  - [x] Git Master / Scrum : Franck
+    
