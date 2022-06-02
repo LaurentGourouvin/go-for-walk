@@ -1,5 +1,3 @@
-
-
 ## Le cahier des charges
 
   
