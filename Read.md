@@ -32,11 +32,39 @@ Des réunions seront effectuées chaque semaine afin de partager nos difficulté
 
 #### Les fonctionnalités du projet (spécifications fonctionnelles) :
 
-*Le MVP (Minimum Viable Product) : image
-Le projet va faire l'objet de plusieurs étapes : l'idée c'est qu'à chaque étape le produit fonctionne, même si ce n'est pas avec toutes les fonctionnalités qui étaient prévues
-Il faut se poser la question : pour que mon projet marche, est-ce que telle fonctionnalité doit marcher (MVP) ou être une fonctionnalité annexe ?
-Les évolutions potentielles (ce qui ne sera pas terminé) : tout ce qui est prévu mais ne fait pas partie du MVP
-La liste des technololgies utilisées pour le projet (spécifications techniques)*
+
+v1 : 
+Site simple, sans API annexe :
+Page d'accueil, page rando via /rando/:dynamique
+Création de compte.
+route creation rando, route modif rando.
+
+v2 :
+Création de randonnées une fois connecté (photos, description, ville, titre). ATTENTION, ATTRIBUER LA RANDO AU BON MEMBRE.
+page membre
+Modification d'une randonnée. 
+Suppression d'une rando.
+Recherche de randonnée via ville.
+
+v3 :
+API MAPS via google maps.
+
+v4 :
+Commentaire
+Contact entre membre
+Recherche autour de soi
+
+v5 : 
+Bonus Back - 
+TU 
+Fonctions SQL
+Index SQL
+
+Bonus Front -
+Typescript
+NextJS
+Websocket (amélioration du contact entre membre)
+
 
   
   
