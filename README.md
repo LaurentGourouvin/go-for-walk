@@ -74,9 +74,9 @@ Websocket (amélioration du contact entre membre)
  
 
 #### Public visé : 
-    - randonneur occasionnel : 
+- randonneur occasionnel
        
-    - randonneur chevronné 
+- randonneur chevronné 
         
   
   
@@ -91,15 +91,29 @@ Websocket (amélioration du contact entre membre)
 
 ####  L'arborescence de l'application (le chemin de l'utilisateur) :
 
-/
-Accueil (Login register-profil-recherche)
-Resultat recherche
-liste rando
-Détail rando
+![alt text](./Orga.png)
 
 #### La liste des routes prévues :
 
-  /API/getAllRando
+route BACK :  
+  
+/API/auth/login  
+/API/auth/register  
+/API/trek/{getAllTrek}  
+/API/trek/{getTrekByIdOrCity}  
+/API/trek/createTrek  
+/API/trek/updateTrek 
+/API/user/{getUserById}  
+
+
+route FRONT :  
+
+/singin  
+/register  
+/profil  
+/about  
+/trek  
+/search  
  
 ####  La liste des User stories : 
 
