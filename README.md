@@ -91,7 +91,7 @@ Websocket (amélioration du contact entre membre)
 
 ####  L'arborescence de l'application (le chemin de l'utilisateur) :
 
-![alt text](./Orga.png)
+![alt text](./conception/Orga.png)
 
 #### La liste des routes prévues :
 
@@ -117,7 +117,7 @@ route FRONT :
  
 ####  La liste des User stories : 
 
-Voir fichier **[userstories.md](./userstories.md)**
+Voir fichier **[userstories.md](./conception/userstories.md)**
 
 
 #### La liste des rôles de chacun :
