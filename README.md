@@ -1,7 +1,7 @@
 ## Le cahier des charges
 
-### Lien vers la documentation projet :
-[Doc projet](https://drive.google.com/drive/u/0/folders/1BGg96K2KEdEaY-ejXD6isEuPe546zlF_)
+
+[Documentation projet](https://drive.google.com/drive/u/0/folders/1BGg96K2KEdEaY-ejXD6isEuPe546zlF_)
 
 
 ### Présentation du projet : GoForWalk
