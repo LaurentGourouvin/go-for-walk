@@ -1,14 +1,7 @@
-Ville: code ville, nom
 appartenir, 11 Trek, 0N Difficulté
-Difficulté: code difficulté, facile, intermédiaire, difficile, expert
-:
+Difficulté: code difficulté, label
 
-propose, 0N Ville, 11 Trek
-Trek: code trek, titre, description, distance, coordonnées, durée
+
+Trek: code trek, titre, description, distance, durée, ville, coordonnées,  images
 créer, 0N Utilisateur, 11 Trek
-Utilisateur: code utilisateur, prénom, nom, email, mot de passe, xp, grade
-
-:
-contient, 0N Trek, 11 Commentaires
-Commentaires: code commentaire, titre, description, note
-écrire, 0N Utilisateur, 11 Commentaires
+Utilisateur: code utilisateur, prénom, nom, email, mot de passe
