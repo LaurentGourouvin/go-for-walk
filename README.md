@@ -149,21 +149,53 @@ Supprimer compte utilisateur (DELETE):
 Voir les randonnées publiées par un utilisateur (GET) :  
 /API/trek/{TrekByUser}
 
-Route FRONT :
+#### Route FRONT :
 
+Permet d'accéder la homepage du site:  
+```
+/  
+```
+
+Permet d'accéder à la page de connexion:  
+```
 /login
-
+```
+Permet d'accéder à la page de création d'un profil:  
+```
 /register
+```
 
+Permet d'accéder à la page de profil:  
+```
 /profil
+```
 
-/profil/myTrek
-
+Permet d'accéder à la page about:  
+```
 /about
+```
 
-/trek
+Permet d'accéder à la randonnée sélectionné par l'utilisateur:  
+```
+/trek/:idTrek
+```
 
+Permet d'accéder à la fonctionnalité de mise à jour d'une randonnée sélectionné par l'utilisateur:  
+```
+/trek/update/:idTrek
+```
+
+Permet d'accéder à la fonctionnalité de création d'une randonée par l'utilisateur:  
+```
+/trek/create  
+```
+
+Permet d'accéder aux résultats de notre recherche de randonnée:  
+```
 /search
+```
+
+_(A voir pour une route **/profil/myTreks** pour afficher les randonnées d'un utilisateur)_
 
 #### La liste des User stories :
 
