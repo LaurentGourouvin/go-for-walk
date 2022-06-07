@@ -6,9 +6,7 @@
 
 ---
 
-Application WEB pour des partages de randonnées. Cette application permet à un visiteur de rechercher des randonnées via un mot clé ( ville ), de voir en details ses informations dont un aperçu du parcours grâce à une API externe,
-
-mais également de se créer un compte pour pouvoir créer une randonnée à son tour .
+Application WEB pour des partages de randonnées. Cette application permet à un visiteur de rechercher des randonnées via un mot clé ( ville ), de voir en details ses informations dont un aperçu du parcours grâce à une API externe, mais également de se créer un compte pour pouvoir créer une randonnée à son tour.
 
 #### Fonctionnalités :
 
