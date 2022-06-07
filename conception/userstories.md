@@ -6,9 +6,10 @@ MVP -
 |EN TANT QUE| JE VEUX | AFIN DE |
 |--|--|--|
 |visiteur | rechercher des randonnées | ... |
-|visiteur | consulter des randonées | ... |
+|visiteur | consulter des randonnées | ... |
 |visiteur | créer un profil (compte) | ... |
-|membres | me connecter | créer une randonnée via lien du menu epinglé |
+|visiteur | me connecter | accèder au fonctionnalités membres |
+|membres | créer une randonnée via lien du menu epinglé | ... |
 |membres | accèder à ma page profil | modifier mes informations personnel |
 |membres | accèder à ma page profil | supprimer mon profil |
 |membres | accès à la page mes randonnées via la page profil | sélectionner une de mes randonnée(s) publiée(s) |
