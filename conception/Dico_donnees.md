@@ -16,10 +16,10 @@ Table Trek
 | Titre | Text| NOT NULL | Titre de la rando |
 | Description | Text | DEFAULT "aucune description pour cette randonnée" | Description de la rando |
 | Distance | INT | NOT NULL | Distance de la rando en KM |
-| Durée | TIMESTAMP | NOT NULL | Durée de la randonnée |
+| Durée | TIMESTAMPTZ | NOT NULL | Durée de la randonnée |
 | Ville | Text | NOT NULL | Nom de la ville |
 | Coordonnées | INT ARRAY| DEFAULT [] | Tableaux des coordonées |
-| Images| Text | NOT NULL | Image de la randonnée |
+| Images| Text ARRAY | NULL | Image de la randonnée |
 | Crée le | TIMESTAMPTZ| NOT NULL, DEFAULT CURRENT_TIMESTAMP| Date création |
 | Modifier le | TIMESTAMPTZ| NOT NULL, DEFAULT CURRENT_TIMESTAMP| Date modification |
 
