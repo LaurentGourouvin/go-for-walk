@@ -10,11 +10,16 @@ Application WEB pour des partages de randonnées. Cette application permet à un
 mais également de se créer un compte pour pouvoir créer une randonnée à son tour .
 
 #### Fonctionnalités  :
- - Itinéraires via une API comme google maps
- - Ajouter photos des parcours
- - Notations des randonnées
+ - Recherche de randonnées via un nom de ville
+ - Itinéraires / Parcours via une API comme google maps
  - Informations sur la faune et la flore
+ - Création de Compte 
+ - Création de randonnée ( Informations + Photos )
+ - Modifications de randonnées
+  
+  Bonus
  - Echange et rencontres entre randonneurs (Via espace membre, fonctionnalité message, etc..)
+-  Notations des randonnées
 
 #### Opportunités :
 
@@ -61,6 +66,7 @@ API MAPS via google maps.
 BONUS: 
 
 v4 :
+Notation des randonnées
 Commentaire
 Contact entre membre
 Recherche autour de soi
