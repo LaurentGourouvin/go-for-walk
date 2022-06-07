@@ -95,6 +95,8 @@ Bonus Front :
 
 ---
 
+- Rando familial
+
 - Randonneur occasionnel
 
 - Randonneur chevronné
