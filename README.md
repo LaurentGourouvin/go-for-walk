@@ -121,33 +121,34 @@ Chrome , Firefox , Safari .
 
 Route API :
 
-Visiteur :
-Se connecter (GET) :
-/API/auth/login
-Crée un compte (POST) :
-/API/auth/register
-Recherche France entière (GET) :
-/API/trek/{AllTrek}
-Recherche par Ville (GET):
-/API/trek/{TrekByCity}
-Afficher les détails d'une randonnée (GET):
+Visiteur :  
+Se connecter (GET) :  
+/API/auth/login  
+Crée un compte (POST) :  
+/API/auth/register  
+Recherche France entière (GET) :  
+/API/trek/{AllTrek}  
+Recherche par Ville (GET):  
+/API/trek/{TrekByCity}  
+Afficher les détails d'une randonnée (GET):  
 /API/trek/{TrekById}
 
-Membre :
-Crée une randonnée (POST) :
-/API/trek/createTrek
-Mettre à jour une randonnée (PUT/PATCH):
-/API/trek/{TrekById}
-Supprimer une randonnée (DELETE):
-/API/trek/{TrekById}
-Détails page profil d'un utilisateur (GET):
-/API/user/{UserById}
-Modification profil d'un utilisateur (POST) :
-/API/user/{UserById}
-Supprimer compte utilisateur (DELETE):
-/API/user/{UserById}
-Voir les randonnées publiées par un utilisateur (GET) :
+Membre :  
+Crée une randonnée (POST) :  
+/API/trek/createTrek  
+Mettre à jour une randonnée (PUT/PATCH):  
+/API/trek/{TrekById}  
+Supprimer une randonnée (DELETE):  
+/API/trek/{TrekById}  
+Détails page profil d'un utilisateur (GET):  
+/API/user/{UserById}  
+Modification profil d'un utilisateur (POST) :  
+/API/user/{UserById}  
+Supprimer compte utilisateur (DELETE):  
+/API/user/{UserById}  
+Voir les randonnées publiées par un utilisateur (GET) :  
 /API/trek/{TrekByUser}
+
 Route FRONT :
 
 /login
