@@ -6,7 +6,8 @@
 
 ### Présentation du projet : GoForWalk
 
-Application WEB pour des partages de randonnées.
+Application WEB pour des partages de randonnées. Cette application permet à un visiteur de rechercher des randonnées via un mot clé ( ville ), de voir en details ses informations dont un aperçu du parcours grâce à une API externe,
+mais également de se créer un compte pour pouvoir créer une randonnée à son tour .
 
 #### Fonctionnalités  :
  - Itinéraires via une API comme google maps
@@ -35,7 +36,8 @@ Le projet permet de répondre à une demande spécifique :
 - Mettre en relation la communauté de randonneurs
 
 #### Les fonctionnalités du projet (spécifications fonctionnelles) :
-
+---
+MVP:
 
 v1 : 
 Site simple, sans API annexe :
@@ -54,18 +56,22 @@ login/Token jwt(JsonWebToken)
 v3 :
 API MAPS via google maps.
 
+---
+
+BONUS: 
+
 v4 :
 Commentaire
 Contact entre membre
 Recherche autour de soi
 
 v5 : 
-Bonus Back - 
+- Back - 
 TU 
 Fonctions SQL
 Index SQL
 
-Bonus Front -
+- Front -
 Typescript
 NextJS
 Websocket (amélioration du contact entre membre)
@@ -74,7 +80,7 @@ Websocket (amélioration du contact entre membre)
   
   
  
-
+---
 #### Public visé : 
 - randonneur occasionnel
        
@@ -87,7 +93,7 @@ Websocket (amélioration du contact entre membre)
 
 #### Les navigateurs compatibles :
 
-  Chrome , Firefox .
+  Chrome , Firefox , Safari .
 
 
 
