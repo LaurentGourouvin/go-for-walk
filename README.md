@@ -169,7 +169,10 @@ Permet d'accéder à la page de profil:
 ```
 /profil
 ```
-
+Permet d'accéder à la page de profil:  
+```
+/profil/myTreks
+```
 Permet d'accéder à la page about:  
 ```
 /about
@@ -195,7 +198,6 @@ Permet d'accéder aux résultats de notre recherche de randonnée:
 /search
 ```
 
-_(A voir pour une route **/profil/myTreks** pour afficher les randonnées d'un utilisateur)_
 
 #### La liste des User stories :
 
