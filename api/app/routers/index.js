@@ -1,9 +1,7 @@
 const express = require('express');
 
 const apiRouter = require('./api');
-const websiteRouter = require('./website');
-const { errorHandler } = require('../helpers/errorHandler');
-
+/* const websiteRouter = require('./website'); */
 
 const router = express.Router();
 
@@ -16,8 +14,8 @@ router.use('/api', apiRouter);
 // Les routes pour le site web de présentation de l'API, de l'entreprise, du service en général
 /* router.use('/', websiteRouter); */
 
-router.use((err, _, response, next) => {
-    errorHandler(err, response, next);
+router.use((req, res) => {
+  res.status(404).send('Not Found');
 });
 
 module.exports = router;
