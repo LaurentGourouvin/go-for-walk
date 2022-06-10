@@ -7,10 +7,10 @@ function App() {
 
   return (
     <div className="App">
-      <p>Hello World</p>
-      <Header isLogged={isLogged} setIsLogged={setIsLogged} />
+      <div className="main">
+        <Header isLogged={isLogged} setIsLogged={setIsLogged} />
+      </div>
     </div>
-
   );
 }
 
