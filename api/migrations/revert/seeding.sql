@@ -3,6 +3,6 @@
 BEGIN;
 
 
-TRUNCATE TABLE users, difficulty, trek;
+TRUNCATE TABLE users, difficulty, treks;
 
 COMMIT;
