@@ -1,4 +1,5 @@
 const express = require('express');
+const userRouter = require('./user');
 
 const router = express.Router();
 
@@ -12,9 +13,7 @@ router.use('/trek', (req, res) => {
   res.send('coucou les trek');
 });
 
-router.use('/user', (req, res) => {
-  res.send('coucou les user');
-});
+router.use('/users', userRouter);
 
 router.use(() => {
   // Ici on force une erreur, afin de déclencher le gestionnaire d'erreur et donc l'affichage de

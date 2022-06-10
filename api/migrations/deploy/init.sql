@@ -2,20 +2,14 @@
 
 BEGIN;
 
-DROP TABLE IF EXISTS "user", "trek", "difficulty";
-
-CREATE DOMAIN MAILCHECK AS TEXT
-  CHECK(
-    VALUE ~ '^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$'
-  )
-;
+DROP TABLE IF EXISTS "users", "trek", "difficulty";
 
 
-CREATE TABLE "user" (
+CREATE TABLE "users" (
     "id" int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "firstname" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "email" MAILCHECK NOT NULL UNIQUE,
+    "email" TEXT NOT NULL UNIQUE,
     "password" TEXT NOT NULL,
     "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
     "updated_at" TIMESTAMPTZ
@@ -32,14 +26,14 @@ CREATE TABLE "trek" (
     "id" int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "title" TEXT NOT NULL,
     "description" TEXT DEFAULT 'aucune description pour cette randonnée',
-    "distance" INT NOT NULL,
-    "duration" TIMESTAMPTZ NOT NULL,
+    "distance" INT,
+    "duration" INT NOT NULL,
     "city" TEXT NOT NULL,
     "coordinate" INT[],
     "pictures" TEXT[],
     "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
     "updated_at" TIMESTAMPTZ ,
-    "user_id" INT NOT NULL REFERENCES "user"("id"),
+    "user_id" INT NOT NULL REFERENCES "users"("id"),
     "difficulty_id" INT NOT NULL REFERENCES "difficulty"("id")
 );
 

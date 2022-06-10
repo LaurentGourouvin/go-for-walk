@@ -2,6 +2,9 @@
 
 BEGIN;
 
-DROP TABLE "user", "difficulty", "trek";
+
+
+DROP TABLE "users", "difficulty", "trek";
+DROP DOMAIN IF EXISTS MAILCHECK;
 
 COMMIT;

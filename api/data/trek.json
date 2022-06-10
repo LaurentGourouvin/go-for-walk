@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "title": "Selma",
+    "description": "In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.",
+    "distance": "43-280-9888",
+    "duration": "2:14 AM",
+    "city": "Dobřív",
+    "user_id": 1,
+    "difficulty_id": 1
+  },
+  {
+    "id": 2,
+    "title": "Shanghai Gesture, The",
+    "description": "Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.",
+    "distance": "87-995-9590",
+    "duration": "8:12 PM",
+    "city": "Biñan",
+    "user_id": 2,
+    "difficulty_id": 2
+  },
+  {
+    "id": 3,
+    "title": "Dreamland",
+    "description": "In congue. Etiam justo. Etiam pretium iaculis justo.",
+    "distance": "89-587-2281",
+    "duration": "9:29 AM",
+    "city": "Lochovice",
+    "user_id": 3,
+    "difficulty_id": 3
+  },
+  {
+    "id": 4,
+    "title": "Dupes, The (Al-makhdu'un)",
+    "description": "Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.\n\nIn hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.",
+    "distance": "51-762-8478",
+    "duration": "1:48 PM",
+    "city": "Jinshan",
+    "user_id": 4,
+    "difficulty_id": 4
+  },
+  {
+    "id": 5,
+    "title": "Great Day in Harlem, A",
+    "description": "Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.\n\nInteger tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat.",
+    "distance": "07-675-8139",
+    "duration": "6:34 AM",
+    "city": "Mashi",
+    "user_id": 5,
+    "difficulty_id": 5
+  },
+  {
+    "id": 6,
+    "title": "Torpedo Run",
+    "description": "Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.\n\nQuisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.",
+    "distance": "80-488-6526",
+    "duration": "4:36 AM",
+    "city": "Frankfort",
+    "user_id": 6,
+    "difficulty_id": 6
+  }
+]
