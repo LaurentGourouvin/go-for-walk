@@ -2,7 +2,7 @@
 
 BEGIN;
 
-DROP TABLE IF EXISTS "users", "trek", "difficulty";
+DROP TABLE IF EXISTS "users", "treks", "difficulty";
 
 
 CREATE TABLE "users" (
@@ -22,7 +22,7 @@ CREATE TABLE "difficulty" (
     "updated_at" TIMESTAMPTZ
 );
 
-CREATE TABLE "trek" (
+CREATE TABLE "treks" (
     "id" int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "title" TEXT NOT NULL,
     "description" TEXT DEFAULT 'aucune description pour cette randonnée',
