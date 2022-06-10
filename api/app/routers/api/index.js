@@ -1,5 +1,6 @@
 const express = require('express');
 const userRouter = require('./user');
+const authController = require('./auth');
 
 const router = express.Router();
 
@@ -9,9 +10,7 @@ router.all('/', (req, res) => {
 });
 
 // On préfixe les routers de l'API
-router.use('/trek', (req, res) => {
-  res.send('coucou les trek');
-});
+router.use('/auth', authController);
 
 router.use('/users', userRouter);
 

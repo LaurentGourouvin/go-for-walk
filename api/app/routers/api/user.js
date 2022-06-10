@@ -1,4 +1,5 @@
 const express = require('express');
+const controllerHandler = require('../../helpers/controllerHandler');
 const userController = require('../../controllers/api/user');
 
 const router = express.Router();
@@ -9,20 +10,35 @@ router
      * GET /api/users
      * @summary Get all users
      * @tags Users
-     * @return {[Post]} 200 - success response - application/json
      */
-  .get(userController.getAll);
-
+  .get(controllerHandler(userController.getAll));
 router
-  .route('/:id(\\d+)');
+  .route('/:id(\\d+)')
 /**
-     * GET /api/user/{id}
+     * GET /api/users/{id}
      * @summary Get one user
      * @tags Users
      * @param {number} id.path.required - post identifier
-     * @return {Post} 200 - success response - application/json
-     * @return {ApiError} 400 - Bad request response - application/json
-     * @return {ApiError} 404 - Post not found - application/json
+     * @returns {object} 200 - An array of users
+     * @returns {object} 204 - No User Found but request ok
+     * @returns {object} 404 - Error bad Request
+     * @returns {object} 500 - Error Internal Server Error
      */
+  .get(controllerHandler(userController.getById))
+/**
+     * PUT /api/users/{id}
+     * @summary Update one user
+     * @tags Users
+     * @param {number} id.path.required - post identifier
+     */
+  .put(controllerHandler(userController.updateUser))
+/**
+ * DELETE /api/users/{id}
+ * @summary Delete one user
+ * @tags Users
+ * @param {number} id.path.required - post identifier
+ * @returns {object} 200 - utilisateur supprimé
+ */
+  .delete(controllerHandler(userController.deletUser));
 
 module.exports = router;
