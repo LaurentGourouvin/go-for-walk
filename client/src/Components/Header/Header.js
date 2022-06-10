@@ -6,32 +6,19 @@ function Header({ setIsLogged, isLogged }) {
   if (isLogged === false) {
     return (
       <div className="Header">
-        <Link to="/register">
-          <button className="Header--button" type="button">Inscription</button>
-        </Link>
-        <Link to="/login">
-          <button className="Header--button" type="button">Connexion</button>
-        </Link>
-        <Link to="/about">
-          <button className="Header--button" type="button">A propos</button>
-        </Link>
+        <h1 className="Header--website-title">Go For Walk</h1>
+        <Link to="/register" className="Header--a">Inscription</Link>
+        <Link to="/login" className="Header--a">Connexion</Link>
+        <Link to="/about" className="Header--a">A propos</Link>
       </div>
     );
   }
   return (
     <div className="Header">
-      <Link to="/">
-        <button className="Header--button" type="button" onClick={() => setIsLogged(!isLogged)}>Deconnexion</button>
-      </Link>
-      <Link to="/trek/create">
-        <button className="Header--button" type="button">Créer une randonnée</button>
-      </Link>
-      <Link to="/profil">
-        <button className="Header--button" type="button">Mon profil</button>
-      </Link>
-      <Link to="/about">
-        <button className="Header--button" type="button">A propos</button>
-      </Link>
+      <h1 className="Header--website-title">Go For Walk</h1>
+      <Link to="/" className="Header--a" onClick={() => setIsLogged(!isLogged)}> Deconnexion</Link>
+      <Link to="/profil" className="Header--a">Mon profil</Link>
+      <Link to="/about" className="Header--a">A propos</Link>
     </div>
   );
 }
