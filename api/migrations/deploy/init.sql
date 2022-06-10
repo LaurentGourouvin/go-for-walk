@@ -2,7 +2,7 @@
 
 BEGIN;
 
-DROP TABLE IF EXISTS "users", "treks", "difficulty";
+DROP TABLE IF EXISTS "treks", "users", "difficulty";
 
 
 CREATE TABLE "users" (

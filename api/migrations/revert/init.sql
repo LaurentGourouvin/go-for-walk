@@ -5,6 +5,5 @@ BEGIN;
 
 
 DROP TABLE "users", "difficulty", "treks";
-DROP DOMAIN IF EXISTS MAILCHECK;
 
 COMMIT;
