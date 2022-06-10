@@ -18,25 +18,23 @@ router
      * GET /api/users/{id}
      * @summary Get one user
      * @tags Users
-     * @param {number} id.path.required - post identifier
+     * @param {number} id.path.required - user identifier
      * @returns {object} 200 - An array of users
      * @returns {object} 204 - No User Found but request ok
-     * @returns {object} 404 - Error bad Request
-     * @returns {object} 500 - Error Internal Server Error
      */
   .get(controllerHandler(userController.getById))
 /**
      * PUT /api/users/{id}
      * @summary Update one user
      * @tags Users
-     * @param {number} id.path.required - post identifier
+     * @param {number} id.path.required - user identifier
      */
   .put(controllerHandler(userController.updateUser))
 /**
  * DELETE /api/users/{id}
  * @summary Delete one user
  * @tags Users
- * @param {number} id.path.required - post identifier
+ * @param {number} id.path.required - user identifier
  * @returns {object} 200 - utilisateur supprimé
  */
   .delete(controllerHandler(userController.deletUser));

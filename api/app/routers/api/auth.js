@@ -18,7 +18,7 @@ router
      * @summary Create New User
      * @tags Auth
      * @param {User} request.body.required - user info
-     * @returns {object} 200 - response object
+     * @returns {object} 200 - Utilisateur crée
      */
   .post(controllerHandler(authController.register));
 

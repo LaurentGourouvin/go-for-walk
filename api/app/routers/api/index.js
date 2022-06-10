@@ -1,6 +1,7 @@
 const express = require('express');
 const userRouter = require('./user');
-const authController = require('./auth');
+const authRouter = require('./auth');
+const trekRouter = require('./trek');
 
 const router = express.Router();
 
@@ -10,9 +11,11 @@ router.all('/', (req, res) => {
 });
 
 // On préfixe les routers de l'API
-router.use('/auth', authController);
+router.use('/auth', authRouter);
 
 router.use('/users', userRouter);
+
+router.use('/treks', trekRouter);
 
 router.use(() => {
   // Ici on force une erreur, afin de déclencher le gestionnaire d'erreur et donc l'affichage de

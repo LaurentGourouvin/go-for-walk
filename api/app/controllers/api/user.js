@@ -20,21 +20,19 @@ module.exports = {
   async updateUser(req, res) {
     const user = await userDataMapper.findByPk(req.params.id);
     if (!user) {
-      res.status(404);
-      throw new Error('User not found', { statusCode: 404 });
+      res.status(204).send({ message: 'No users found' });
     }
-    const userUpdate = await userDataMapper.updateUser(req.params.id, req.body);
+    const userUpdate = await userDataMapper.update(req.params.id, req.body);
     return res.json(userUpdate);
   },
 
   async deletUser(req, res) {
     const user = await userDataMapper.findByPk(req.params.id);
     if (!user) {
-      res.status(404);
-      throw new Error('User not found', { statusCode: 404 });
+      res.status(204).send({ message: 'No users found' });
     }
     try {
-      await userDataMapper.delet(req.params.id); 
+      await userDataMapper.delet(req.params.id);
     } catch (error) {
       res.status(500);
       throw new Error('Internal Server Error', { statusCode: 500 });
