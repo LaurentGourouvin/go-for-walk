@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Header from '../Header/Header';
 import LoginForm from '../LoginForm/LoginForm';
-import SearchBar from '../SearchBar/SerachBar';
+import SearchBar from '../SearchBar/SearchBar';
 
 function App() {
   const [isLogged, setIsLogged] = useState(false);
@@ -16,7 +16,6 @@ function App() {
           <Route path="/" element={<SearchBar />} />
           <Route path="/login" element={<LoginForm />} />
         </Routes>
-
       </div>
     </div>
   );
