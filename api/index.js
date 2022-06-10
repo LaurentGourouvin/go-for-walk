@@ -8,7 +8,9 @@ const http = require('http');
 const dotenv = require('dotenv');
 const debug = require('debug')('app:server');
 
-dotenv.config();
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config();
+}
 
 const app = require('./app');
 
