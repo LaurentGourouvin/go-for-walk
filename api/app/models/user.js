@@ -8,7 +8,7 @@ module.exports = {
   },
 
   async findByPk(userId) {
-    const result = await client.query('SELECT * FROM users WHERE id = $1', [userId]);
+    const result = await client.query('SELECT * FROM "users" WHERE id = $1', [userId]);
     return result.rows[0];
   },
 
@@ -19,12 +19,12 @@ module.exports = {
       fields.push(`${key} = $${key}`);
       values.push(user[key]);
     });
-    const result = await client.query(`UPDATE users SET ${fields} WHERE id = ${userId}`, values);
+    const result = await client.query(`UPDATE "users" SET ${fields} WHERE id = ${userId}`, values);
     return result.rows[0];
   },
 
   async delet(userId) {
-    const result = await client.query('DELETE FROM users WHERE id = $1', [userId]);
+    const result = await client.query('DELETE FROM "users" WHERE id = $1', [userId]);
     return result.rows[0];
   },
 };
