@@ -1,4 +1,5 @@
 const client = require('../config/db');
+const myfunction = require('../helpers/functions');
 
 module.exports = {
   async findAll() {
@@ -14,9 +15,19 @@ module.exports = {
     return result.rows[0];
   },
 
+  async findByCity(trekCity) {
+    const city = myfunction.uppercaseFirstLetter(trekCity);
+    const result = await client.query('SELECT * FROM treks WHERE city = $1', [city]);
+    return result.rows[0];
+  },
+
   async update(trekId, trekData) {
-    const fields = Object.keys(trekData).map((trek, index) => `"${trek}" = $${index + 1}`);
-    const values = Object.values(trekData);
+    const fields = [];
+    const values = [];
+    Object.keys(trekData).forEach((key) => {
+      fields.push(`${key} = $${1 + fields.length}`);
+      values.push(trekData[key]);
+    });
     const result = await client.query(`UPDATE treks SET ${fields} WHERE id = ${trekId}`, values);
     return result.rows[0];
   },

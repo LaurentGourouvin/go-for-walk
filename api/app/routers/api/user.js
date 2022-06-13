@@ -12,8 +12,8 @@ router
   .route('/')
   /**
  * A User is create with the following parameters :
-     * @typedef {object} User
-     * @property {string} firstname- user firstname
+     * @typedef {object} updateUser
+     * @property {string} firstname - user firstname
      * @property {string} name - user lastname
      * @property {string} email - user email
      * @property {string} password - user password
@@ -40,6 +40,7 @@ router
      * @summary Update one user
      * @tags Users
      * @param {number} id.path.required - user identifier
+     * @param {updateUser} request.body.required - user info
      */
   .put(validate('body', updateSchema), controllerHandler(userController.updateUser))
 /**

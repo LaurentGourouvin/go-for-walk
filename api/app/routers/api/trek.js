@@ -54,6 +54,7 @@ router
      * @summary Update one Trek
      * @tags Treks
      * @param {number} id.path.required - trek identifier
+     * @param {Trek} request.body.required - trek info
      */
   .put(validate('body', updateSchema), controllerHandler(trekController.updateTrek))
 /**
@@ -65,4 +66,14 @@ router
  */
   .delete(controllerHandler(trekController.deletTrek));
 
+router
+  .route('/:city')
+/**
+ * GET /api/treks/{city}
+ * @summary Get all treks by city
+ * @tags Treks
+ * @param {string} city.path.required - trek city
+ * @returns {object} 200 - An array of treks
+*/
+  .get(controllerHandler(trekController.getByCity));
 module.exports = router;

@@ -6,7 +6,9 @@ function Header({ setIsLogged, isLogged }) {
   if (isLogged === false) {
     return (
       <div className="Header">
-        <h1 className="Header--website-title">Go For Walk</h1>
+        <Link to="/">
+          <h1 className="Header--website-title">Go For Walk</h1>
+        </Link>
         <div className="Header--burger-menu space-y-2">
           <div className="w-8 h-0.5 bg-white" />
           <div className="w-8 h-0.5 bg-white" />
@@ -20,7 +22,9 @@ function Header({ setIsLogged, isLogged }) {
   }
   return (
     <div className="Header">
-      <h1 className="Header--website-title">Go For Walk</h1>
+      <Link to="/">
+        <h1 className="Header--website-title">Go For Walk</h1>
+      </Link>
       <h1 className="Header--website-burger">Burger</h1>
       <Link to="/" className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline" onClick={() => setIsLogged(!isLogged)}> Deconnexion</Link>
       <Link to="/profil" className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline">Mon profil</Link>
