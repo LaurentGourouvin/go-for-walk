@@ -4,7 +4,7 @@ module.exports = {
   async getAll(req, res) {
     const treks = await trekDataMapper.findAll();
     if (!treks) {
-      res.status(204).send({ message: 'No Trek found' });
+      throw new Error('no trek found');
     }
     return res.json(treks);
   },
@@ -12,15 +12,23 @@ module.exports = {
   async getById(req, res) {
     const trek = await trekDataMapper.findByPk(req.params.id);
     if (!trek) {
-      res.status(204).send({ message: 'No Trek found' });
+      throw new Error('no trek found');
     }
     return res.json(trek);
+  },
+
+  async getByCity(req, res) {
+    const treks = await trekDataMapper.findByCity(req.params.city);
+    if (!treks) {
+      throw new Error('no trek found');
+    }
+    return res.json(treks);
   },
 
   async updateTrek(req, res) {
     const trek = await trekDataMapper.findByPk(req.params.id);
     if (!trek) {
-      res.status(204).send({ message: 'No Trek found' });
+      throw new Error('no trek found');
     }
     const trekUpdate = await trekDataMapper.update(req.params.id, req.body);
     return res.json(trekUpdate);
@@ -29,7 +37,7 @@ module.exports = {
   async deletTrek(req, res) {
     const trek = await trekDataMapper.findByPk(req.params.id);
     if (!trek) {
-      res.status(204).send({ message: 'No Trek found' });
+      throw new Error('no trek found');
     }
     try {
       await trekDataMapper.delet(req.params.id);
