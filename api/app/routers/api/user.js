@@ -6,6 +6,14 @@ const router = express.Router();
 
 router
   .route('/')
+  /**
+ * A User is create with the following parameters :
+     * @typedef {object} updateUser
+     * @property {string} firstname - user firstname
+     * @property {string} name - user lastname
+     * @property {string} email - user email
+     * @property {string} password - user password
+ */
 /**
      * GET /api/users
      * @summary Get all users
@@ -28,6 +36,7 @@ router
      * @summary Update one user
      * @tags Users
      * @param {number} id.path.required - user identifier
+     * @param {updateUser} request.body.required - user info
      */
   .put(controllerHandler(userController.updateUser))
 /**
