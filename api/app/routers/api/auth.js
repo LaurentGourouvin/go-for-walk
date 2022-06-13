@@ -1,5 +1,8 @@
 const express = require('express');
 
+const validate = require('../../validation/validator');
+const createSchema = require('../../validation/schemas/usersCreateSchema');
+
 const controllerHandler = require('../../helpers/controllerHandler');
 const authController = require('../../controllers/api/auth');
 
@@ -14,6 +17,6 @@ router
      * @param {User} request.body.required - user info
      * @returns {object} 200 - Utilisateur crée
      */
-  .post(controllerHandler(authController.register));
+  .post(validate('body', createSchema), controllerHandler(authController.register));
 
 module.exports = router;

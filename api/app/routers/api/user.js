@@ -1,4 +1,8 @@
 const express = require('express');
+
+const validate = require('../../validation/validator');
+const updateSchema = require('../../validation/schemas/usersUpdateSchema');
+
 const controllerHandler = require('../../helpers/controllerHandler');
 const userController = require('../../controllers/api/user');
 
@@ -37,7 +41,7 @@ router
      * @tags Users
      * @param {number} id.path.required - user identifier
      */
-  .put(controllerHandler(userController.updateUser))
+  .put(validate('body', updateSchema), controllerHandler(userController.updateUser))
 /**
  * DELETE /api/users/{id}
  * @summary Delete one user
