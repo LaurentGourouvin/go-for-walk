@@ -14,6 +14,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "bunyan": "^1.8.15",
     "cors": "^2.8.5",
     "debug": "^4.3.4",
@@ -21,6 +22,7 @@
     "express": "^4.18.1",
     "express-jsdoc-swagger": "^1.6.8",
     "joi": "^17.6.0",
+    "jsonwebtoken": "^8.5.1",
     "pg": "^8.7.3"
   },
   "devDependencies": {
