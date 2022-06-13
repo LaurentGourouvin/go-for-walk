@@ -48,6 +48,7 @@ router
      * @summary Update one Trek
      * @tags Treks
      * @param {number} id.path.required - trek identifier
+     * @param {Trek} request.body.required - trek info
      */
   .put(controllerHandler(trekController.updateTrek))
 /**
