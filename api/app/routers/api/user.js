@@ -6,6 +6,14 @@ const router = express.Router();
 
 router
   .route('/')
+  /**
+ * A User is create with the following parameters :
+     * @typedef {object} User
+     * @property {string} firstname- user firstname
+     * @property {string} name - user lastname
+     * @property {string} email - user email
+     * @property {string} password - user password
+ */
 /**
      * GET /api/users
      * @summary Get all users
