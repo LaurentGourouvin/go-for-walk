@@ -16,10 +16,10 @@ module.exports = {
     const fields = [];
     const values = [];
     Object.keys(user).forEach((key) => {
-      fields.push(`${key} = $${key}`);
+      fields.push(`${key} = $${1 + fields.length}`);
       values.push(user[key]);
     });
-    const result = await client.query(`UPDATE "users" SET ${fields} WHERE id = ${userId}`, values);
+    const result = await client.query(`UPDATE users SET ${fields} WHERE id = ${userId}`, values);
     return result.rows[0];
   },
 
