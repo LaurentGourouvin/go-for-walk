@@ -6,6 +6,6 @@ module.exports = joi.object({
   distance: joi.number().integer(),
   duration: joi.number().integer().required(),
   city: joi.string().required(),
-  coordinate: joi.number().integer(),
-  pictures: joi.string(),
+  coordinate: joi.array().items(joi.number()),
+  pictures: joi.array().items(joi.string()),
 }).required();
