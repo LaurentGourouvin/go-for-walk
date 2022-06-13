@@ -60,4 +60,14 @@ router
  */
   .delete(controllerHandler(trekController.deletTrek));
 
+router
+  .route('/:city')
+/**
+ * GET /api/treks/{city}
+ * @summary Get all treks by city
+ * @tags Treks
+ * @param {string} city.path.required - trek city
+ * @returns {object} 200 - An array of treks
+*/
+  .get(controllerHandler(trekController.getByCity));
 module.exports = router;

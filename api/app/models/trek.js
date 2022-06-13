@@ -1,4 +1,5 @@
 const client = require('../config/db');
+const myfunction = require('../helpers/functions');
 
 module.exports = {
   async findAll() {
@@ -11,6 +12,12 @@ module.exports = {
 
   async findByPk(trekId) {
     const result = await client.query('SELECT * FROM treks WHERE id = $1', [trekId]);
+    return result.rows[0];
+  },
+
+  async findByCity(trekCity) {
+    const city = myfunction.uppercaseFirstLetter(trekCity);
+    const result = await client.query('SELECT * FROM treks WHERE city = $1', [city]);
     return result.rows[0];
   },
 
