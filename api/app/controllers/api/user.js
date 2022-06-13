@@ -4,7 +4,7 @@ module.exports = {
   async getAll(req, res) {
     const users = await userDataMapper.findAll();
     if (!users) {
-      res.status(204).send({ message: 'No users found' });
+      throw new Error('no users found');
     }
     return res.json(users);
   },
@@ -12,7 +12,7 @@ module.exports = {
   async getById(req, res) {
     const user = await userDataMapper.findByPk(req.params.id);
     if (!user) {
-      res.status(204).send({ message: 'No users found' });
+      throw new Error('no users found');
     }
     return res.json(user);
   },
@@ -20,7 +20,7 @@ module.exports = {
   async updateUser(req, res) {
     const user = await userDataMapper.findByPk(req.params.id);
     if (!user) {
-      res.status(204).send({ message: 'No users found' });
+      throw new Error('no users found');
     }
     const userUpdate = await userDataMapper.update(req.params.id, req.body);
     return res.json(userUpdate);
@@ -29,8 +29,9 @@ module.exports = {
   async deletUser(req, res) {
     const user = await userDataMapper.findByPk(req.params.id);
     if (!user) {
-      res.status(204).send({ message: 'No users found' });
+      throw new Error('no users found');
     }
+
     try {
       await userDataMapper.delet(req.params.id);
     } catch (error) {
