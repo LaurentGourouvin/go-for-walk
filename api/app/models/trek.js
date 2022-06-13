@@ -15,8 +15,12 @@ module.exports = {
   },
 
   async update(trekId, trekData) {
-    const fields = Object.keys(trekData).map((trek, index) => `"${trek}" = $${index + 1}`);
-    const values = Object.values(trekData);
+    const fields = [];
+    const values = [];
+    Object.keys(trekData).forEach((key) => {
+      fields.push(`${key} = $${key}`);
+      values.push(trekData[key]);
+    });
     const result = await client.query(`UPDATE treks SET ${fields} WHERE id = ${trekId}`, values);
     return result.rows[0];
   },

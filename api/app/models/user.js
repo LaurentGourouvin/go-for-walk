@@ -13,10 +13,12 @@ module.exports = {
   },
 
   async update(userId, user) {
-    // eslint-disable-next-line no-shadow
-    const fields = Object.keys(user).map((user, index) => `"${user}" = $${index + 1}`);
-    const values = Object.values(user);
-    // eslint-disable-next-line no-template-curly-in-string
+    const fields = [];
+    const values = [];
+    Object.keys(user).forEach((key) => {
+      fields.push(`${key} = $${key}`);
+      values.push(user[key]);
+    });
     const result = await client.query(`UPDATE users SET ${fields} WHERE id = ${userId}`, values);
     return result.rows[0];
   },
