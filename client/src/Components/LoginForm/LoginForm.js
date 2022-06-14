@@ -17,10 +17,6 @@ function LoginForm({ setToken }) {
       onSubmit={(event) => {
         event.preventDefault();
 
-        // A REVOIR AVEC LE BACK POUR JWTOKEN ET /auth/connect
-        console.log(email);
-        console.log(password);
-
         axios.post('http://141.94.207.7:8080/api/auth/login', { email: email, password: password })
           .then((res) => {
             const token = res.data;
