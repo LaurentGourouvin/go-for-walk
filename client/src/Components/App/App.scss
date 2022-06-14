@@ -17,6 +17,14 @@
    margin: auto;
 }
 
+.SearchBar {
+   height: 50vh;
+   display: flex;
+   align-items: center;
+   justify-content:center;
+   padding: 2rem;
+}
+
 @media screen and (max-width: 640px){
       .main {
          width: 100%;
