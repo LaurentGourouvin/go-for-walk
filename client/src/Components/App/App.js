@@ -9,14 +9,15 @@ import Profil from '../Profil/Profil';
 
 function App() {
   const [isLogged, setIsLogged] = useState(false);
+  const [token, setToken] = useState({});
 
   return (
     <div className="App">
       <div className="main">
-        <Header isLogged={isLogged} setIsLogged={setIsLogged} />
+        <Header token={token} isLogged={isLogged} setIsLogged={setIsLogged} />
         <Routes>
           <Route path="/" element={<SearchBar />} />
-          <Route path="/login" element={<LoginForm />} />
+          <Route path="/login" element={<LoginForm setToken={setToken} />} />
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/profil" element={<Profil />} />
         </Routes>
