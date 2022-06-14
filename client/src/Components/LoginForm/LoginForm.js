@@ -26,6 +26,7 @@ function LoginForm({ setToken }) {
           .then((res) => {
             const token = res.data;
             setToken(token);
+            console.log(token);
             navigate('/profil');
           })
           .catch((error) => {
