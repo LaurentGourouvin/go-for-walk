@@ -1,3 +1,4 @@
+import './SearchBar.scss';
 import { useState } from 'react';
 
 function SearchBar() {
@@ -17,6 +18,7 @@ function SearchBar() {
       <form onSubmit={handleSubmitForm}>
         <input
           type="text"
+          className="SearchBar-cityNameInput rounded shadow-lg py-4 px-4 w-96"
           placeholder="Saisir le nom d'une ville"
           value={cityName}
           onChange={handleChangeCityName}
