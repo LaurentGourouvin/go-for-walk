@@ -38,10 +38,11 @@ function RegisterForm() {
       <div className="RegisterForm--input-container">
 
         <label className="RegisterForm--label" htmlFor="email">
-          Adresse mail :
+          <span className="RegisterForm--label--text">Adresse mail :</span>
           <input
-            className="RegisterForm--input"
+            className="RegisterForm--input shadow-lg rounded-md"
             placeholder="Votre adresse mail"
+            id="email"
             name="email"
             type="email"
             required
@@ -51,11 +52,12 @@ function RegisterForm() {
             }}
           />
         </label>
-        <label className="RegisterForm--label" htmlFor="name">
-          Nom de Famille :
+        <label className="RegisterForm--label " htmlFor="name">
+          <span className="RegisterForm--label--text">Nom de Famille :</span>
           <input
-            className="RegisterForm--input"
+            className="RegisterForm--input shadow-lg rounded-md"
             placeholder="Votre Nom"
+            id="name"
             name="name"
             type="text"
             required
@@ -66,10 +68,11 @@ function RegisterForm() {
           />
         </label>
         <label className="RegisterForm--label" htmlFor="firstname">
-          Prénom :
+          <span className="RegisterForm--label--text">Prénom :</span>
           <input
-            className="RegisterForm--input"
+            className="RegisterForm--input shadow-lg rounded-md"
             placeholder="Votre Prénom"
+            id="firstname"
             name="firstname"
             type="text"
             required
@@ -80,10 +83,11 @@ function RegisterForm() {
           />
         </label>
         <label className="RegisterForm--label" htmlFor="password">
-          Mot de passe :
+          <span className="RegisterForm--label--text">Mot de passe :</span>
           <input
-            className="RegisterForm--input"
+            className="RegisterForm--input shadow-lg rounded-md"
             placeholder="Votre mot de passe"
+            id="password"
             name="password"
             type="text"
             required
@@ -94,10 +98,11 @@ function RegisterForm() {
           />
         </label>
         <label className="RegisterForm--label" htmlFor="confirmPassword">
-          Confirmé votre Mot de passe :
+          <span className="RegisterForm--label--text">Confirmer votre Mot de passe :</span>
           <input
-            className="RegisterForm--input"
+            className="RegisterForm--input shadow-lg rounded-md"
             placeholder="Confirmer votre mot de passe"
+            id="confirmPassword"
             name="confirmPassword"
             type="text"
             required
@@ -110,7 +115,9 @@ function RegisterForm() {
       </div>
 
       <div className="RegisterForm--button-container">
+        <button className="RegisterForm--button bg-stone-500 text-white active:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Validez</button>
         <button
+          className="RegisterForm--button bg-stone-500 text-white active:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
           type="button"
           onClick={() => {
             setEmail('');
@@ -121,7 +128,6 @@ function RegisterForm() {
           }}
         >Réinitialiser le formulaire
         </button>
-        <button className="RegisterForm--button" type="submit">Validez</button>
       </div>
     </form>
 

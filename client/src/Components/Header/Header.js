@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import logo from './images/logo.png';
 import './Header.scss';
 
 function Header({ setIsLogged, isLogged }) {
@@ -7,7 +8,7 @@ function Header({ setIsLogged, isLogged }) {
     return (
       <div className="Header">
         <Link to="/">
-          <h1 className="Header--website-title">Go For Walk</h1>
+          <h1 className="Header--website-title"><img className="Header--Logo" src={logo} alt="Go For Walk Logo Website" /></h1>
         </Link>
         <div className="Header--burger-menu space-y-2">
           <div className="w-8 h-0.5 bg-white" />
@@ -23,7 +24,7 @@ function Header({ setIsLogged, isLogged }) {
   return (
     <div className="Header">
       <Link to="/">
-        <h1 className="Header--website-title">Go For Walk</h1>
+        <h1 className="Header--website-title"><img className="Header--Logo" src={logo} alt="Go For Walk Logo Website" /></h1>
       </Link>
       <h1 className="Header--website-burger">Burger</h1>
       <Link to="/" className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline" onClick={() => setIsLogged(!isLogged)}> Deconnexion</Link>

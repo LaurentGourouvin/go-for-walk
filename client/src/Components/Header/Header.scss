@@ -6,19 +6,19 @@
 .Header {
     display: flex;
     max-width: 100%;
-    background-color: rgba(255,255,255,.5);
+    background-color:rgba(233, 237, 201, .15);
     justify-content: space-between;
     align-items: center;
     margin: auto;
     padding: 1rem;
-    border-bottom-right-radius: .5rem;
-    border-bottom-left-radius:  .5rem;
-    border-left: 1px solid rgb(96, 84, 90,1);
-    border-right: 1px solid rgb(96, 84, 90,1);
-    border-bottom: 1px solid rgb(96, 84, 90,1);
+    border-radius: .5rem;
+    // border-left: 1px solid rgb(96, 84, 90,1);
+    // border-right: 1px solid rgb(96, 84, 90,1);
+    // border-bottom: 1px solid rgb(96, 84, 90,1);
+    
     margin-bottom: 2rem;
-    color: white;
-    text-shadow: 1px 1px 2px black;
+    color: rgb(87, 98, 47);
+    // text-shadow: 1px 1px 2px black;
 
     &--a {
         padding: 1rem;
@@ -35,6 +35,9 @@
 
     &--burger-menu {
         display: none;
+    }
+    &--Logo {
+        max-width: 250px;
     }
  }
 
