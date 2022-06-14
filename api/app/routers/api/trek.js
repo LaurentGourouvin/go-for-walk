@@ -6,6 +6,7 @@ const updateSchema = require('../../validation/schemas/usersUpdateSchema');
 
 const controllerHandler = require('../../helpers/controllerHandler');
 const trekController = require('../../controllers/api/trek');
+const tokenController = require('../../helpers/tokenController');
 
 const router = express.Router();
 
@@ -36,7 +37,7 @@ router
      * @tags Treks
      * @param {Trek} request.body.required - trek info
      */
-  .post(validate('body', createSchema), controllerHandler(trekController.createTrek));
+  .post(validate('body', createSchema), tokenController(), controllerHandler(trekController.createTrek));
 
 router
   .route('/:id(\\d+)')
@@ -56,7 +57,7 @@ router
      * @param {number} id.path.required - trek identifier
      * @param {Trek} request.body.required - trek info
      */
-  .put(validate('body', updateSchema), controllerHandler(trekController.updateTrek))
+  .put(validate('body', updateSchema), tokenController(), controllerHandler(trekController.updateTrek))
 /**
  * DELETE /api/treks/{id}
  * @summary Delete one trek
@@ -64,7 +65,7 @@ router
  * @param {number} id.path.required - trek identifier
  * @returns {object} 200 - trek supprimé
  */
-  .delete(controllerHandler(trekController.deletTrek));
+  .delete(tokenController(), controllerHandler(trekController.deletTrek));
 
 router
   .route('/:city')
