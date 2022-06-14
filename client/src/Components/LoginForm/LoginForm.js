@@ -18,44 +18,6 @@ function LoginForm({ setToken }) {
         className="LoginForm"
         onSubmit={(event) => {
           event.preventDefault();
-
-<<<<<<< HEAD
-        axios.post('http://141.94.207.7:8080/api/auth/login', { email: email, password: password })
-          .then((res) => {
-            const token = res.data;
-            setToken(token);
-            navigate('/profil');
-          })
-          .catch((error) => {
-            swal('Votre Email ou votre Mot de passe est incorrect');
-            console.log(error);
-          });
-      }}
-
-    >
-      <input
-        className="LoginForm--input"
-        placeholder="Email"
-        type="email"
-        required
-        value={email}
-        onChange={(event) => {
-          setEmail(event.target.value);
-        }}
-      />
-      <input
-        className="LoginForm--input"
-        placeholder="Password"
-        type="password"
-        required
-        value={password}
-        onChange={(event) => {
-          setPassword(event.target.value);
-=======
-          // A REVOIR AVEC LE BACK POUR JWTOKEN ET /auth/connect
-          console.log(email);
-          console.log(password);
-
           axios.post('http://141.94.207.7:8080/api/auth/login', { email: email, password: password })
             .then((res) => {
               const token = res.data;
@@ -66,7 +28,6 @@ function LoginForm({ setToken }) {
               swal('Votre Email ou votre Mot de passe est incorrect');
               console.log(error);
             });
->>>>>>> 64a2d2dc119174c524bb92ad4c3e1bbbc65ee879
         }}
       >
         <input
