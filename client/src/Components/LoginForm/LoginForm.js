@@ -2,11 +2,13 @@ import './LoginForm.scss';
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import swal from 'sweetalert';
 
-function LoginForm() {
+function LoginForm({ setToken }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [loggedUser, setLoggedUser] = useState({});
+  // const [loggedUser, setLoggedUser] = useState({});
   const navigate = useNavigate();
 
   // CODER L'APPEL A l'API -->
@@ -18,25 +20,18 @@ function LoginForm() {
           event.preventDefault();
 
           // A REVOIR AVEC LE BACK POUR JWTOKEN ET /auth/connect
+          console.log(email);
+          console.log(password);
 
-          axios.get('http://141.94.207.7:8080/api/auth')
+          axios.post('http://141.94.207.7:8080/api/auth/login', { email: email, password: password })
             .then((res) => {
-              const { data } = res;
-              console.log('affichage des data', data);
-              console.log('affichage de la req axios', res);
-              const user = data.find((oneUser) => oneUser.email.toLowerCase() === email.toLowerCase()
-                && oneUser.password === password);
-
-              console.log("j'affiche ma recherche du find", user);
-
-              if (user) {
-                setLoggedUser(user);
-              }
-              console.log(loggedUser);
-            })
-            .catch((error) => console.log(error))
-            .finally(() => {
+              const token = res.data;
+              setToken(token);
               navigate('/profil');
+            })
+            .catch((error) => {
+              swal('Votre Email ou votre Mot de passe est incorrect');
+              console.log(error);
             });
         }}
       >
@@ -60,11 +55,17 @@ function LoginForm() {
             setPassword(event.target.value);
           }}
         />
+
         <button className="LoginForm--button bg-stone-500 text-white active:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Envoyer</button>
       </form>
     </div>
 
   );
 }
+
+LoginForm.propTypes = {
+
+  setToken: PropTypes.func.isRequired,
+};
 
 export default LoginForm;
