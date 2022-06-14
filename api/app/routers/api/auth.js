@@ -28,13 +28,19 @@ router
 
 router
   .route('/login')
-  /**
+/**
+ * A User login the following parameters :
+     * @typedef {object} login
+     * @property {string} email.required - user firstname
+     * @property {string} password.required - user password
+ */
+/**
    * POST /api/auth/login
    * @summary Login The User
    * @tags Auth
-   * @param {string} email - user email
-   * @param {string} password - user password
-   * */
+   * @param {login} request.body.required - user email and password
+   * @returns {object} 200 - User login with token
+   */
   .post(controllerHandler(authController.login));
 
 module.exports = router;
