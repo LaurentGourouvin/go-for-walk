@@ -6,6 +6,7 @@ import LoginForm from '../LoginForm/LoginForm';
 import SearchBar from '../SearchBar/SearchBar';
 import RegisterForm from '../RegisterForm/RegisterForm';
 import Profil from '../Profil/Profil';
+import MyTreks from '../MyTreks/MyTreks';
 
 function App() {
   const [token, setToken] = useState({});
@@ -19,6 +20,7 @@ function App() {
           <Route path="/login" element={<LoginForm setToken={setToken} />} />
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/profil" element={<Profil />} />
+          <Route path="/MyTreks" element={<MyTreks />} />
         </Routes>
       </div>
     </div>
