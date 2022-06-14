@@ -8,13 +8,12 @@ import RegisterForm from '../RegisterForm/RegisterForm';
 import Profil from '../Profil/Profil';
 
 function App() {
-  const [isLogged, setIsLogged] = useState(false);
   const [token, setToken] = useState({});
 
   return (
     <div className="App">
       <div className="main">
-        <Header token={token} isLogged={isLogged} setIsLogged={setIsLogged} />
+        <Header token={token} setToken={setToken} />
         <Routes>
           <Route path="/" element={<SearchBar />} />
           <Route path="/login" element={<LoginForm setToken={setToken} />} />
