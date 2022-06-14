@@ -11,27 +11,32 @@ function LoginForm({ setToken }) {
   // const [loggedUser, setLoggedUser] = useState({});
   const navigate = useNavigate();
 
+  const resetForm = () => {
+    setEmail('');
+    setPassword('');
+  };
   // CODER L'APPEL A l'API -->
   return (
-    <div className="main">
-      <form
-        className="LoginForm"
-        onSubmit={(event) => {
-          event.preventDefault();
-          axios.post('http://141.94.207.7:8080/api/auth/login', { email: email, password: password })
-            .then((res) => {
-              const token = res.data;
-              setToken(token);
-              navigate('/profil');
-            })
-            .catch((error) => {
-              swal('Votre Email ou votre Mot de passe est incorrect');
-              console.log(error);
-            });
-        }}
-      >
+    <form
+      className="LoginForm"
+      onSubmit={(event) => {
+        event.preventDefault();
+
+        axios.post('http://141.94.207.7:8080/api/auth/login', { email: email, password: password })
+          .then((res) => {
+            const token = res.data;
+            setToken(token);
+            navigate('/profil');
+          })
+          .catch((error) => {
+            swal('Votre Email ou votre Mot de passe est incorrect');
+            console.log(error);
+          });
+      }}
+    >
+      <div className="LoginForm-main-form">
         <input
-          className="LoginForm--input"
+          className="LoginForm--input shadow-lg rounded-md"
           placeholder="Email"
           type="email"
           required
@@ -41,7 +46,7 @@ function LoginForm({ setToken }) {
           }}
         />
         <input
-          className="LoginForm--input"
+          className="LoginForm--input shadow-lg rounded-md"
           placeholder="Password"
           type="password"
           required
@@ -51,9 +56,18 @@ function LoginForm({ setToken }) {
           }}
         />
 
-        <button className="LoginForm--button bg-stone-500 text-white active:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Envoyer</button>
-      </form>
-    </div>
+      </div>
+      <div className="LoginForm--buttonGroup">
+        <button className="LoginForm--button btnForm bg-stone-500 text-white active:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Envoyer</button>
+        <button
+          className="LoginForm--button btnForm bg-stone-500 text-white active:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+          type="button"
+          onClick={resetForm}
+        >
+          Réinitialiser
+        </button>
+      </div>
+    </form>
 
   );
 }
