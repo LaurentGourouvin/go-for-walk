@@ -5,6 +5,7 @@ const updateSchema = require('../../validation/schemas/usersUpdateSchema');
 
 const controllerHandler = require('../../helpers/controllerHandler');
 const userController = require('../../controllers/api/user');
+const tokenController = require('../../helpers/tokenController');
 
 const router = express.Router();
 
@@ -42,7 +43,7 @@ router
      * @param {number} id.path.required - user identifier
      * @param {updateUser} request.body.required - user info
      */
-  .put(validate('body', updateSchema), controllerHandler(userController.updateUser))
+  .put(validate('body', updateSchema), tokenController(), controllerHandler(userController.updateUser))
 /**
  * DELETE /api/users/{id}
  * @summary Delete one user
@@ -50,6 +51,6 @@ router
  * @param {number} id.path.required - user identifier
  * @returns {object} 200 - utilisateur supprimé
  */
-  .delete(controllerHandler(userController.deletUser));
+  .delete(tokenController(), controllerHandler(userController.deletUser));
 
 module.exports = router;

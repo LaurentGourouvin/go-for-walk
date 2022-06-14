@@ -30,7 +30,7 @@ router
      * @summary Get all treks
      * @tags Treks
      */
-  .get(tokenController(), controllerHandler(trekController.getAll))
+  .get(controllerHandler(trekController.getAll))
 /**
      * POST /api/treks
      * @summary Create one trek
@@ -57,7 +57,7 @@ router
      * @param {number} id.path.required - trek identifier
      * @param {Trek} request.body.required - trek info
      */
-  .put(validate('body', updateSchema), controllerHandler(trekController.updateTrek))
+  .put(validate('body', updateSchema), tokenController(), controllerHandler(trekController.updateTrek))
 /**
  * DELETE /api/treks/{id}
  * @summary Delete one trek
@@ -65,7 +65,7 @@ router
  * @param {number} id.path.required - trek identifier
  * @returns {object} 200 - trek supprimé
  */
-  .delete(controllerHandler(trekController.deletTrek));
+  .delete(tokenController(), controllerHandler(trekController.deletTrek));
 
 router
   .route('/:city')
