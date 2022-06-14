@@ -6,6 +6,7 @@ const updateSchema = require('../../validation/schemas/usersUpdateSchema');
 
 const controllerHandler = require('../../helpers/controllerHandler');
 const trekController = require('../../controllers/api/trek');
+const tokenController = require('../../helpers/tokenController');
 
 const router = express.Router();
 
@@ -29,14 +30,14 @@ router
      * @summary Get all treks
      * @tags Treks
      */
-  .get(controllerHandler(trekController.getAll))
+  .get(tokenController(), controllerHandler(trekController.getAll))
 /**
      * POST /api/treks
      * @summary Create one trek
      * @tags Treks
      * @param {Trek} request.body.required - trek info
      */
-  .post(validate('body', createSchema), controllerHandler(trekController.createTrek));
+  .post(validate('body', createSchema), tokenController(), controllerHandler(trekController.createTrek));
 
 router
   .route('/:id(\\d+)')
