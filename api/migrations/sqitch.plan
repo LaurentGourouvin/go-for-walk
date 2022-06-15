@@ -1,5 +1,4 @@
 %syntax-version=1.0.0
 %project=goforwalk
 
-init 2022-06-09T11:48:21Z Bisschop Franck <bisschopfranck@gmail.com> # Initialisation des premières tables
-seeding 2022-06-09T18:51:17Z LEO WOLFF <LEO@DESKTOP-7B6G526> #      migrations\\deploy\\seeding.sql\n     migrations\\revert\\seeding.sql\n     migrations\\verify\\seeding.sql\n     
+init 2022-06-09T11:48:21Z Bisschop Franck <bisschopfranck@gmail.com> # Initialisation des premières tables 
