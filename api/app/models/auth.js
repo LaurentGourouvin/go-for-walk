@@ -5,6 +5,13 @@ const saltRounds = 10;
 
 module.exports = {
   async register(newUser) {
+    const findUser = await client.query(
+      'SELECT * FROM users WHERE email = $1',
+      [newUser.email],
+    );
+    if (findUser.rows.length > 0) {
+      throw new Error('User already exists');
+    }
     const hashPassword = await bcrypt.hash(newUser.password, saltRounds);
     const result = await client.query(`INSERT INTO users (firstname, name, email, password) VALUES ('${newUser.firstname}','${newUser.name}','${newUser.email}','${hashPassword}') RETURNING *`);
     return result.rows[0];
