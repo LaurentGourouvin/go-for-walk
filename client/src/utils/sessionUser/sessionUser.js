@@ -26,7 +26,7 @@ const authentification = {
    * @param {*} token Token reçu via notre API
    * @returns true || false si l'utilisateur est bien connecté on retourne la valeur true sinon false
    */
-  checkLoggin(token) {
+  checkLoggin(token = null) {
     if ((token) && (localStorage.getItem('isLogged') === 'true')) {
       return true;
     }
