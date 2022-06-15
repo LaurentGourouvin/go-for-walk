@@ -2,7 +2,7 @@ const express = require('express');
 
 const validate = require('../../validation/validator');
 const createSchema = require('../../validation/schemas/treksCreateSchema');
-const updateSchema = require('../../validation/schemas/usersUpdateSchema');
+const updateSchema = require('../../validation/schemas/treksUpdateSchema');
 
 const controllerHandler = require('../../helpers/controllerHandler');
 const trekController = require('../../controllers/api/trek');
