@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import swal from 'sweetalert';
+import authentification from '../../utils/sessionUser/sessionUser';
 
 function LoginForm({ setToken }) {
   const [email, setEmail] = useState('');
@@ -26,7 +27,9 @@ function LoginForm({ setToken }) {
           .then((res) => {
             const token = res.data;
             setToken(token);
-            console.log(token);
+            // on défini si l'utilisateur est connecté ou non dans le local storage
+            authentification.setLoggin(token);
+
             navigate('/profil');
           })
           .catch((error) => {

@@ -20,7 +20,7 @@ function App() {
           <Route path="/" element={<SearchBar />} />
           <Route path="/login" element={<LoginForm setToken={setToken} />} />
           <Route path="/register" element={<RegisterForm />} />
-          <Route path="/profil" element={<Profil />} />
+          <Route path="/profil" element={<Profil token={token} />} />
           <Route path="/MyTreks" element={<MyTreks />} />
           <Route path="/search" element={<SearchResults />} />
         </Routes>

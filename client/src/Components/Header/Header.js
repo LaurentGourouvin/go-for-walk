@@ -2,8 +2,9 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import logo from './images/logo.png';
 import './Header.scss';
+import authentification from '../../utils/sessionUser/sessionUser';
 
-function Header({ token, setToken }) {
+function Header({ token }) {
   if (!token.access_token) {
     return (
       <div className="Header">
@@ -28,7 +29,8 @@ function Header({ token, setToken }) {
         <h1 className="Header--website-title"><img className="Header--Logo" src={logo} alt="Go For Walk Logo Website" /></h1>
       </Link>
       <h1 className="Header--website-burger">Burger</h1>
-      <Link to="/" className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline" onClick={() => setToken({})}> Deconnexion</Link>
+      {/* <Link to="/" className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline" onClick={() => setToken({})}> Deconnexion</Link> */}
+      <Link to="/" className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline" onClick={() => authentification.disconnectUser()}> Deconnexion</Link>
       <Link to="/profil" className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline">Mon profil</Link>
       <Link to="/about" className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline">A propos</Link>
     </div>
@@ -38,7 +40,7 @@ function Header({ token, setToken }) {
 Header.propTypes = {
 
   token: PropTypes.object.isRequired,
-  setToken: PropTypes.func.isRequired,
+  // setToken: PropTypes.func.isRequired,
 };
 
 export default Header;

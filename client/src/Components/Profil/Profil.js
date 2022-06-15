@@ -1,8 +1,19 @@
 import './Profil.scss';
 // data static pour conception du composant
+import PropTypes from 'prop-types';
 import data from '../../dataStatic/data_profil';
+import authentification from '../../utils/sessionUser/sessionUser';
+import ImageWarning from './images/warning.png';
 
-function Profil() {
+function Profil({ token }) {
+  const isLogged = authentification.checkLoggin(token);
+
+  // Si l'utilisateur est connecté on lui affiche son dashboard
+  if (!isLogged) {
+    return (
+      <p className="msg-error p-2 bg-amber-50 rounded-md shadow-md"><img src={ImageWarning} alt="logo de warning" />Vous devez être connecté pour accéder à la page profil</p>
+    );
+  }
   return (
     <>
       <h1 className="Profil-h1">Bonjour {data.firstname} {data.name}</h1>
@@ -29,4 +40,7 @@ function Profil() {
   );
 }
 
+Profil.propTypes = {
+  token: PropTypes.object.isRequired,
+};
 export default Profil;
