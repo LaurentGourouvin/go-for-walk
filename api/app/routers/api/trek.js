@@ -1,5 +1,7 @@
 const express = require('express');
+const multer = require('multer');
 
+const upload = multer({ dest: 'uploads/' });
 const validate = require('../../validation/validator');
 const createSchema = require('../../validation/schemas/treksCreateSchema');
 const updateSchema = require('../../validation/schemas/usersUpdateSchema');
@@ -21,7 +23,7 @@ router
   * @property {integer} duration - trek duration
   * @property {string} city - trek city
   * @property {array<integer>} coordinate - trek coordinates
-  * @property {array<string>} pictures - trek pictures
+  * @property {array<file>} pictures - trek pictures
   * @property {integer} user_id.required - trek userId
   * @property {integer} difficulty_id.required - trek difficulty
 */
@@ -35,9 +37,9 @@ router
      * POST /api/treks
      * @summary Create one trek
      * @tags Treks
-     * @param {Trek} request.body.required - trek info
+     * @param {Trek} request.body.required - trek info - multipart/form-data
      */
-  .post(validate('body', createSchema), tokenController(), controllerHandler(trekController.createTrek));
+  .post(validate('body', createSchema), tokenController(), upload.array('pictures', 6), controllerHandler(trekController.createTrek));
 
 router
   .route('/:id(\\d+)')

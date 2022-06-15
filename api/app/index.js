@@ -1,10 +1,14 @@
 const express = require('express');
+const serve = require('express-static');
 const cors = require('cors');
+// const path = require('node:path');
 
 const router = require('./routers');
 
 const app = express();
 require('./helpers/apiDocs')(app);
+
+app.use(serve(`${__dirname}/uploads`));
 
 // On active le middleware pour parser le payload JSON
 app.use(express.json());
