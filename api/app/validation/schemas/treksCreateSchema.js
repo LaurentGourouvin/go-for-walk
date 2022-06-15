@@ -8,4 +8,6 @@ module.exports = joi.object({
   city: joi.string().required(),
   coordinate: joi.array().items(joi.number()),
   pictures: joi.array().items(joi.string()),
+  user_id: joi.number(),
+  difficulty_id: joi.number(),
 }).required();
