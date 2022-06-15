@@ -18,7 +18,6 @@ module.exports = {
     try {
       const userFound = await authDataMapper.login(user);
       const jwtTokens = jwt.jwtTokens(userFound);
-      res.cookie('refresh_token', jwtTokens.refresh_token, { httpOnly: true });
       return res.json(jwtTokens);
     } catch (err) {
       return res.status(401).json({ error: err.message });
