@@ -1,13 +1,15 @@
+import { useEffect, useState } from 'react';
 import './Profil.scss';
 // data static pour conception du composant
 import PropTypes from 'prop-types';
-import data from '../../dataStatic/data_profil';
+import axios from 'axios';
+import jwtDecode from 'jwt-decode';
+// import data from '../../dataStatic/data_profil';
 import authentification from '../../utils/sessionUser/sessionUser';
 import ImageWarning from './images/warning.png';
 
 function Profil({ token }) {
   const isLogged = authentification.checkLoggin(token);
-  console.log(token);
 
   // Si l'utilisateur est connecté on lui affiche son dashboard
   if (!isLogged) {
@@ -15,19 +17,40 @@ function Profil({ token }) {
       <p className="msg-error p-2 bg-amber-50 rounded-md shadow-md"><img src={ImageWarning} alt="logo de warning" />Vous devez être connecté pour accéder à la page profil</p>
     );
   }
+  const [name, setName] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [email, setEmail] = useState('');
+
+  const decodedToken = jwtDecode(token.access_token);
+  const { userId } = decodedToken;
+
+  useEffect(() => {
+    try {
+      axios.get(`http://141.94.207.7:8080/api/users/${userId}`)
+        .then((res) => {
+          const { data } = res;
+          console.log(data);
+          setEmail(data.email);
+          setName(data.name);
+          setFirstName(data.firstname);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
   return (
     <>
-      <h1 className="Profil-h1">Bonjour {data.firstname} {data.name}</h1>
+      <h1 className="Profil-h1">Bonjour {firstName} {name}</h1>
 
       <div className="Profil">
         <div className="Profil-Dashboard">
           <div className="Profil-Informations">
             <h2 className="Profil-h2">Votre Profil</h2>
             <div className="Profil-Informations-Card m-7 p-6 max-w-sm bg-white/[.9] rounded-lg border border-white shadow-md dark:bg-gray-800 dark:border-gray-700 hover:shadow-lg">
-              <p>nom utilisateur: {data.email}</p>
+              <p>adresse mail {email}</p>
 
-              <p>nom: {data.name}</p>
-              <p>prenom: {data.firstname}</p>
+              <p>nom: {name}</p>
+              <p>prenom: {firstName}</p>
 
             </div>
           </div>
