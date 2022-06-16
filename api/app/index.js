@@ -1,13 +1,17 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const cors = require('cors');
+// const path = require('node:path');
 
 const router = require('./routers');
 
 const app = express();
 require('./helpers/apiDocs')(app);
 
+app.use('/uploads', express.static('uploads'));
 // On active le middleware pour parser le payload JSON
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 // On active le middleware pour parser le payload urlencoded
 app.use(express.urlencoded({ extended: true }));
 
