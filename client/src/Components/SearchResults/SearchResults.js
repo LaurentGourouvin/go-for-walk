@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 // import data from '../../dataStatic/data_treks';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Trek from '../Trek/Trek';
 import './SearchResults.scss';
@@ -47,7 +48,9 @@ function SearchResults({ searchCity }) {
         </h1>
         <h2 className="SearchResults-Title-2">
           {searchCity ? `Pour la ville de ${searchCity}` : 'Pour la France entière'}
+          <Link to="/"><p className="SearchResults-Subtitle">Retour accueil</p></Link>
         </h2>
+
       </div>
       <div className="SearchResults-cardContainer">
         {console.log('affichage de mon state', searchResult)}
