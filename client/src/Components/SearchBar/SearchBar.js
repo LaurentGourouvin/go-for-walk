@@ -15,7 +15,7 @@ function SearchBar() {
 
   return (
     <div className="SearchBar">
-      <p className="SearchBar-description my-2">Rechercher une randonnée via la barre de recherche</p>
+      <p className="SearchBar-description my-2">Rechercher une randonnée</p>
       <form onSubmit={handleSubmitForm}>
 
         <input
