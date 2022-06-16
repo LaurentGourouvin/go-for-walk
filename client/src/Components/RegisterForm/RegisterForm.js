@@ -36,7 +36,7 @@ function RegisterForm() {
       }}
     >
       <div className="RegisterForm--input-container">
-
+        <h1 className="RegisterForm-h1">Création d'un profil personnel</h1>
         <label className="RegisterForm--label" htmlFor="email">
           <span className="RegisterForm--label--text">Adresse mail :</span>
           <input
