@@ -14,6 +14,17 @@ function SearchResults({ searchCity }) {
     const dataArray = [];
     if (searchCity === '') {
       console.log('Je dois afficher toutes les randonnées du site');
+      try {
+        axios.get('http://141.94.207.7:8080/api/treks')
+          .then((res) => {
+            const { data } = res;
+            setSearchResult(data);
+            console.log('resultat axios', res);
+            console.log('tout les randonnées du site:', dataArray);
+          });
+      } catch (err) {
+        console.log(err);
+      }
     } else {
       try {
         axios.get(`http://141.94.207.7:8080/api/treks/${searchCity}`)
@@ -35,12 +46,13 @@ function SearchResults({ searchCity }) {
           Résultats de votre recherche :
         </h1>
         <h2 className="SearchResults-Title-2">
-          Pour la ville de {searchCity}
+          {searchCity ? `Pour la ville de ${searchCity}` : 'Pour la France entière'}
         </h2>
       </div>
       <div className="SearchResults-cardContainer">
         {console.log('affichage de mon state', searchResult)}
-        {searchResult && searchResult.map((result) => <Trek data={result} />) }
+        {searchResult.length > 0
+          ? searchResult.map((result) => <Trek key={result.id} data={result} />) : ''}
       </div>
     </div>
   );
