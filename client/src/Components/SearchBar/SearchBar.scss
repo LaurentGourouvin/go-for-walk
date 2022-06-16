@@ -1,4 +1,8 @@
 .SearchBar {
+
+    display: flex;
+    flex-direction: column;
+
     &-cityNameInput:focus {
         color: #ccd5ae;
         outline: .15rem solid #ccd5ae;
@@ -15,6 +19,11 @@
     &-cityNameInput::placeholder {
         color: #ccd5ae;
         font-weight: initial;
+        font-style: italic;
+    }
+    &-description {
+        color: rgb(87, 98, 47);;
+        font-size: 1.5rem;
         font-style: italic;
     }
 }

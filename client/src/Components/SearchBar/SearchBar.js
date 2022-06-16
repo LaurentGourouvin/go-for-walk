@@ -15,10 +15,12 @@ function SearchBar() {
 
   return (
     <div className="SearchBar">
+      <p className="SearchBar-description my-2">Rechercher une randonnée via la barre de recherche</p>
       <form onSubmit={handleSubmitForm}>
+
         <input
           type="text"
-          className="SearchBar-cityNameInput rounded shadow-lg py-4 px-4 w-96"
+          className="SearchBar-cityNameInput rounded shadow-lg py-4 px-4 w-96 hover:shadow-xl"
           placeholder="Saisir le nom d'une ville"
           value={cityName}
           onChange={handleChangeCityName}
