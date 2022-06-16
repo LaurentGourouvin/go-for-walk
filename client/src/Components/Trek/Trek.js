@@ -6,9 +6,7 @@ function Trek({ data }) {
   return (
     <div className="Trek">
       <figure className="imgTrek">
-        {/* ATTENTION
-        PENSEZ A GERER UN SOUCIS POSSIBLE VIA LA PROPRIETE PICTURES (tableau ou valeur NULL) */}
-        {/* <img src={data.pictures[0]} alt="Illustration Trek" /> */}
+        <img src={data.pictures[0]} alt="Illustration Trek" />
       </figure>
       <header>{data.title}</header>
       <main>{data.description}</main>
