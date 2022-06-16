@@ -18,6 +18,7 @@ function LoginForm({ setToken }) {
   };
   // CODER L'APPEL A l'API -->
   return (
+
     <form
       className="LoginForm"
       onSubmit={(event) => {
@@ -39,6 +40,7 @@ function LoginForm({ setToken }) {
       }}
     >
       <div className="LoginForm-main-form">
+        <h1 className="LoginForm-h1">Se connecter à votre profil personnel</h1>
         <input
           className="LoginForm--input shadow-lg rounded-md"
           placeholder="Email"
