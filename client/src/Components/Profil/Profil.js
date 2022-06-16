@@ -20,12 +20,15 @@ function Profil({ token }) {
   const [name, setName] = useState('');
   const [firstName, setFirstName] = useState('');
   const [email, setEmail] = useState('');
-
-  const decodedToken = jwtDecode(token.access_token);
-  const { userId } = decodedToken;
+  let decodedToken = null;
+  let userId = null;
 
   useEffect(() => {
     try {
+      if (token) {
+        decodedToken = jwtDecode(token.access_token);
+        userId = decodedToken.userId;
+      }
       axios.get(`http://141.94.207.7:8080/api/users/${userId}`)
         .then((res) => {
           const { data } = res;
