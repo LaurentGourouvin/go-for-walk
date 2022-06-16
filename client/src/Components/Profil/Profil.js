@@ -7,6 +7,7 @@ import ImageWarning from './images/warning.png';
 
 function Profil({ token }) {
   const isLogged = authentification.checkLoggin(token);
+  console.log(token);
 
   // Si l'utilisateur est connecté on lui affiche son dashboard
   if (!isLogged) {

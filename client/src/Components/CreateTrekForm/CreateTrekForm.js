@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './CreateTrekForm.scss';
 import PropTypes from 'prop-types';
-// import jwtDecode from 'jwt-decode';
+import jwtDecode from 'jwt-decode';
 // import swal from 'sweetalert';
 // import axios from 'axios';
 
@@ -15,7 +15,8 @@ function CreateTrekForm({ token }) {
   const [pictures, setPictures] = useState([]);
   const [difficultyId, setDifficultyId] = useState('');
 
-  // const decodedToken = jwtDecode(token.access_token);
+  const decodedToken = jwtDecode(token.access_token);
+  console.log(decodedToken);
   // const accessToken = token.access_token;
 
   // const { userId } = decodedToken;
