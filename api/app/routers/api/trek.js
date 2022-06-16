@@ -5,9 +5,9 @@ const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 
 const validate = require('../../validation/validator');
+
 // const createSchema = require('../../validation/schemas/treksCreateSchema');
 const updateSchema = require('../../validation/schemas/usersUpdateSchema');
-
 const controllerHandler = require('../../helpers/controllerHandler');
 const trekController = require('../../controllers/api/trek');
 const tokenController = require('../../helpers/tokenController');
