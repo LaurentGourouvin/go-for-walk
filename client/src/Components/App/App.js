@@ -8,7 +8,6 @@ import RegisterForm from '../RegisterForm/RegisterForm';
 import Profil from '../Profil/Profil';
 import MyTreks from '../MyTreks/MyTreks';
 import SearchResults from '../SearchResults/SearchResults';
-import TrekDetails from '../TrekDetails/TrekDetails';
 import CreateTrekForm from '../CreateTrekForm/CreateTrekForm';
 
 function App() {
