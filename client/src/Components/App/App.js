@@ -27,7 +27,6 @@ function App() {
           <Route path="/search" element={<SearchResults />} />
           <Route path="/trek/create" element={<CreateTrekForm token={token} />} />
         </Routes>
-        <TrekDetails />
       </div>
     </div>
   );
