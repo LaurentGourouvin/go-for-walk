@@ -12,13 +12,15 @@ import CreateTrekForm from '../CreateTrekForm/CreateTrekForm';
 
 function App() {
   const [token, setToken] = useState({});
+  const [searchCity, setSearchCity] = useState(null);
+  console.log(searchCity);
 
   return (
     <div className="App">
       <div className="main">
         <Header token={token} setToken={setToken} />
         <Routes>
-          <Route path="/" element={<SearchBar />} />
+          <Route path="/" element={<SearchBar setSearchCity={setSearchCity} />} />
           <Route path="/login" element={<LoginForm setToken={setToken} />} />
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/profil" element={<Profil token={token} />} />

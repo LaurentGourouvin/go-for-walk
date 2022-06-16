@@ -1,7 +1,8 @@
 import './SearchBar.scss';
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 
-function SearchBar() {
+function SearchBar({ setSearchCity }) {
   const [cityName, setCityName] = useState('');
 
   const handleChangeCityName = (event) => {
@@ -9,7 +10,7 @@ function SearchBar() {
   };
   const handleSubmitForm = (event) => {
     event.preventDefault();
-    // coder l'appel à l'API du gouvernement pour récupérer le nom de la bonne ville.
+    setSearchCity(cityName);
     setCityName('');
   };
 
@@ -30,4 +31,7 @@ function SearchBar() {
   );
 }
 
+SearchBar.propTypes = {
+  setSearchCity: PropTypes.func.isRequired,
+};
 export default SearchBar;
