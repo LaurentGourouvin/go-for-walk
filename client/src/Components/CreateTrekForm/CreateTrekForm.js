@@ -2,8 +2,8 @@ import { useState } from 'react';
 import './CreateTrekForm.scss';
 import PropTypes from 'prop-types';
 import jwtDecode from 'jwt-decode';
-// import swal from 'sweetalert';
-// import axios from 'axios';
+import swal from 'sweetalert';
+import axios from 'axios';
 
 function CreateTrekForm({ token }) {
   const [title, setTitle] = useState('');
@@ -27,23 +27,65 @@ function CreateTrekForm({ token }) {
       className="CreateTrekForm"
       onSubmit={(event) => {
         event.preventDefault();
-        console.log(token);
-        //  axios.post(
-        //  'http://141.94.207.7:8080/api/treks',
-        //  { access_token: accessToken },
-        //  {
-        //    title: title, description: description, distance: distance, duration: duration, city: city, coordinate: [coordinate], pictures: [pictures], user_id: userId, difficulty_Id: difficultyId,
-        //  },
+        // console.log(token);
+        const dataPicture = [];
+        const dataCoordinate = [];
+        dataPicture.push(document.getElementById('pictures').files[0]);
+        dataCoordinate.push(parseInt(coordinate, 10));
+        console.log('file ?:', document.getElementById('pictures').files[0]);
+        console.log('title: ', title);
+        console.log('description:', description);
+        console.log('distance:', parseInt(distance, 10));
+        console.log('duration:', parseInt(duration, 10));
+        console.log('city', city);
+        console.log('coordinate', dataCoordinate);
+        console.log('pictures', dataPicture);
+        console.log('user_id:', 2);
+        console.log('difficulty_Id:', parseInt(difficultyId, 10));
 
-        // )
-        //  .then((res) => {
-        //    console.log(res);
-        //    swal('Randonnée Créée', 'success');
-        // })
-        //   .catch((error) => {
-        //    swal('Cela na pas marché');
-        //       console.log(error);
-      //    });
+        // ESSAIE AVEC FORM DATA
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('description', description);
+        formData.append('distance', parseInt(distance, 10));
+        formData.append('duration', parseInt(duration, 10));
+        formData.append('city', city);
+        formData.append('coordinate', dataCoordinate);
+        formData.append('pictures', document.getElementById('pictures').files[0]);
+        formData.append('user_id', 2);
+        formData.append('difficulty_Id', parseInt(difficultyId, 10));
+
+        axios.post(
+          'http://141.94.207.7:8080/api/treks',
+          formData,
+          {
+            headers: {
+              'content-type': 'multipart/form-data',
+            },
+          },
+          // {
+          //   // MODIFIER LE USER ID POUR QU'IL SOIT DYNAMIQUE
+          //   title: title,
+          //   description: description,
+          //   distance: distance,
+          //   duration: duration,
+          //   city: city,
+          //   coordinate: [coordinate],
+          //   pictures: dataPicture,
+          //   user_id: 2,
+          //   difficulty_Id: parseInt(difficultyId, 10),
+          // },
+
+        )
+          .then((res) => {
+            console.log(res);
+            swal('Randonnée Créée', 'success');
+          })
+          .catch((error) => {
+            alert(JSON.stringify(formData));
+            swal('Cela na pas marché');
+            console.log(error);
+          });
       }}
     >
       <div className="CreateTrekForm-input-container">
@@ -130,7 +172,7 @@ function CreateTrekForm({ token }) {
             placeholder="Coordonnées de votre Randonnée au format : xxx.yyy.aaa "
             id="coordinate"
             name="coordinate"
-            type="text"
+            type="number"
             required
             value={coordinate}
             onChange={(event) => {
@@ -139,13 +181,14 @@ function CreateTrekForm({ token }) {
           />
         </label>
         <label className="CreateTrekForm-label" htmlFor="pictures">
-          <span className="CreateTrekForm-label-text">Saississez le(s) lien(s) de Photos pour la randonnée :</span>
+          <span className="CreateTrekForm-label-text">Ajouter une photo de votre randonée :</span>
           <input
             className="CreateTrekForm-input shadow-lg rounded-md"
             placeholder="Photos de votre Randonnée "
             id="pictures"
             name="pictures"
-            type="text"
+            type="file"
+            accept="images/png, images/jpeg"
             required
             value={pictures}
             onChange={(event) => {
