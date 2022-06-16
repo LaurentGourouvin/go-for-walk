@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
 
 .App {
    width: 100%;
@@ -11,6 +11,8 @@
    background-position: center;
    background-repeat: no-repeat;
    background-size: cover;
+   font-family: 'Patrick Hand', sans-serif;
+   font-size: 1.2rem;
 }
 
 .main {
