@@ -12,8 +12,7 @@ import CreateTrekForm from '../CreateTrekForm/CreateTrekForm';
 
 function App() {
   const [token, setToken] = useState({});
-  const [searchCity, setSearchCity] = useState(null);
-  console.log(searchCity);
+  const [searchCity, setSearchCity] = useState('');
 
   return (
     <div className="App">
@@ -25,7 +24,7 @@ function App() {
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/profil" element={<Profil token={token} />} />
           <Route path="/MyTreks" element={<MyTreks />} />
-          <Route path="/search" element={<SearchResults />} />
+          <Route path="/search" element={<SearchResults searchCity={searchCity} />} />
           <Route path="/trek/create" element={<CreateTrekForm token={token} />} />
         </Routes>
       </div>

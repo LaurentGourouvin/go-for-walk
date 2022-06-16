@@ -1,10 +1,11 @@
 import './SearchBar.scss';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 
 function SearchBar({ setSearchCity }) {
   const [cityName, setCityName] = useState('');
-
+  const navigate = useNavigate();
   const handleChangeCityName = (event) => {
     setCityName(event.target.value);
   };
@@ -12,6 +13,7 @@ function SearchBar({ setSearchCity }) {
     event.preventDefault();
     setSearchCity(cityName);
     setCityName('');
+    navigate('/search');
   };
 
   return (

@@ -2,11 +2,13 @@ import PropTypes from 'prop-types';
 import './Trek.scss';
 
 function Trek({ data }) {
-  console.log(data);
+  console.log('Data dans TREK composant:', data);
   return (
     <div className="Trek">
       <figure className="imgTrek">
-        <img src={data.images[0]} alt="Illustration Trek" />
+        {/* ATTENTION
+        PENSEZ A GERER UN SOUCIS POSSIBLE VIA LA PROPRIETE PICTURES (tableau ou valeur NULL) */}
+        {/* <img src={data.pictures[0]} alt="Illustration Trek" /> */}
       </figure>
       <header>{data.titre}</header>
       <main>{data.description}</main>
