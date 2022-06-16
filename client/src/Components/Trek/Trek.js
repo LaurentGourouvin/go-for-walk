@@ -10,7 +10,7 @@ function Trek({ data }) {
         PENSEZ A GERER UN SOUCIS POSSIBLE VIA LA PROPRIETE PICTURES (tableau ou valeur NULL) */}
         {/* <img src={data.pictures[0]} alt="Illustration Trek" /> */}
       </figure>
-      <header>{data.titre}</header>
+      <header>{data.title}</header>
       <main>{data.description}</main>
       <footer>Bouton pour voir la Trek en détail</footer>
     </div>

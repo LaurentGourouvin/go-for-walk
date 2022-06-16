@@ -9,6 +9,7 @@ import Profil from '../Profil/Profil';
 import MyTreks from '../MyTreks/MyTreks';
 import SearchResults from '../SearchResults/SearchResults';
 import CreateTrekForm from '../CreateTrekForm/CreateTrekForm';
+import TrekDetails from '../TrekDetails/TrekDetails';
 
 function App() {
   const [token, setToken] = useState({});
@@ -26,6 +27,7 @@ function App() {
           <Route path="/MyTreks" element={<MyTreks />} />
           <Route path="/search" element={<SearchResults searchCity={searchCity} />} />
           <Route path="/trek/create" element={<CreateTrekForm token={token} />} />
+          <Route path="/trek/:id" element={<TrekDetails />} />
         </Routes>
       </div>
     </div>
