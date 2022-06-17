@@ -22,7 +22,7 @@ const controllerHandler = require('../../helpers/controllerHandler');
 const trekController = require('../../controllers/api/trek');
 const tokenController = require('../../helpers/tokenController');
 
-// const log = require('../../helpers/consolelog');
+const log = require('../../helpers/consolelog');
 
 const router = express.Router();
 
@@ -100,23 +100,23 @@ router
 /**
   * add new image :
   * @typedef {object} addImage
-  * @property {number} trek.id.required - trek id
+  * @property {number} id.path.required - trek id
   * @property {string} files - nouvelle image - binary
 */
 /**
- * POST /api/treks/addImage
+ * PUT /api/treks/addImage
  * @summary Add new image
  * @tags Images
  * @param {addImage} request.body.required - ajouter nouvelle image - multipart/form-data
  * @returns {object} 200 - Url of new image
 */
-  .post(upload.single('files'), controllerHandler(trekController.addImage));
+  .put(upload.single('files'), log(), controllerHandler(trekController.addImage));
 router
   .route('/:image')
 /**
   * Delete image from a trek :
   * @typedef {object} deleteImage
-  * @property {number} trek.id.required - trek id
+  * @property {number} id.path.required - trek id
   * @property {string} image.required - url de l'image
 */
 /**

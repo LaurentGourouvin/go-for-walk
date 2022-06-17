@@ -4,7 +4,7 @@ const difficulties = require('./difficulty.json');
 
 (async () => {
   const client = new Client({
-    connectionString: process.env.DATABASE_URL,
+    connectionString: 'postgres://goforwalk:goforwalk@localhost:5432/goforwalk',
   });
   await client.connect();
   await client.query('DELETE FROM "difficulty"');

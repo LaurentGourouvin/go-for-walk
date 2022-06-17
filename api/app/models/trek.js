@@ -18,7 +18,7 @@ module.exports = {
   async findByCity(trekCity) {
     const city = myfunction.uppercaseFirstLetter(trekCity);
     const result = await client.query('SELECT * FROM treks WHERE city = $1', [city]);
-    return result.rows[0];
+    return result.rows;
   },
 
   async update(trekId, trekData) {
@@ -44,7 +44,19 @@ module.exports = {
       fields.push(`"${key}"`);
       values.push(`$${values.length + 1}`);
     });
+    if (imagePath === null) {
+      const result = await client.query(`INSERT INTO treks (${fields}) VALUES (${values}) RETURNING *`, Object.values(trekData));
+      return result.rows[0];
+    }
     const result = await client.query(`INSERT INTO treks (${fields}, pictures) VALUES (${values}, '{${imagePath}}') RETURNING *`, Object.values(trekData));
+    return result.rows[0];
+  },
+
+  async addImage(trekData, urlImage) {
+    const newPictures = trekData.pictures;
+    newPictures.push(urlImage);
+    console.log(newPictures);
+    const result = await client.query(`UPDATE treks SET pictures = '{${newPictures}}' WHERE id = ${trekData.id} RETURNING *`);
     return result.rows[0];
   },
 };
