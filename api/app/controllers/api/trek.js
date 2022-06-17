@@ -52,7 +52,7 @@ module.exports = {
   async createTrek(req, res) {
     req.body.coordinate = `{${req.body.coordinate}}`;
     req.body.city = myFunction.uppercaseFirstLetter(req.body.city);
-    if (req.files) {
+    if (req.files.length > 0) {
       const imagePath = [];
       req.files.forEach((file) => {
         imagePath.push(`${process.env.API_ADRESS_VPS}uploads/${file.filename}`);
