@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './CreateTrekForm.scss';
 import PropTypes from 'prop-types';
-import jwtDecode from 'jwt-decode';
+// import jwtDecode from 'jwt-decode';
 import swal from 'sweetalert';
 import axios from 'axios';
 
@@ -15,11 +15,12 @@ function CreateTrekForm({ token }) {
   const [pictures, setPictures] = useState([]);
   const [difficultyId, setDifficultyId] = useState('');
 
-  const decodedToken = jwtDecode(token.access_token);
-  console.log(decodedToken);
+  // const decodedToken = jwtDecode(token.access_token);
+  // console.log(decodedToken);
   // const accessToken = token.access_token;
 
   // const { userId } = decodedToken;
+  console.log(token);
 
   return (
 
@@ -34,7 +35,9 @@ function CreateTrekForm({ token }) {
         dataPicture.push(document.getElementById('pictures').files[0]);
         dataCoordinate.push(parseInt(coordinate, 10));
 
-        // ESSAIE AVEC FORM DATA
+        // Mise en place d'un formData car envoie de fichier.
+        // L'envoi du fichier nous force à changer le content-type et l'encodage par défaut de notre formulaire.
+        // Côté Back l'utilisation de multer nous permet de leur envoyer les informations directement via un FormData
         const formData = new FormData();
         formData.append('title', title);
         formData.append('description', description);
@@ -42,10 +45,19 @@ function CreateTrekForm({ token }) {
         formData.append('duration', parseInt(duration, 10));
         formData.append('city', city);
         formData.append('coordinate', dataCoordinate);
-        formData.append('files', document.getElementById('pictures').files[0]);
         formData.append('user_id', 2);
         formData.append('difficulty_id', parseInt(difficultyId, 10));
 
+        // ajout de plusieurs fichier aux formData de façon dynamique
+        const tabPhoto = document.getElementById('pictures').files;
+        Object.entries(tabPhoto).forEach(
+          // eslint-disable-next-line no-unused-vars
+          ([key, value]) => {
+            formData.append('files', value);
+          },
+        );
+
+        // Communication à notre API afin d'envoyé la requête de création d'une randonnée
         axios.post(
           'http://141.94.207.7:8080/api/treks',
           formData,
@@ -158,15 +170,16 @@ function CreateTrekForm({ token }) {
             }}
           />
         </label>
-        <label className="CreateTrekForm-label" htmlFor="pictures">
+        <label className="CreateTrekForm-label " htmlFor="pictures">
           <span className="CreateTrekForm-label-text">Ajouter une photo de votre randonée :</span>
           <input
-            className="CreateTrekForm-input shadow-lg rounded-md"
+            className="CreateTrekForm-input label-photo shadow-lg rounded-md"
             placeholder="Photos de votre Randonnée "
             id="pictures"
             name="pictures"
             type="file"
             accept="images/png, images/jpeg"
+            multiple
             required
             value={pictures}
             onChange={(event) => {
