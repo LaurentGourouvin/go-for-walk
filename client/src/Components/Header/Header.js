@@ -2,9 +2,10 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import logo from './images/logo.png';
 import './Header.scss';
+import authentification from '../../utils/sessionUser/sessionUser';
 
-function Header({ setIsLogged, isLogged }) {
-  if (isLogged === false) {
+function Header({ token, setToken }) {
+  if (!token.access_token) {
     return (
       <div className="Header">
         <Link to="/">
@@ -22,12 +23,22 @@ function Header({ setIsLogged, isLogged }) {
     );
   }
   return (
+
     <div className="Header">
       <Link to="/">
         <h1 className="Header--website-title"><img className="Header--Logo" src={logo} alt="Go For Walk Logo Website" /></h1>
       </Link>
-      <h1 className="Header--website-burger">Burger</h1>
-      <Link to="/" className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline" onClick={() => setIsLogged(!isLogged)}> Deconnexion</Link>
+      <Link to="/trek/create" className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline"> Créer une Randonnée</Link>
+      {/* <Link to="/" className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline" onClick={() => setToken({})}> Deconnexion</Link> */}
+      <Link
+        to="/"
+        className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline"
+        onClick={() => {
+          setToken({});
+          authentification.disconnectUser();
+        }}
+      > Deconnexion
+      </Link>
       <Link to="/profil" className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline">Mon profil</Link>
       <Link to="/about" className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline">A propos</Link>
     </div>
@@ -36,8 +47,8 @@ function Header({ setIsLogged, isLogged }) {
 
 Header.propTypes = {
 
-  isLogged: PropTypes.bool.isRequired,
-  setIsLogged: PropTypes.func.isRequired,
+  token: PropTypes.object.isRequired,
+  setToken: PropTypes.func.isRequired,
 };
 
 export default Header;
