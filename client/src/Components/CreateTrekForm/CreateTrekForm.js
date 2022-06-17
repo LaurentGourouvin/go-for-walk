@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './CreateTrekForm.scss';
 import PropTypes from 'prop-types';
-import jwtDecode from 'jwt-decode';
+// import jwtDecode from 'jwt-decode';
 import swal from 'sweetalert';
 import axios from 'axios';
 
@@ -14,12 +14,27 @@ function CreateTrekForm({ token }) {
   const [coordinate, setCoordinate] = useState([]);
   const [pictures, setPictures] = useState([]);
   const [difficultyId, setDifficultyId] = useState('');
+  const [listCity, setListCity] = useState([]);
+  const [codePostal, setCodePostal] = useState('');
+  const [disableSelect, setDisableSelect] = useState(true);
 
-  const decodedToken = jwtDecode(token.access_token);
-  console.log(decodedToken);
+  const getCityNameByPostalCode = (sendCp) => {
+    // Vérification si le code postal contient bien 5 chiffres
+    axios.get(`https://geo.api.gouv.fr/communes?codePostal=${sendCp}`)
+      .then((res) => {
+        setListCity(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  // const decodedToken = jwtDecode(token.access_token);
+  // console.log(decodedToken);
   // const accessToken = token.access_token;
 
   // const { userId } = decodedToken;
+  console.log(token);
 
   return (
 
@@ -34,7 +49,9 @@ function CreateTrekForm({ token }) {
         dataPicture.push(document.getElementById('pictures').files[0]);
         dataCoordinate.push(parseInt(coordinate, 10));
 
-        // ESSAIE AVEC FORM DATA
+        // Mise en place d'un formData car envoie de fichier.
+        // L'envoi du fichier nous force à changer le content-type et l'encodage par défaut de notre formulaire.
+        // Côté Back l'utilisation de multer nous permet de leur envoyer les informations directement via un FormData
         const formData = new FormData();
         formData.append('title', title);
         formData.append('description', description);
@@ -42,10 +59,20 @@ function CreateTrekForm({ token }) {
         formData.append('duration', parseInt(duration, 10));
         formData.append('city', city);
         formData.append('coordinate', dataCoordinate);
-        formData.append('files', document.getElementById('pictures').files[0]);
         formData.append('user_id', 2);
         formData.append('difficulty_id', parseInt(difficultyId, 10));
 
+        console.log('Ville a envoyer au Back', city);
+        // ajout de plusieurs fichier aux formData de façon dynamique
+        const tabPhoto = document.getElementById('pictures').files;
+        Object.entries(tabPhoto).forEach(
+          // eslint-disable-next-line no-unused-vars
+          ([key, value]) => {
+            formData.append('files', value);
+          },
+        );
+
+        // Communication à notre API afin d'envoyé la requête de création d'une randonnée
         axios.post(
           'http://141.94.207.7:8080/api/treks',
           formData,
@@ -128,20 +155,58 @@ function CreateTrekForm({ token }) {
             }}
           />
         </label>
-        <label className="CreateTrekForm-label" htmlFor="city">
-          <span className="CreateTrekForm-label-text">Choisissez une Ville pour la randonnée :</span>
+        <label className="CreateTrekForm-label" htmlFor="cp">
+          <span className="CreateTrekForm-label-text">Saisir code postal:</span>
           <input
             className="CreateTrekForm-input shadow-lg rounded-md"
-            placeholder="Choissiez une Ville pour votre Randonnée"
-            id="city"
-            name="city"
+            placeholder="Saisir un code postal"
+            id="cp"
+            name="cp"
             type="text"
+            maxLength={5}
+            minLength={5}
             required
-            value={city}
+            value={codePostal}
             onChange={(event) => {
-              setCity(event.target.value);
+              setCodePostal(event.target.value);
+              // Vérification de la taille tu CP afin de consommer l'API via getCityNameByPostalCode()
+              if (event.target.value.length === 5) {
+                getCityNameByPostalCode(event.target.value);
+                setDisableSelect(!disableSelect);
+                console.log(listCity);
+              } else {
+                setDisableSelect(true);
+              }
             }}
           />
+        </label>
+        <label className="CreateTrekForm-label" htmlFor="city">
+          <span className="CreateTrekForm-label-text">Choisissez une Ville pour la randonnée :</span>
+
+          {/* Affichage conditionnel du select pour les villes  */}
+          {disableSelect ? (
+            <select name="city" id="city" disabled>
+              <option value="default">Sélectionner votre vilte</option>
+            </select>
+
+          ) : (
+
+            // Si disableSelect est false on affiche la selection des villes à l'utilisateur
+            <select
+              name="city"
+              id="city"
+              value={city}
+              onChange={(e) => {
+                setCity(e.target.value);
+              }}
+            >
+              <option value="default">Selectionner votre ville</option>
+              {console.log(listCity)}
+              {listCity.map((oneCity) => (<option key={oneCity.code} value={oneCity.nom}>{oneCity.nom}</option>))}
+
+            </select>
+          )}
+
         </label>
         <label className="CreateTrekForm-label" htmlFor="coordinate">
           <span className="CreateTrekForm-label-text">Saississez des Coordonnées pour la randonnée :</span>
@@ -158,15 +223,16 @@ function CreateTrekForm({ token }) {
             }}
           />
         </label>
-        <label className="CreateTrekForm-label" htmlFor="pictures">
+        <label className="CreateTrekForm-label " htmlFor="pictures">
           <span className="CreateTrekForm-label-text">Ajouter une photo de votre randonée :</span>
           <input
-            className="CreateTrekForm-input shadow-lg rounded-md"
+            className="CreateTrekForm-input label-photo shadow-lg rounded-md"
             placeholder="Photos de votre Randonnée "
             id="pictures"
             name="pictures"
             type="file"
             accept="images/png, images/jpeg"
+            multiple
             required
             value={pictures}
             onChange={(event) => {
