@@ -25,6 +25,7 @@ function CreateTrekForm({ token }) {
 
     <form
       className="CreateTrekForm"
+      encType="multipart/form-data"
       onSubmit={(event) => {
         event.preventDefault();
         // console.log(token);
@@ -32,16 +33,6 @@ function CreateTrekForm({ token }) {
         const dataCoordinate = [];
         dataPicture.push(document.getElementById('pictures').files[0]);
         dataCoordinate.push(parseInt(coordinate, 10));
-        console.log('file ?:', document.getElementById('pictures').files[0]);
-        console.log('title: ', title);
-        console.log('description:', description);
-        console.log('distance:', parseInt(distance, 10));
-        console.log('duration:', parseInt(duration, 10));
-        console.log('city', city);
-        console.log('coordinate', dataCoordinate);
-        console.log('pictures', dataPicture);
-        console.log('user_id:', 2);
-        console.log('difficulty_Id:', parseInt(difficultyId, 10));
 
         // ESSAIE AVEC FORM DATA
         const formData = new FormData();
@@ -51,9 +42,9 @@ function CreateTrekForm({ token }) {
         formData.append('duration', parseInt(duration, 10));
         formData.append('city', city);
         formData.append('coordinate', dataCoordinate);
-        formData.append('pictures', document.getElementById('pictures').files[0]);
+        formData.append('files', document.getElementById('pictures').files[0]);
         formData.append('user_id', 2);
-        formData.append('difficulty_Id', parseInt(difficultyId, 10));
+        formData.append('difficulty_id', parseInt(difficultyId, 10));
 
         axios.post(
           'http://141.94.207.7:8080/api/treks',
@@ -63,18 +54,6 @@ function CreateTrekForm({ token }) {
               'content-type': 'multipart/form-data',
             },
           },
-          // {
-          //   // MODIFIER LE USER ID POUR QU'IL SOIT DYNAMIQUE
-          //   title: title,
-          //   description: description,
-          //   distance: distance,
-          //   duration: duration,
-          //   city: city,
-          //   coordinate: [coordinate],
-          //   pictures: dataPicture,
-          //   user_id: 2,
-          //   difficulty_Id: parseInt(difficultyId, 10),
-          // },
 
         )
           .then((res) => {
@@ -82,7 +61,6 @@ function CreateTrekForm({ token }) {
             swal('Randonnée Créée', 'success');
           })
           .catch((error) => {
-            alert(JSON.stringify(formData));
             swal('Cela na pas marché');
             console.log(error);
           });
