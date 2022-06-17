@@ -1,4 +1,5 @@
 const trekDataMapper = require('../../models/trek');
+const myFunction = require('../../helpers/functions');
 
 module.exports = {
   async getAll(req, res) {
@@ -50,10 +51,8 @@ module.exports = {
 
   async createTrek(req, res) {
     req.body.coordinate = `{${req.body.coordinate}}`;
-    console.log(req.file);
-    console.log(req.body);
-    const imagePath = `http://localhost:8080/api/${req.file.path}`;
-    console.log(imagePath);
+    req.body.city = myFunction.uppercaseFirstLetter(req.body.city);
+    const imagePath = `${process.env.API_ADRESS_VPS}${req.file.path}`;
     const trek = await trekDataMapper.create(req.body, imagePath);
     return res.json(trek);
   },
