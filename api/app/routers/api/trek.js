@@ -16,11 +16,13 @@ const upload = multer({ storage });
 
 const validate = require('../../validation/validator');
 
-// const createSchema = require('../../validation/schemas/treksCreateSchema');
-const updateSchema = require('../../validation/schemas/usersUpdateSchema');
+const createSchema = require('../../validation/schemas/treksCreateSchema');
+const updateSchema = require('../../validation/schemas/treksUpdateSchema');
 const controllerHandler = require('../../helpers/controllerHandler');
 const trekController = require('../../controllers/api/trek');
 const tokenController = require('../../helpers/tokenController');
+
+// const log = require('../../helpers/consolelog');
 
 const router = express.Router();
 
@@ -52,7 +54,7 @@ router
      * @param {Trek} request.body.required - trek info - multipart/form-data
      * @return {object} 200 - the new trek
      */
-  .post(upload.array('files', 5), controllerHandler(trekController.createTrek));
+  .post(upload.array('files', 5), validate('body', createSchema), controllerHandler(trekController.createTrek));
 
 router
   .route('/:id(\\d+)')
@@ -92,4 +94,37 @@ router
  * @returns {object} 200 - An array of treks
 */
   .get(controllerHandler(trekController.getByCity));
+
+router
+  .route('/addImage')
+/**
+  * add new image :
+  * @typedef {object} addImage
+  * @property {number} trek.id.required - trek id
+  * @property {string} files - nouvelle image - binary
+*/
+/**
+ * POST /api/treks/addImage
+ * @summary Add new image
+ * @tags Images
+ * @param {addImage} request.body.required - ajouter nouvelle image - multipart/form-data
+ * @returns {object} 200 - Url of new image
+*/
+  .post(upload.single('files'), controllerHandler(trekController.addImage));
+router
+  .route('/:image')
+/**
+  * Delete image from a trek :
+  * @typedef {object} deleteImage
+  * @property {number} trek.id.required - trek id
+  * @property {string} image.required - url de l'image
+*/
+/**
+ * DELETE /api/treks/{image}
+ * @summary Delete one image
+ * @tags Images
+ * @param {deleteImage} request.body.required - trek info
+ * @returns {object} 200 - Name of delete image
+*/
+  .delete(controllerHandler(trekController.deleteImage));
 module.exports = router;
