@@ -7,6 +7,7 @@ import jwtDecode from 'jwt-decode';
 // import data from '../../dataStatic/data_profil';
 import authentification from '../../utils/sessionUser/sessionUser';
 import ImageWarning from './images/warning.png';
+import Map from '../Map/Map';
 
 function Profil({ token }) {
   const isLogged = authentification.checkLoggin(token);
@@ -64,6 +65,7 @@ function Profil({ token }) {
           </div>
         </div>
       </div>
+      <Map />
     </>
   );
 }
