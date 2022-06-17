@@ -14,6 +14,20 @@ function CreateTrekForm({ token }) {
   const [coordinate, setCoordinate] = useState([]);
   const [pictures, setPictures] = useState([]);
   const [difficultyId, setDifficultyId] = useState('');
+  const [listCity, setListCity] = useState([]);
+  const [codePostal, setCodePostal] = useState('');
+  const [disableSelect, setDisableSelect] = useState(true);
+
+  const getCityNameByPostalCode = (sendCp) => {
+    // Vérification si le code postal contient bien 5 chiffres
+    axios.get(`https://geo.api.gouv.fr/communes?codePostal=${sendCp}`)
+      .then((res) => {
+        setListCity(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   // const decodedToken = jwtDecode(token.access_token);
   // console.log(decodedToken);
@@ -48,6 +62,7 @@ function CreateTrekForm({ token }) {
         formData.append('user_id', 2);
         formData.append('difficulty_id', parseInt(difficultyId, 10));
 
+        console.log('Ville a envoyer au Back', city);
         // ajout de plusieurs fichier aux formData de façon dynamique
         const tabPhoto = document.getElementById('pictures').files;
         Object.entries(tabPhoto).forEach(
@@ -140,20 +155,58 @@ function CreateTrekForm({ token }) {
             }}
           />
         </label>
-        <label className="CreateTrekForm-label" htmlFor="city">
-          <span className="CreateTrekForm-label-text">Choisissez une Ville pour la randonnée :</span>
+        <label className="CreateTrekForm-label" htmlFor="cp">
+          <span className="CreateTrekForm-label-text">Saisir code postal:</span>
           <input
             className="CreateTrekForm-input shadow-lg rounded-md"
-            placeholder="Choissiez une Ville pour votre Randonnée"
-            id="city"
-            name="city"
+            placeholder="Saisir un code postal"
+            id="cp"
+            name="cp"
             type="text"
+            maxLength={5}
+            minLength={5}
             required
-            value={city}
+            value={codePostal}
             onChange={(event) => {
-              setCity(event.target.value);
+              setCodePostal(event.target.value);
+              // Vérification de la taille tu CP afin de consommer l'API via getCityNameByPostalCode()
+              if (event.target.value.length === 5) {
+                getCityNameByPostalCode(event.target.value);
+                setDisableSelect(!disableSelect);
+                console.log(listCity);
+              } else {
+                setDisableSelect(true);
+              }
             }}
           />
+        </label>
+        <label className="CreateTrekForm-label" htmlFor="city">
+          <span className="CreateTrekForm-label-text">Choisissez une Ville pour la randonnée :</span>
+
+          {/* Affichage conditionnel du select pour les villes  */}
+          {disableSelect ? (
+            <select name="city" id="city" disabled>
+              <option value="default">Sélectionner votre vilte</option>
+            </select>
+
+          ) : (
+
+            // Si disableSelect est false on affiche la selection des villes à l'utilisateur
+            <select
+              name="city"
+              id="city"
+              value={city}
+              onChange={(e) => {
+                setCity(e.target.value);
+              }}
+            >
+              <option value="default">Selectionner votre ville</option>
+              {console.log(listCity)}
+              {listCity.map((oneCity) => (<option key={oneCity.code} value={oneCity.nom}>{oneCity.nom}</option>))}
+
+            </select>
+          )}
+
         </label>
         <label className="CreateTrekForm-label" htmlFor="coordinate">
           <span className="CreateTrekForm-label-text">Saississez des Coordonnées pour la randonnée :</span>
