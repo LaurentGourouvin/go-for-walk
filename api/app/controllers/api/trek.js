@@ -52,7 +52,16 @@ module.exports = {
   async createTrek(req, res) {
     req.body.coordinate = `{${req.body.coordinate}}`;
     req.body.city = myFunction.uppercaseFirstLetter(req.body.city);
-    const imagePath = `${process.env.API_ADRESS_VPS}${req.file.path}`;
+    if (req.files) {
+      const imagePath = [];
+      req.files.forEach((file) => {
+        imagePath.push(`${process.env.API_ADRESS_VPS}uploads/${file.filename}`);
+      });
+      const trek = await trekDataMapper.create(req.body, imagePath);
+      return res.json(trek);
+    }
+    delete req.body.files;
+    const imagePath = '';
     const trek = await trekDataMapper.create(req.body, imagePath);
     return res.json(trek);
   },
