@@ -31,8 +31,8 @@ function SearchResults({ searchCity }) {
         axios.get(`http://141.94.207.7:8080/api/treks/${searchCity}`)
           .then((res) => {
             const { data } = res;
-            dataArray.push(data);
-            setSearchResult(dataArray);
+            // dataArray.push(data);
+            setSearchResult(data);
           });
       } catch (err) {
         console.log(err);
@@ -54,8 +54,8 @@ function SearchResults({ searchCity }) {
       </div>
       <div className="SearchResults-cardContainer">
         {console.log('affichage de mon state', searchResult)}
-        {searchResult.length > 0
-          ? searchResult.map((result) => <Trek key={result.id} data={result} />) : ''}
+        {searchResult.length === 0
+          ? '' : searchResult.map((result) => <Trek key={result.id} data={result} />)}
       </div>
     </div>
   );

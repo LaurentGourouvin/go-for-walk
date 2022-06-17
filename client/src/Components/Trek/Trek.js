@@ -6,7 +6,8 @@ function Trek({ data }) {
   return (
     <div className="Trek">
       <figure className="imgTrek">
-        <img src={data.pictures[0]} alt="Illustration Trek" />
+        {data.pictures ? <img src={data.pictures[0]} alt="Illustration Trek" /> : <img src="" alt="Illustration Trek" /> }
+        {/* <img src={data.pictures[0]} alt="Illustration Trek" /> */}
       </figure>
       <header>{data.title}</header>
       <main>{data.description}</main>
