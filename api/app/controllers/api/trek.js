@@ -49,7 +49,12 @@ module.exports = {
   },
 
   async createTrek(req, res) {
-    const trek = await trekDataMapper.create(req.body);
+    req.body.coordinate = `{${req.body.coordinate}}`;
+    console.log(req.file);
+    console.log(req.body);
+    const imagePath = `http://localhost:8080/api/${req.file.path}`;
+    console.log(imagePath);
+    const trek = await trekDataMapper.create(req.body, imagePath);
     return res.json(trek);
   },
 };

@@ -37,14 +37,14 @@ module.exports = {
     return result.rows[0];
   },
 
-  async create(trekData) {
+  async create(trekData, imagePath) {
     const fields = [];
     const values = [];
     Object.keys(trekData).forEach((key) => {
       fields.push(`"${key}"`);
       values.push(`$${values.length + 1}`);
     });
-    const result = await client.query(`INSERT INTO treks (${fields}) VALUES (${values}) RETURNING *`, Object.values(trekData));
+    const result = await client.query(`INSERT INTO treks (${fields}, pictures) VALUES (${values}, '{${imagePath}}') RETURNING *`, Object.values(trekData));
     return result.rows[0];
   },
 };
