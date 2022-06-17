@@ -52,8 +52,11 @@ module.exports = {
   async createTrek(req, res) {
     req.body.coordinate = `{${req.body.coordinate}}`;
     req.body.city = myFunction.uppercaseFirstLetter(req.body.city);
-    if (req.file) {
-      const imagePath = `${process.env.API_ADRESS_LOCAL}${req.file.path}`;
+    if (req.files) {
+      const imagePath = [];
+      req.files.forEach((file) => {
+        imagePath.push(`${process.env.API_ADRESS_VPS}uploads/${file.filename}`);
+      });
       const trek = await trekDataMapper.create(req.body, imagePath);
       return res.json(trek);
     }

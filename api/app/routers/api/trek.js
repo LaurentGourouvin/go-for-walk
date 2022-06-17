@@ -7,7 +7,8 @@ const storage = multer.diskStorage({
     cb(null, './uploads');
   },
   filename: (req, file, cb) => {
-    cb(null, file.originalname);
+    const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1E9)}`;
+    cb(null, `${uniqueSuffix}_${file.originalname}`);
   },
 });
 
@@ -51,7 +52,7 @@ router
      * @param {Trek} request.body.required - trek info - multipart/form-data
      * @return {object} 200 - the new trek
      */
-  .post(upload.single('files'), controllerHandler(trekController.createTrek));
+  .post(upload.array('files', 5), controllerHandler(trekController.createTrek));
 
 router
   .route('/:id(\\d+)')
