@@ -1,10 +1,7 @@
 import { useEffect, useState } from 'react';
 import './Profil.scss';
-// data static pour conception du composant
 import PropTypes from 'prop-types';
-// import axios from 'axios';
 import jwtDecode from 'jwt-decode';
-// import data from '../../dataStatic/data_profil';
 import swal from 'sweetalert';
 import authentification from '../../utils/sessionUser/sessionUser';
 import ImageWarning from './images/warning.png';
@@ -20,12 +17,14 @@ function Profil({ token }) {
       <p className="msg-error p-2 bg-amber-50 rounded-md shadow-md"><img src={ImageWarning} alt="logo de warning" />Vous devez être connecté pour accéder à la page profil</p>
     );
   }
+  // State initial du composant
   const [name, setName] = useState('');
   const [firstName, setFirstName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [updateForm, setUpdateForm] = useState(false);
 
+  // State pour les informations relatives à l'update des données
   const [updateName, setUpdateName] = useState('');
   const [updateFirstName, setUpdateFirstName] = useState('');
   const [updateEmail, setUpdateEmail] = useState('');
@@ -33,6 +32,8 @@ function Profil({ token }) {
 
   let decodedToken = null;
   let userId = null;
+
+  // Fonction lors de la soumission du formulaire
   const handleUpdateForm = async (e) => {
     e.preventDefault();
     if (token) {
@@ -67,8 +68,13 @@ function Profil({ token }) {
         const userUpdate = await api.updateUser(updateFirstName, updateName, updatePassword, updateEmail, userId, token);
         if (userUpdate.status === 200) {
           swal({
-            title: 'Mise à jour',
+            title: 'Mise à jour effectuée',
             icon: 'success',
+          });
+        } else {
+          swal({
+            title: 'Problème lors de la mise à jour des données',
+            icon: 'error',
           });
         }
       } catch (error) {
@@ -123,62 +129,83 @@ function Profil({ token }) {
             <div className="Profil-Informations-Card m-7 p-6 max-w-sm bg-white/[.9] rounded-lg border border-white shadow-md dark:bg-gray-800 dark:border-gray-700 hover:shadow-lg">
               {!updateForm && (
               <>
-                <p>adresse mail {email}</p>
-                <p>nom: {name}</p>
-                <p>prenom: {firstName}</p>
+                <h2 className="Profil-informations-h2">Adresse Email</h2>
+                <hr />
+                <p className="Profil-informations-description">{email}</p>
+                <h2 className="Profil-informations-h2">Nom</h2>
+                <hr />
+                <p className="Profil-informations-description">{name}</p>
+                <h2 className="Profil-informations-h2">Prénom</h2>
+                <hr />
+                <p className="Profil-informations-description">{firstName}</p>
               </>
               )}
 
               {updateForm && (
               <form className="Profil-form" onSubmit={handleUpdateForm}>
-                <label className="" htmlFor="email">
-                  <span>Email:</span>
+                <label className="Profil-label" htmlFor="email">
+                  <span className="Profil-span">Email:</span>
                   <input
-                    className="Profil-input"
+                    className="Profil-input shadow-lg rounded-md"
                     placeholder={email}
                     type="email"
                     value={updateEmail}
                     onChange={handleChangeUpdateEmail}
                   />
                 </label>
-                <label className="" htmlFor="password">
-                  <span>Password:</span>
+                <label className="Profil-label" htmlFor="password">
+                  <span className="Profil-span">Password:</span>
                   <input
                     id="password"
                     name="password"
-                    className="Profil-input"
+                    className="Profil-input shadow-lg rounded-md"
                     placeholder={password}
                     type="password"
                     value={updatePassword}
                     onChange={handleChangeUpdatePassword}
                   />
                 </label>
-                <label className="" htmlFor="name">
-                  <span>Name:</span>
+                <label className="Profil-label" htmlFor="name">
+                  <span className="Profil-span">Name:</span>
                   <input
                     id="name"
                     name="name"
-                    className="Profil-input"
+                    className="Profil-input shadow-lg rounded-md"
                     placeholder={name}
                     type="text"
                     value={updateName}
                     onChange={handleChangeUpdateName}
                   />
                 </label>
-                <label className="" htmlFor="firstname">
-                  <span>Firstname:</span>
+                <label className="Profil-label" htmlFor="firstname">
+                  <span className="Profil-span">Firstname:</span>
                   <input
                     id="firstname"
                     name="firstname"
-                    className="Profil-input"
+                    className="Profil-input shadow-lg rounded-md"
                     placeholder={firstName}
                     type="text"
                     value={updateFirstName}
                     onChange={handleChangeUpdateFirstName}
                   />
                 </label>
-                <button type="submit">Confirmer la mise à jour</button>
-                <button type="button" onClick={() => setUpdateForm(!updateForm)}>Annuler la mise à jour</button>
+                <div className="Profil-buttons-group">
+                  <button className="bg-stone-500 text-white active:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Confirmer la mise à jour</button>
+                  <button
+                    className="bg-stone-500 text-white active:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    type="button"
+                    onClick={() => {
+                      setUpdateForm(!updateForm);
+                      setUpdateName('');
+                      setUpdatePassword('');
+                      setUpdateFirstName('');
+                      setUpdateEmail('');
+                    }}
+                  >
+                    Annuler la mise à jour
+                  </button>
+                </div>
+
               </form>
               )}
 
