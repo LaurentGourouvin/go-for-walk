@@ -1,6 +1,5 @@
 const trekDataMapper = require('../../models/trek');
 const myFunction = require('../../helpers/functions');
-const { findByPk } = require('../../models/trek');
 
 module.exports = {
   async getAll(req, res) {
@@ -70,9 +69,20 @@ module.exports = {
   },
 
   async addImage(req, res) {
-    const trekToUpdate = await findByPk(req.body.id);
+    const trekToUpdate = await trekDataMapper.findByPk(req.body.id);
     const newImage = `${process.env.API_ADRESS_LOCAL}uploads/${req.file.filename}`;
     const trek = await trekDataMapper.addImage(trekToUpdate, newImage);
     return res.json(trek);
+  },
+
+  async deleteImage(req, res) {
+    const trekToUpdate = await trekDataMapper.findByPk(req.body.id);
+    const trek = await trekDataMapper.deleteImage(trekToUpdate, req.body.image);
+    return res.json(trek);
+  },
+
+  async getTreksByUser(req, res) {
+    const trekUserId = await trekDataMapper.findByUserPk(req.params.id);
+    return res.json(trekUserId);
   },
 };
