@@ -17,10 +17,6 @@ const api = {
         email: email,
         password: password,
       });
-      if (login.data) {
-        axiosInstance.defaults.headers.common.Authorization = `bearer ${login.data.access_token}`;
-      }
-
       return login;
     } catch (error) {
       console.error(error);
@@ -111,6 +107,20 @@ const api = {
     return resultUpdate;
   },
 
+  /**
+   *
+   * @param {*} userId ID de l'utilisateur à rechercher dans la base de données
+   * @returns Retourne les informations de l'utilisateur
+   */
+  async getUser(userId) {
+    let resultUser = null;
+    try {
+      resultUser = axiosInstance.get(`/users/${userId}`);
+    } catch (error) {
+      console.error(error);
+    }
+    return resultUser;
+  },
 };
 
 export default api;

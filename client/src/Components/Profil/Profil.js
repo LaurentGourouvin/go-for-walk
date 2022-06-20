@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './Profil.scss';
 // data static pour conception du composant
 import PropTypes from 'prop-types';
-import axios from 'axios';
+// import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 // import data from '../../dataStatic/data_profil';
 import swal from 'sweetalert';
@@ -98,15 +98,16 @@ function Profil({ token }) {
         decodedToken = jwtDecode(token.access_token);
         userId = decodedToken.userId;
       }
-      axios.get(`http://141.94.207.7:8080/api/users/${userId}`)
-        .then((res) => {
-          const { data } = res;
-          console.log(data);
-          setEmail(data.email);
-          setName(data.name);
-          setFirstName(data.firstname);
-          setPassword(data.password);
-        });
+      const getUser = async (id) => {
+        const user = await api.getUser(id);
+        if (user) {
+          setEmail(user.data.email);
+          setName(user.data.name);
+          setFirstName(user.data.firstname);
+          setPassword(user.data.password);
+        }
+      };
+      getUser(userId);
     } catch (err) {
       console.log(err);
     }
