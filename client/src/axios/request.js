@@ -50,6 +50,7 @@ const api = {
   },
 
   // REQUETES SUR LES TREKS
+  // =========================
   /**
    *
    * @returns Retourne la liste de toutes les randonnées stockées dans la base de données
@@ -92,6 +93,22 @@ const api = {
       console.error(error);
     }
     return treksByUserId;
+  },
+
+  /**
+   *
+   * @param {*} trekId ID de la randonnée que la fonction va supprimer de la base de données
+   * @returns Retourne l'état de suppression de la randonnée
+   */
+  async deleteTrek(trekId, token) {
+    let deleteTrek = null;
+    axiosInstance.defaults.headers.common.access_token = `${token.access_token}`;
+    try {
+      deleteTrek = await axiosInstance.delete(`/treks/${trekId}`);
+    } catch (error) {
+      console.error(error);
+    }
+    return deleteTrek;
   },
   // REQUETES SUR LES USERS
   /**
