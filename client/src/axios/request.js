@@ -83,6 +83,34 @@ const api = {
     return treksByCity;
   },
 
+  // REQUETES SUR LES USERS
+  /**
+   *
+   * @param {*} firstname le nom de l'utilisateur à modifier
+   * @param {*} name le prénom de l'utilisateur à modifier
+   * @param {*} password la password de l'utilisateur à modifier
+   * @param {*} email l'email de l'utilisateur à modifier
+   * @param {*} userId l'id de l'utilisateur
+   * @returns retourne les nouvelles informations de l'utilisateur
+   */
+  async updateUser(firstname, name, password, email, userId, token) {
+    let resultUpdate = null;
+    // voir plus tard avec le Back si on utilise le mot "Bearer"
+    // Mise en place du TOKEN dans le header de notre requête
+    axiosInstance.defaults.headers.common.access_token = `${token.access_token}`;
+    try {
+      resultUpdate = await axiosInstance.put(`/users/${userId}`, {
+        firstname,
+        name,
+        password,
+        email,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+    return resultUpdate;
+  },
+
 };
 
 export default api;
