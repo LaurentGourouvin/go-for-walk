@@ -25,7 +25,7 @@ function App() {
           <Route path="/register" element={<RegisterForm />} />
           <Route path="/profil" element={<Profil token={token} />} />
           <Route path="/MyTreks" element={<MyTreks token={token} />} />
-          <Route path="/search" element={<SearchResults searchCity={searchCity} />} />
+          <Route path="/search" element={<SearchResults searchCity={searchCity} token={token} />} />
           <Route path="/trek/create" element={<CreateTrekForm token={token} />} />
           <Route path="/trek/:id" element={<TrekDetails />} />
         </Routes>
