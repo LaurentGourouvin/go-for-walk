@@ -1,10 +1,11 @@
 import './LoginForm.scss';
 import { useState } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import swal from 'sweetalert';
+// import swal from 'sweetalert';
 import authentification from '../../utils/sessionUser/sessionUser';
+import api from '../../axios/request';
 
 function LoginForm({ setToken }) {
   const [email, setEmail] = useState('');
@@ -16,27 +17,24 @@ function LoginForm({ setToken }) {
     setEmail('');
     setPassword('');
   };
-  // CODER L'APPEL A l'API -->
+
   return (
 
     <form
       className="LoginForm"
-      onSubmit={(event) => {
+      onSubmit={async (event) => {
         event.preventDefault();
-
-        axios.post('http://141.94.207.7:8080/api/auth/login', { email: email, password: password })
-          .then((res) => {
-            const token = res.data;
-            setToken(token);
+        try {
+          const { data } = await api.login(email, password);
+          if (data) {
+            setToken(data);
             // on défini si l'utilisateur est connecté ou non dans le local storage
-            authentification.setLoggin(token);
-
+            authentification.setLoggin(data);
             navigate('/profil');
-          })
-          .catch((error) => {
-            swal('Votre Email ou votre Mot de passe est incorrect');
-            console.log(error);
-          });
+          }
+        } catch (error) {
+          console.error(error);
+        }
       }}
     >
       <div className="LoginForm-main-form">
