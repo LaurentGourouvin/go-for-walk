@@ -1,11 +1,13 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import './TrekDetails.scss';
 
 function TrekDetails() {
   const { id } = useParams();
   const [trekData, setTrekData] = useState({});
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     try {
@@ -22,7 +24,7 @@ function TrekDetails() {
   return (
 
     <div className="TrekDetails">
-      <button className="TrekDetails-button bg-stone-500 text-white active:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">Retour au résultats de la recherche</button>
+      <button className="TrekDetails-button bg-stone-500 text-white active:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button" onClick={() => { navigate(-1); }}>Retour au résultats de la recherche</button>
       <div className="main">
         <div className="TrekDetails-container-head">
           <div className="TrekDetails-container-head-left">

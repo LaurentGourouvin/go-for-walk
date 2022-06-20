@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import './Trek.scss';
+import { Link } from 'react-router-dom';
 
 function Trek({ data }) {
   console.log('Data dans TREK composant:', data);
@@ -11,7 +12,9 @@ function Trek({ data }) {
       </figure>
       <header>{data.title}</header>
       <main>{data.description}</main>
-      <footer>Bouton pour voir la Trek en détail</footer>
+      <Link to={`/trek/${data.id}`}>
+        <footer>Bouton pour voir la Trek en détail</footer>
+      </Link>
     </div>
   );
 }
