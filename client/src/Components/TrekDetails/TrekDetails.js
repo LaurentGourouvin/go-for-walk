@@ -6,6 +6,7 @@ import './TrekDetails.scss';
 function TrekDetails() {
   const { id } = useParams();
   const [trekData, setTrekData] = useState({});
+  const [trekDataPictures, setTrekDataPictures] = useState([]);
 
   const navigate = useNavigate();
 
@@ -15,6 +16,7 @@ function TrekDetails() {
         .then((res) => {
           const { data } = res;
           setTrekData(data);
+          setTrekDataPictures(res.data.pictures);
         });
     } catch (err) {
       console.log(err);
@@ -50,7 +52,7 @@ function TrekDetails() {
         </div>
         <div className="TrekDetails-container-main">
           <div className="TrekDetails-container-img">
-            <img className="TrekDetails-img" src="" alt="La-Randonnée" />
+            { trekDataPictures.map((picture) => <img src={picture} alt={picture} />)}
           </div>
           <p className="TrekDetails-description">
             {trekData.description}
