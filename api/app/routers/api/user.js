@@ -1,5 +1,29 @@
 const express = require('express');
 
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './uploads');
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1E9)}`;
+    cb(null, `${uniqueSuffix}_${file.originalname}`);
+  },
+});
+
+const upload = multer({
+  storage,
+  fileFilter(req, file, cb) {
+    if ((file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpg' || file.mimetype === 'image/png')) {
+      return cb(null, true);
+    }
+    return cb(new Error('Format supported is only .png, .jpg and .jpeg '));
+  },
+});
+
+const log = require('../../helpers/consolelog');
+
 const validate = require('../../validation/validator');
 const updateSchema = require('../../validation/schemas/usersUpdateSchema');
 
@@ -18,6 +42,7 @@ router
      * @property {string} name - user lastname
      * @property {string} email - user email
      * @property {string} password - user password
+     * @property {string} files - profil picture - binary
  */
 /**
      * GET /api/users
@@ -41,9 +66,10 @@ router
      * @summary Update one user
      * @tags Users
      * @param {number} id.path.required - user identifier
-     * @param {updateUser} request.body.required - user info
+     * @param {updateUser} request.body.required - user info - multipart/form-data
+     * @return {object} 200 - Utilisateur mis à jour
      */
-  .put(validate('body', updateSchema), tokenController(), controllerHandler(userController.updateUser))
+  .put(upload.single('files'), log(), validate('body', updateSchema), controllerHandler(userController.updateUser))
 /**
  * DELETE /api/users/{id}
  * @summary Delete one user

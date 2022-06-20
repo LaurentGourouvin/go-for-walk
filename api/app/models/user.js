@@ -19,7 +19,7 @@ module.exports = {
       fields.push(`${key} = $${1 + fields.length}`);
       values.push(user[key]);
     });
-    const result = await client.query(`UPDATE users SET ${fields} WHERE id = ${userId}`, values);
+    const result = await client.query(`UPDATE users SET ${fields} WHERE id = ${userId} RETURNING *`, values);
     return result.rows[0];
   },
 
