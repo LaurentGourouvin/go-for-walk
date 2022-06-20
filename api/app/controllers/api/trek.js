@@ -85,4 +85,13 @@ module.exports = {
     const trekUserId = await trekDataMapper.findByUserPk(req.params.id);
     return res.json(trekUserId);
   },
+
+  async checkMaxImage(req, res, next) {
+    const trekToCheck = await trekDataMapper.findByPk(req.params.id);
+    const myArray = trekToCheck.pictures;
+    if (myArray.length < 5) {
+      next();
+    }
+    res.send('You can not add more than 5 images');
+  },
 };

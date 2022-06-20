@@ -1,6 +1,7 @@
 const express = require('express');
-
 const multer = require('multer');
+const controllerHandler = require('../../helpers/controllerHandler');
+const trekController = require('../../controllers/api/trek');
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -26,11 +27,10 @@ const validate = require('../../validation/validator');
 
 const createSchema = require('../../validation/schemas/treksCreateSchema');
 const updateSchema = require('../../validation/schemas/treksUpdateSchema');
-const controllerHandler = require('../../helpers/controllerHandler');
-const trekController = require('../../controllers/api/trek');
+
 const tokenController = require('../../helpers/tokenController');
 
-const log = require('../../helpers/consolelog');
+// const log = require('../../helpers/consolelog');
 
 const router = express.Router();
 
@@ -104,21 +104,21 @@ router
   .get(controllerHandler(trekController.getByCity));
 
 router
-  .route('/addImage')
+  .route('/addImage/:id(\\d+)')
 /**
   * add new image :
   * @typedef {object} addImage
-  * @property {number} id.path.required - trek id
   * @property {string} files - nouvelle image - binary
 */
 /**
- * PUT /api/treks/addImage
+ * PUT /api/treks/addImage/{id}
  * @summary Add new image
  * @tags Images
+ * @param {number} id.path.required - trek identifier
  * @param {addImage} request.body.required - ajouter nouvelle image - multipart/form-data
  * @returns {object} 200 - Url of new image
 */
-  .put(upload.single('files'), log(), controllerHandler(trekController.addImage));
+  .put(controllerHandler(trekController.checkMaxImage), upload.single('files'), controllerHandler(trekController.addImage));
 router
   .route('/deleteImage')
 /**
