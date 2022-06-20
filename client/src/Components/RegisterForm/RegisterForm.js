@@ -82,7 +82,7 @@ function RegisterForm() {
             placeholder="Votre mot de passe"
             id="password"
             name="password"
-            type="text"
+            type="password"
             required
             value={password}
             onChange={(event) => {
@@ -97,7 +97,7 @@ function RegisterForm() {
             placeholder="Confirmer votre mot de passe"
             id="confirmPassword"
             name="confirmPassword"
-            type="text"
+            type="password"
             required
             value={confirmPassword}
             onChange={(event) => {
