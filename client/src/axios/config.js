@@ -1,9 +1,7 @@
 import axios from 'axios';
 
-export const axiosInstance = axios.create({
-  baseURL: 'http://141.94.207.7:8080/',
+const axiosInstance = axios.create({
+  baseURL: 'http://141.94.207.7:8080/api',
 });
 
-export const axiosInstanceAuth = axios.create({
-  baseURL: 'http://141.94.207.7:8080/auth',
-});
+export default axiosInstance;
