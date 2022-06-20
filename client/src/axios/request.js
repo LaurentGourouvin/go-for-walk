@@ -79,6 +79,20 @@ const api = {
     return treksByCity;
   },
 
+  /**
+   *
+   * @param {*} userId ID de l'utilistaeur permettant de récupérer les randonnées créer par cet utilisateur
+   * @returns Retourne la liste des randonées crées par cet utilisateur
+   */
+  async getTreksByUserId(userId) {
+    let treksByUserId = null;
+    try {
+      treksByUserId = await axiosInstance.get(`/treks/user/${userId}`);
+    } catch (error) {
+      console.error(error);
+    }
+    return treksByUserId;
+  },
   // REQUETES SUR LES USERS
   /**
    *
