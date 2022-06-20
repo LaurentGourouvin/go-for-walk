@@ -1,9 +1,7 @@
 import './MyTreks.scss';
-// import de la data Statique
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import jwtDecode from 'jwt-decode';
-// import data from '../../dataStatic/data_treks';
 import Trek from '../Trek/Trek';
 import authentification from '../../utils/sessionUser/sessionUser';
 import ImageWarning from './images/warning.png';
