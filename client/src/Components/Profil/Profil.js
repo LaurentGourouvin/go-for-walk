@@ -9,6 +9,7 @@ import swal from 'sweetalert';
 import authentification from '../../utils/sessionUser/sessionUser';
 import ImageWarning from './images/warning.png';
 import Map from '../Map/Map';
+import api from '../../axios/request';
 
 function Profil({ token }) {
   const isLogged = authentification.checkLoggin(token);
@@ -32,7 +33,7 @@ function Profil({ token }) {
 
   let decodedToken = null;
   let userId = null;
-  const handleUpdateForm = (e) => {
+  const handleUpdateForm = async (e) => {
     e.preventDefault();
     if (token) {
       decodedToken = jwtDecode(token.access_token);
@@ -63,23 +64,13 @@ function Profil({ token }) {
       });
     } else {
       try {
-        axios.put(`http://141.94.207.7:8080/api/users/${userId}`, {
-          headers: {
-            Authorization: `bearer ${token.access_token}`,
-          },
-          data: {
-            firstname: updateFirstName,
-            name: updateName,
-            password: updatePassword,
-            email: updateEmail,
-          },
-        })
-          .then((res) => {
-            console.log(res);
-          })
-          .catch((err) => {
-            console.error('error axios:', err);
+        const userUpdate = await api.updateUser(updateFirstName, updateName, updatePassword, updateEmail, userId, token);
+        if (userUpdate.status === 200) {
+          swal({
+            title: 'Mise à jour',
+            icon: 'success',
           });
+        }
       } catch (error) {
         console.error(error);
       } finally {
@@ -196,6 +187,7 @@ function Profil({ token }) {
             <button
               onClick={() => {
                 setUpdateForm(true);
+                console.log('mon token => ', token);
               }}
               type="button"
               className="bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
