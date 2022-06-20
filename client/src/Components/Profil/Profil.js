@@ -3,6 +3,7 @@ import './Profil.scss';
 import PropTypes from 'prop-types';
 import jwtDecode from 'jwt-decode';
 import swal from 'sweetalert';
+import { useNavigate } from 'react-router-dom';
 import authentification from '../../utils/sessionUser/sessionUser';
 import ImageWarning from './images/warning.png';
 import Map from '../Map/Map';
@@ -10,6 +11,7 @@ import api from '../../axios/request';
 
 function Profil({ token }) {
   const isLogged = authentification.checkLoggin(token);
+  const navigate = useNavigate();
 
   // Si l'utilisateur est connecté on lui affiche son dashboard
   if (!isLogged) {
@@ -221,7 +223,13 @@ function Profil({ token }) {
               className="bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
             >Modifier le profil
             </button>
-            <button type="button" className="bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Consulter mes randonnées</button>
+            <button
+              type="button"
+              className="bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+              onClick={() => { navigate('/MyTreks'); }}
+            >
+              Consulter mes randonnées
+            </button>
           </div>
         </div>
       </div>
