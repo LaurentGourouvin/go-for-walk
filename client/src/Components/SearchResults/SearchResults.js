@@ -1,13 +1,11 @@
 import PropTypes from 'prop-types';
-// import data from '../../dataStatic/data_treks';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-// import axios from 'axios';
 import Trek from '../Trek/Trek';
 import './SearchResults.scss';
 import api from '../../axios/request';
 
-function SearchResults({ searchCity }) {
+function SearchResults({ searchCity, token }) {
   const [searchResult, setSearchResult] = useState([]);
 
   useEffect(() => {
@@ -59,7 +57,7 @@ function SearchResults({ searchCity }) {
       <div className="SearchResults-cardContainer">
         {console.log('affichage de mon state', searchResult)}
         {searchResult.length === 0
-          ? '' : searchResult.map((result) => <Trek key={result.id} data={result} />)}
+          ? '' : searchResult.map((result) => <Trek key={result.id} data={result} token={token} />)}
       </div>
     </div>
   );
@@ -68,5 +66,6 @@ function SearchResults({ searchCity }) {
 
 SearchResults.propTypes = {
   searchCity: PropTypes.string.isRequired,
+  token: PropTypes.object.isRequired,
 };
 export default SearchResults;
