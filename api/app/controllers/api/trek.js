@@ -50,7 +50,9 @@ module.exports = {
   },
 
   async createTrek(req, res) {
-    req.body.coordinate = `{${req.body.coordinate}}`;
+    if (req.body.coordinate) {
+      req.body.coordinate = `{${req.body.coordinate}}`;
+    }
     req.body.city = myFunction.uppercaseFirstLetter(req.body.city);
     if (req.files.length > 0) {
       const imagePath = [];
@@ -61,8 +63,26 @@ module.exports = {
       return res.json(trek);
     }
     delete req.body.files;
-    const imagePath = '';
+    const imagePath = null;
     const trek = await trekDataMapper.create(req.body, imagePath);
     return res.json(trek);
+  },
+
+  async addImage(req, res) {
+    const trekToUpdate = await trekDataMapper.findByPk(req.body.id);
+    const newImage = `${process.env.API_ADRESS_LOCAL}uploads/${req.file.filename}`;
+    const trek = await trekDataMapper.addImage(trekToUpdate, newImage);
+    return res.json(trek);
+  },
+
+  async deleteImage(req, res) {
+    const trekToUpdate = await trekDataMapper.findByPk(req.body.id);
+    const trek = await trekDataMapper.deleteImage(trekToUpdate, req.body.image);
+    return res.json(trek);
+  },
+
+  async getTreksByUser(req, res) {
+    const trekUserId = await trekDataMapper.findByUserPk(req.params.id);
+    return res.json(trekUserId);
   },
 };

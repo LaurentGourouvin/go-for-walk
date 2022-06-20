@@ -12,7 +12,15 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage });
+const upload = multer({
+  storage,
+  fileFilter(req, file, cb) {
+    if ((file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpg' || file.mimetype === 'image/png')) {
+      return cb(null, true);
+    }
+    return cb(new Error('Format supported is only .png, .jpg and .jpeg '));
+  },
+});
 
 const validate = require('../../validation/validator');
 
@@ -22,7 +30,7 @@ const controllerHandler = require('../../helpers/controllerHandler');
 const trekController = require('../../controllers/api/trek');
 const tokenController = require('../../helpers/tokenController');
 
-// const log = require('../../helpers/consolelog');
+const log = require('../../helpers/consolelog');
 
 const router = express.Router();
 
@@ -100,31 +108,43 @@ router
 /**
   * add new image :
   * @typedef {object} addImage
-  * @property {number} trek.id.required - trek id
+  * @property {number} id.path.required - trek id
   * @property {string} files - nouvelle image - binary
 */
 /**
- * POST /api/treks/addImage
+ * PUT /api/treks/addImage
  * @summary Add new image
  * @tags Images
  * @param {addImage} request.body.required - ajouter nouvelle image - multipart/form-data
  * @returns {object} 200 - Url of new image
 */
-  .post(upload.single('files'), controllerHandler(trekController.addImage));
+  .put(upload.single('files'), log(), controllerHandler(trekController.addImage));
 router
-  .route('/:image')
+  .route('/deleteImage')
 /**
-  * Delete image from a trek :
+  * Remove image from a trek :
   * @typedef {object} deleteImage
-  * @property {number} trek.id.required - trek id
+  * @property {number} id.path.required - trek id
   * @property {string} image.required - url de l'image
 */
 /**
- * DELETE /api/treks/{image}
- * @summary Delete one image
+ * PUT /api/treks/deleteImage
+ * @summary Remove one image
  * @tags Images
  * @param {deleteImage} request.body.required - trek info
  * @returns {object} 200 - Name of delete image
 */
-  .delete(controllerHandler(trekController.deleteImage));
+  .put(controllerHandler(trekController.deleteImage));
+
+router
+  .route('/user/:id(\\d+)')
+/**
+   * GET /api/treks/user/{id}
+   * @summary Get all treks for one user
+   * @tags Treks
+   * @param {number} id.path.required - userid
+   * @return {object} 200 - all treks for one user
+   */
+  .get(controllerHandler(trekController.getTreksByUser));
+
 module.exports = router;
