@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './CreateTrekForm.scss';
 import PropTypes from 'prop-types';
-// import jwtDecode from 'jwt-decode';
+import jwtDecode from 'jwt-decode';
 import swal from 'sweetalert';
 import axios from 'axios';
 
@@ -44,53 +44,58 @@ function CreateTrekForm({ token }) {
       onSubmit={(event) => {
         event.preventDefault();
         // console.log(token);
-        const dataPicture = [];
-        const dataCoordinate = [];
-        dataPicture.push(document.getElementById('pictures').files[0]);
-        dataCoordinate.push(parseInt(coordinate, 10));
 
-        // Mise en place d'un formData car envoie de fichier.
-        // L'envoi du fichier nous force à changer le content-type et l'encodage par défaut de notre formulaire.
-        // Côté Back l'utilisation de multer nous permet de leur envoyer les informations directement via un FormData
-        const formData = new FormData();
-        formData.append('title', title);
-        formData.append('description', description);
-        formData.append('distance', parseInt(distance, 10));
-        formData.append('duration', parseInt(duration, 10));
-        formData.append('city', city);
-        formData.append('coordinate', dataCoordinate);
-        formData.append('user_id', 2);
-        formData.append('difficulty_id', parseInt(difficultyId, 10));
+        if (token) {
+          const decodedToken = jwtDecode(token.access_token);
 
-        console.log('Ville a envoyer au Back', city);
-        // ajout de plusieurs fichier aux formData de façon dynamique
-        const tabPhoto = document.getElementById('pictures').files;
-        Object.entries(tabPhoto).forEach(
+          const dataPicture = [];
+          const dataCoordinate = [];
+          dataPicture.push(document.getElementById('pictures').files[0]);
+          dataCoordinate.push(parseInt(coordinate, 10));
+
+          // Mise en place d'un formData car envoie de fichier.
+          // L'envoi du fichier nous force à changer le content-type et l'encodage par défaut de notre formulaire.
+          // Côté Back l'utilisation de multer nous permet de leur envoyer les informations directement via un FormData
+          const formData = new FormData();
+          formData.append('title', title);
+          formData.append('description', description);
+          formData.append('distance', parseInt(distance, 10));
+          formData.append('duration', parseInt(duration, 10));
+          formData.append('city', city);
+          formData.append('coordinate', dataCoordinate);
+          formData.append('user_id', decodedToken.userId);
+          formData.append('difficulty_id', parseInt(difficultyId, 10));
+
+          console.log('Ville a envoyer au Back', city);
+          // ajout de plusieurs fichier aux formData de façon dynamique
+          const tabPhoto = document.getElementById('pictures').files;
+          Object.entries(tabPhoto).forEach(
           // eslint-disable-next-line no-unused-vars
-          ([key, value]) => {
-            formData.append('files', value);
-          },
-        );
-
-        // Communication à notre API afin d'envoyé la requête de création d'une randonnée
-        axios.post(
-          'http://141.94.207.7:8080/api/treks',
-          formData,
-          {
-            headers: {
-              'content-type': 'multipart/form-data',
+            ([key, value]) => {
+              formData.append('files', value);
             },
-          },
+          );
 
-        )
-          .then((res) => {
-            console.log(res);
-            swal('Randonnée Créée', 'success');
-          })
-          .catch((error) => {
-            swal('Cela na pas marché');
-            console.log(error);
-          });
+          // Communication à notre API afin d'envoyé la requête de création d'une randonnée
+          axios.post(
+            'http://141.94.207.7:8080/api/treks',
+            formData,
+            {
+              headers: {
+                'content-type': 'multipart/form-data',
+              },
+            },
+
+          )
+            .then((res) => {
+              console.log(res);
+              swal('Randonnée Créée', 'success');
+            })
+            .catch((error) => {
+              swal('Cela na pas marché');
+              console.log(error);
+            });
+        }
       }}
     >
       <div className="CreateTrekForm-input-container">
