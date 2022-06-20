@@ -18,7 +18,7 @@ module.exports = {
   async findByCity(trekCity) {
     const city = myfunction.uppercaseFirstLetter(trekCity);
     const result = await client.query('SELECT * FROM treks WHERE city = $1', [city]);
-    return result.rows[0];
+    return result.rows;
   },
 
   async update(trekId, trekData) {
