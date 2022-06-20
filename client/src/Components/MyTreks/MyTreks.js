@@ -54,7 +54,7 @@ function MyTreks({ token }) {
       <h1 className="MyTreks-Title-1">Mes randonnées</h1>
       <div className="MyTreks">
         {
-        treksByUserId.map((trek) => <Trek data={trek} />)
+        treksByUserId.map((trek) => <Trek key={trek.id} data={trek} token={token} setTreksByUserId={setTreksByUserId} />)
         }
       </div>
     </>
