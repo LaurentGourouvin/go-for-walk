@@ -1,3 +1,4 @@
+import swal from 'sweetalert';
 import axiosInstance from './config';
 
 const api = {
@@ -19,7 +20,16 @@ const api = {
       });
       return login;
     } catch (error) {
-      console.error(error);
+      if (error.response.status === 500) {
+        swal('Oups, Veuillez réessayer une erreur innatendu s\'/est produite', 'error');
+        console.log(error.response);
+      } else if (error.response.status === 401) {
+        swal('Veuillez vérifier vos indentifiants', 'error');
+        console.log(error.request);
+      } else {
+        swal('Une erreur innatendu s\'est produite, veuillez nous escuser du dérangement', 'error');
+        console.log(error);
+      }
     }
 
     return login;

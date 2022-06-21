@@ -32,8 +32,8 @@ function LoginForm({ setToken }) {
             authentification.setLoggin(data);
             navigate('/profil');
           }
-        } catch (error) {
-          console.error(error);
+        } catch (err) {
+          console.log('ici', err);
         }
       }}
     >
