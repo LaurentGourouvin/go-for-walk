@@ -8,6 +8,8 @@ const authentification = {
   setLoggin(token) {
     if (token) {
       localStorage.setItem('isLogged', 'true');
+      localStorage.setItem('access_token', token.access_token);
+      localStorage.setItem('refresh_token', token.refresh_token);
     } else {
       localStorage.setItem('isLogged', 'false');
     }
