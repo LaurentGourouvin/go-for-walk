@@ -16,7 +16,9 @@ const storage = multer.diskStorage({
 const upload = multer({
   storage,
   fileFilter(req, file, cb) {
-    if ((file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpg' || file.mimetype === 'image/png')) {
+    const regex = /\.[a-z]*$/g;
+    const fileFilter = file.originalname.match(regex)[0];
+    if ((fileFilter === '.png' || fileFilter === '.jpg' || fileFilter === '.jpeg')) {
       return cb(null, true);
     }
     return cb(new Error('Format supported is only .png, .jpg and .jpeg '));
