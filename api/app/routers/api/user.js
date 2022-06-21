@@ -43,7 +43,7 @@ router
      * @param {number} id.path.required - user identifier
      * @param {updateUser} request.body.required - user info
      */
-  .put(validate('body', updateSchema), tokenController(), controllerHandler(userController.updateUser))
+  .put(tokenController(), validate('body', updateSchema), controllerHandler(userController.updateUser))
 /**
  * DELETE /api/users/{id}
  * @summary Delete one user
