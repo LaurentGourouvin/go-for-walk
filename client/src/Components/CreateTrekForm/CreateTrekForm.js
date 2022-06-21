@@ -191,7 +191,7 @@ function CreateTrekForm({ token }) {
           {/* Affichage conditionnel du select pour les villes  */}
           {disableSelect ? (
             <select name="city" id="city" disabled>
-              <option value="default">Sélectionner votre vilte</option>
+              <option value="default">Sélectionner votre ville</option>
             </select>
 
           ) : (
@@ -257,6 +257,7 @@ function CreateTrekForm({ token }) {
               setDifficultyId(event.target.value);
             }}
           >
+            {/* Faire en sorte que le SELECT provienne de la base de donnée */}
             <option value="">Choisir une Difficulté</option>
             <option value="1">Facile</option>
             <option value="2">Moyen</option>
@@ -266,9 +267,9 @@ function CreateTrekForm({ token }) {
       </div>
 
       <div className="RegisterForm--button-container">
-        <button className="RegisterForm--button bg-stone-500 text-white active:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Validez</button>
+        <button className="RegisterForm--button bg-green-900 text-white hover:bg-green-800 active:bg-green-900 font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Validez</button>
         <button
-          className="RegisterForm--button bg-stone-500 text-white active:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+          className="RegisterForm--button bg-red-600 border border-red-300 text-white hover:text-black hover:bg-red-100 focus:ring-4 focus:ring-red-200  font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
           type="button"
           onClick={() => {
             setTitle('');
