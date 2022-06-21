@@ -192,9 +192,9 @@ function Profil({ token }) {
                   />
                 </label>
                 <div className="Profil-buttons-group">
-                  <button className="bg-stone-500 text-white active:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Confirmer la mise à jour</button>
+                  <button className="bg-green-900 text-white active:bg-green-900 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Confirmer la mise à jour</button>
                   <button
-                    className="bg-stone-500 text-white active:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    className="bg-red-600 border border-red-300 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() => {
                       setUpdateForm(!updateForm);
@@ -220,15 +220,22 @@ function Profil({ token }) {
                 console.log('mon token => ', token);
               }}
               type="button"
-              className="bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+              className="bg-green-900 text-white hover:bg-green-800 active:bg-green-900 font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
             >Modifier le profil
             </button>
             <button
               type="button"
-              className="bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+              className="bg-green-900 text-white hover:bg-green-800 active:bg-green-900 font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
               onClick={() => { navigate('/MyTreks'); }}
             >
               Consulter mes randonnées
+            </button>
+            <button
+              type="button"
+              className="bg-red-600 border border-red-300 text-white hover:text-black hover:bg-red-100 focus:ring-4 focus:ring-red-200  font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              // Mettre en place SWAL + AXIOS pour la suppression du compte de l'utilisateur
+            >
+              Supprimer votre compte
             </button>
           </div>
         </div>
