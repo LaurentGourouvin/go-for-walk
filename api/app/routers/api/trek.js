@@ -60,6 +60,7 @@ router
      * @summary Create one trek
      * @tags Treks
      * @param {Trek} request.body.required - trek info - multipart/form-data
+     * @param {string} access_token.header.required - access_token
      * @return {object} 200 - the new trek
      */
   .post(tokenController(), upload.array('files', 5), validate('body', createSchema), controllerHandler(trekController.createTrek));
@@ -80,14 +81,16 @@ router
      * @summary Update one Trek
      * @tags Treks
      * @param {number} id.path.required - trek identifier
+     * @param {string} access_token.header.required - access_token
      * @param {Trek} request.body.required - trek info
      */
-  .put(validate('body', updateSchema), tokenController(), controllerHandler(trekController.updateTrek))
+  .put(tokenController(), validate('body', updateSchema), controllerHandler(trekController.updateTrek))
 /**
  * DELETE /api/treks/{id}
  * @summary Delete one trek
  * @tags Treks
  * @param {number} id.path.required - trek identifier
+ * @param {string} access_token.header.required - access_token
  * @returns {object} 200 - trek supprimé
  */
   .delete(tokenController(), controllerHandler(trekController.deletTrek));
@@ -116,6 +119,7 @@ router
  * @tags Images
  * @param {number} id.path.required - trek identifier
  * @param {addImage} request.body.required - ajouter nouvelle image - multipart/form-data
+ * @param {string} access_token.header.required - access_token
  * @returns {object} 200 - Url of new image
 */
   .put(tokenController(), controllerHandler(trekController.checkMaxImage), upload.single('files'), controllerHandler(trekController.addImage));
@@ -132,6 +136,7 @@ router
  * @summary Remove one image
  * @tags Images
  * @param {deleteImage} request.body.required - trek info
+ * @param {string} access_token.header.required - access_token
  * @returns {object} 200 - Name of delete image
 */
   .put(tokenController(), controllerHandler(trekController.deleteImage));

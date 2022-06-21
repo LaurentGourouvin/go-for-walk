@@ -11,7 +11,7 @@ const router = express.Router();
 
 router
   .route('/')
-  /**
+/**
  * A User is create with the following parameters :
      * @typedef {object} updateUser
      * @property {string} firstname - user firstname
@@ -41,7 +41,8 @@ router
      * @summary Update one user
      * @tags Users
      * @param {number} id.path.required - user identifier
-     * @param {updateUser} request.body.required - user info
+     * @param {updateUser} request.body.required - user
+     * @param {string} access_token.header.required - access_token
      */
   .put(tokenController(), validate('body', updateSchema), controllerHandler(userController.updateUser))
 /**
@@ -49,6 +50,7 @@ router
  * @summary Delete one user
  * @tags Users
  * @param {number} id.path.required - user identifier
+ * @param {string} access_token.header.required - access_token
  * @returns {object} 200 - utilisateur supprimé
  */
   .delete(tokenController(), controllerHandler(userController.deletUser));

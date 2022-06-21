@@ -16,8 +16,10 @@ module.exports = {
   },
 
   async update(userId, user) {
-    // eslint-disable-next-line no-param-reassign
-    user.password = await bcrypt.hash(user.password, saltRounds);
+    if (user.password) {
+      // eslint-disable-next-line no-param-reassign
+      user.password = await bcrypt.hash(user.password, saltRounds);
+    }
     const fields = [];
     const values = [];
     Object.keys(user).forEach((key) => {
