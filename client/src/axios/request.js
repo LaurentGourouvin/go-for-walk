@@ -20,15 +20,22 @@ const api = {
       });
       return login;
     } catch (error) {
-      if (error.response.status === 500) {
-        swal('Oups, Veuillez réessayer une erreur innatendu s\'/est produite', 'error');
-        console.log(error.response);
-      } else if (error.response.status === 401) {
-        swal('Veuillez vérifier vos indentifiants', 'error');
-        console.log(error.request);
-      } else {
-        swal('Une erreur innatendu s\'est produite, veuillez nous escuser du dérangement', 'error');
-        console.log(error);
+      switch (error.response.status) {
+        case 500:
+          swal('Oups, Veuillez réessayer une erreur innatendu s\'est produite', 'erreur', 'error');
+          console.log(error.response);
+          break;
+        case 401:
+          swal('Veuillez vérifier vos indentifiants', 'erreur', 'error');
+          console.log(error.request);
+          break;
+        case 404:
+          swal('Service indisponible pour le moment, veuillez nous excuser', 'info', 'error');
+          console.log(error.request);
+          break;
+        default:
+          swal('Une erreur innatendu s\'est produite, veuillez nous escuser du dérangement', 'erreur', 'error');
+          console.log(error);
       }
     }
 
@@ -53,7 +60,23 @@ const api = {
         password,
       });
     } catch (error) {
-      console.error(error);
+      switch (error.response.status) {
+        case 500:
+          swal('Oups, Veuillez réessayer une erreur innatendu s\'est produite', 'erreur', 'error');
+          console.log(error.response);
+          break;
+        case 401:
+          swal('Cette adresse mail est déjà utilisé', 'erreur', 'error');
+          console.log(error.request);
+          break;
+        case 404:
+          swal('Service indisponible pour le moment, veuillez nous excuser', 'info', 'error');
+          console.log(error.request);
+          break;
+        default:
+          swal('Une erreur innatendu s\'est produite, veuillez nous escuser du dérangement', 'erreur', 'error');
+          console.log(error);
+      }
     }
 
     return register;
