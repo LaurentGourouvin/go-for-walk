@@ -26,17 +26,8 @@ module.exports = {
     return res.json(userUpdate);
   },
 
-  async deletUser(req, res) {
-    const user = await userDataMapper.findByPk(req.params.id);
-    if (!user) {
-      throw new Error('no users found');
-    }
-    try {
-      await userDataMapper.delet(req.params.id);
-    } catch (error) {
-      res.status(500);
-      throw new Error('Internal Server Error', { statusCode: 500 });
-    }
+  async disabledUser(req, res) {
+    const user = await userDataMapper.disabledUser(req.params.id);
     return res.json(user);
   },
 };

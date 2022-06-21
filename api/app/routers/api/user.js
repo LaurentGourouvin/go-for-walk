@@ -47,12 +47,12 @@ router
   .put(tokenController(), validate('body', updateSchema), controllerHandler(userController.updateUser))
 /**
  * DELETE /api/users/{id}
- * @summary Delete one user
+ * @summary Disabled one user
  * @tags Users
  * @param {number} id.path.required - user identifier
  * @param {string} access_token.header.required - access_token
- * @returns {object} 200 - utilisateur supprimé
+ * @returns {object} 200 - utilisateur désact
  */
-  .delete(tokenController(), controllerHandler(userController.deletUser));
+  .delete(tokenController(), controllerHandler(userController.disabledUser));
 
 module.exports = router;
