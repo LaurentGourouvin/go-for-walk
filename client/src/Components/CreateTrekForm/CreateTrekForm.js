@@ -2,8 +2,9 @@ import { useState } from 'react';
 import './CreateTrekForm.scss';
 import PropTypes from 'prop-types';
 import jwtDecode from 'jwt-decode';
-import swal from 'sweetalert';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import api from '../../axios/request';
 
 function CreateTrekForm({ token }) {
   const [title, setTitle] = useState('');
@@ -18,6 +19,8 @@ function CreateTrekForm({ token }) {
   const [codePostal, setCodePostal] = useState('');
   const [disableSelect, setDisableSelect] = useState(true);
 
+  const navigate = useNavigate();
+
   const getCityNameByPostalCode = (sendCp) => {
     // Vérification si le code postal contient bien 5 chiffres
     axios.get(`https://geo.api.gouv.fr/communes?codePostal=${sendCp}`)
@@ -28,26 +31,16 @@ function CreateTrekForm({ token }) {
         console.log(error);
       });
   };
-
-  // const decodedToken = jwtDecode(token.access_token);
-  // console.log(decodedToken);
-  // const accessToken = token.access_token;
-
-  // const { userId } = decodedToken;
-  console.log(token);
-
   return (
 
     <form
       className="CreateTrekForm"
       encType="multipart/form-data"
-      onSubmit={(event) => {
+      onSubmit={async (event) => {
         event.preventDefault();
-        // console.log(token);
 
-        if (token) {
+        if (token.access_token) {
           const decodedToken = jwtDecode(token.access_token);
-
           const dataPicture = [];
           const dataCoordinate = [];
           dataPicture.push(document.getElementById('pictures').files[0]);
@@ -66,7 +59,6 @@ function CreateTrekForm({ token }) {
           formData.append('user_id', decodedToken.userId);
           formData.append('difficulty_id', parseInt(difficultyId, 10));
 
-          console.log('Ville a envoyer au Back', city);
           // ajout de plusieurs fichier aux formData de façon dynamique
           const tabPhoto = document.getElementById('pictures').files;
           Object.entries(tabPhoto).forEach(
@@ -75,26 +67,14 @@ function CreateTrekForm({ token }) {
               formData.append('files', value);
             },
           );
-
-          // Communication à notre API afin d'envoyé la requête de création d'une randonnée
-          axios.post(
-            'http://141.94.207.7:8080/api/treks',
-            formData,
-            {
-              headers: {
-                'content-type': 'multipart/form-data',
-              },
-            },
-
-          )
-            .then((res) => {
-              console.log(res);
-              swal('Randonnée Créée', 'success');
-            })
-            .catch((error) => {
-              swal('Cela na pas marché');
-              console.log(error);
-            });
+          try {
+            const createTrek = await api.createTrek(token, formData);
+            if (createTrek.status === 200) {
+              navigate('/profil');
+            }
+          } catch (error) {
+            console.log(error);
+          }
         }
       }}
     >
