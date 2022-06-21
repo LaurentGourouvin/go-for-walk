@@ -30,8 +30,8 @@ module.exports = {
     return result.rows[0];
   },
 
-  async delet(userId) {
-    const result = await client.query('DELETE FROM "users" WHERE id = $1', [userId]);
+  async disabledUser(userId) {
+    const result = await client.query('UPDATE "users" SET status = \'disabled\' WHERE id = $1', [userId]);
     return result.rows[0];
   },
 };
