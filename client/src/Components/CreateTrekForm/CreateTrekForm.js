@@ -31,6 +31,7 @@ function CreateTrekForm({ token }) {
         console.log(error);
       });
   };
+
   return (
 
     <form
@@ -193,7 +194,7 @@ function CreateTrekForm({ token }) {
           )}
 
         </label>
-        <label className="CreateTrekForm-label" htmlFor="coordinate">
+        <label className="CreateTrekForm-label" htmlFor="coordinate" id="coordinate">
           <span className="CreateTrekForm-label-text">Saississez des Coordonnées pour la randonnée :</span>
           <input
             className="CreateTrekForm-input shadow-lg rounded-md"
@@ -207,6 +208,7 @@ function CreateTrekForm({ token }) {
               setCoordinate(event.target.value);
             }}
           />
+
         </label>
         <label className="CreateTrekForm-label " htmlFor="pictures">
           <span className="CreateTrekForm-label-text">Ajouter une photo de votre randonée :</span>
