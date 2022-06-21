@@ -10,7 +10,7 @@ function SearchResults({ searchCity, token }) {
 
   useEffect(() => {
     // si searchCity est vide je requête l'API pour recevoir TOUTES les randonnées
-    setSearchResult('');
+    setSearchResult([]);
     if (searchCity === '') {
       try {
         // J'utilise des fonctions fléchées en mode ASYNCHRONE
@@ -25,6 +25,7 @@ function SearchResults({ searchCity, token }) {
         };
         allTreks();
       } catch (err) {
+        console.log('Bug dans SearchResult AllTreks');
         console.log(err);
       }
     } else {
@@ -37,6 +38,7 @@ function SearchResults({ searchCity, token }) {
         };
         treksByCityName();
       } catch (err) {
+        console.log('Bug dans SearchResult TreakByCityName');
         console.log(err);
       }
     }
@@ -56,8 +58,12 @@ function SearchResults({ searchCity, token }) {
       </div>
       <div className="SearchResults-cardContainer">
         {console.log('affichage de mon state', searchResult)}
-        {searchResult.length === 0
-          ? '' : searchResult.map((result) => <Trek key={result.id} data={result} token={token} />)}
+        {
+        searchResult.length === 0 && token
+          ? ''
+          : searchResult.map((result) => <Trek key={result.id} data={result} token={token} />)
+        }
+
       </div>
     </div>
   );

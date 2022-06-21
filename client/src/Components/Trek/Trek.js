@@ -7,12 +7,12 @@ import swal from 'sweetalert';
 import api from '../../axios/request';
 
 function Trek({ data, token, setTreksByUserId }) {
-  const [userId, setUserId] = useState('');
+  const [userId, setUserId] = useState(0);
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
-    if (token) {
+    if (token.access_token) {
       const decodedToken = jwtDecode(token.access_token);
       setUserId(decodedToken.userId);
     }
