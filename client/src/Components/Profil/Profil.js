@@ -38,7 +38,7 @@ function Profil({ token }) {
   // Fonction lors de la soumission du formulaire
   const handleUpdateForm = async (e) => {
     e.preventDefault();
-    if (token) {
+    if (token.access_token) {
       decodedToken = jwtDecode(token.access_token);
       userId = decodedToken.userId;
     }
