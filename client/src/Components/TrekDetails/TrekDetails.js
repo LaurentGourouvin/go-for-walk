@@ -51,7 +51,7 @@ function TrekDetails() {
       </div>
       <div className="TrekDetails-container-main">
         <div className="TrekDetails-container-img">
-          { trekDataPictures.map((picture) => <img src={picture} alt={picture} />)}
+          { trekDataPictures.map((picture) => <img key={picture} src={picture} alt={picture} />)}
         </div>
         <p className="TrekDetails-description">
           {trekData.description}
