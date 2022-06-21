@@ -22,19 +22,19 @@ const api = {
     } catch (error) {
       switch (error.response.status) {
         case 500:
-          swal('Oups, Veuillez réessayer une erreur innatendu s\'est produite', 'erreur', 'error');
+          swal('Oups, Veuillez réessayer une erreur innatendu s\'est produite', '', 'error');
           console.log(error.response);
           break;
         case 401:
-          swal('Veuillez vérifier vos indentifiants', 'erreur', 'error');
+          swal('Veuillez vérifier vos indentifiants', '', 'error');
           console.log(error.request);
           break;
         case 404:
-          swal('Service indisponible pour le moment, veuillez nous excuser', 'info', 'error');
+          swal('Service indisponible pour le moment, veuillez nous excuser', '', 'info');
           console.log(error.request);
           break;
         default:
-          swal('Une erreur innatendu s\'est produite, veuillez nous escuser du dérangement', 'erreur', 'error');
+          swal('Une erreur innatendu s\'est produite, veuillez nous escuser du dérangement', '', 'error');
           console.log(error);
       }
     }
@@ -62,19 +62,19 @@ const api = {
     } catch (error) {
       switch (error.response.status) {
         case 500:
-          swal('Oups, Veuillez réessayer une erreur innatendu s\'est produite', 'erreur', 'error');
+          swal('Oups, Veuillez réessayer une erreur innatendu s\'est produite', '', 'error');
           console.log(error.response);
           break;
         case 401:
-          swal('Cette adresse mail est déjà utilisé', 'erreur', 'error');
+          swal('Cette adresse mail est déjà utilisé', '', 'error');
           console.log(error.request);
           break;
         case 404:
-          swal('Service indisponible pour le moment, veuillez nous excuser', 'info', 'error');
+          swal('Service indisponible pour le moment, veuillez nous excuser', '', 'info');
           console.log(error.request);
           break;
         default:
-          swal('Une erreur innatendu s\'est produite, veuillez nous escuser du dérangement', 'erreur', 'error');
+          swal('Une erreur innatendu s\'est produite, veuillez nous escuser du dérangement', '', 'error');
           console.log(error);
       }
     }
@@ -185,6 +185,46 @@ const api = {
     return resultUser;
   },
 
+  /**
+   * @summary Fonction qui permet de créer une randonnée
+   * @param {*} token Token afin d'avoir l'autorisation de back pour la création d'une randonnée
+   * @param {*} formData Formulaire contenant toute les informations necéssaires à la création d'une randonnée
+   * @returns Une réponse HTTP contenant les informations de la randonnée créée
+   */
+  async createTrek(token, formData) {
+    let resultCreateTrek = null;
+    axiosInstance.defaults.headers.common.access_token = `${token.access_token}`;
+    try {
+      resultCreateTrek = await axiosInstance.post('/treks', formData, {
+        headers: {
+          'content-type': 'multipart/form-data',
+        },
+      });
+      if (resultCreateTrek.status === 200) {
+        swal('Votre randonnée a bien était créée');
+      }
+    } catch (error) {
+      switch (error.response.status) {
+        case 500:
+          swal('Oups, Veuillez réessayer une erreur innatendu s\'est produite', '', 'error');
+          console.log(error.response);
+          break;
+          // si l'on pas authorisé
+        case 401:
+          swal('Problème d\'autorisation veuillez recommencez', '', 'error');
+          console.log(error.request);
+          break;
+        case 404:
+          swal('Service indisponible pour le moment, veuillez nous excuser', '', 'info');
+          console.log(error.request);
+          break;
+        default:
+          swal('Une erreur innatendu s\'est produite, veuillez nous escuser du dérangement', '', 'error');
+          console.log(error);
+      }
+    }
+    return resultCreateTrek;
+  },
   /**
    * @summary Fonction qui permet de supprimer le compte de l'utilisateur dans la base de données
    * @param {*} userId ID de l'utilisateur à rechercher dans la base de données
