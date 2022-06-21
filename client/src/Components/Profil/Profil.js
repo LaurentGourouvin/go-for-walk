@@ -102,7 +102,7 @@ function Profil({ token }) {
   useEffect(() => {
     try {
       // ajout d'une condition pour décoder le TOKEN seulement si celui-ci existe. Cela evitera des erreurs : ERROR ACCES TOKEN
-      if (token) {
+      if (token.access_token) {
         decodedToken = jwtDecode(token.access_token);
         userId = decodedToken.userId;
       }
