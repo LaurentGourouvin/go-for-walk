@@ -5,10 +5,10 @@ const api = {
   // AUTHENTIFICATION
   // ======================
   /**
-   *
+   * @summary Fonction qui retourne un Token contenant les informations de mon utilisateurs
    * @param {*} email email de l'utilisateur permettant la connexion à son espace privé
    * @param {*} password mot de passe l'utilisateur
-   * @returns me retourne un Token contenant les informations de mon utilisateurs
+   * @returns Retourne un jsonwebtoken
    */
   async login(email, password) {
     let login = null;
@@ -26,12 +26,12 @@ const api = {
   },
 
   /**
-   *
+   * @summary Fonction permettant de s'inscrire à l'application
    * @param {*} firstname firstname de l'utilisateur à créer
    * @param {*} name prénom de l'utilisateur à créer
    * @param {*} email email de l'utilisateur à créer
    * @param {*} password password de l'utilisateur à créer
-   * @returns me retourne les informations de l'utilisateur crée
+   * @returns Retourne un utilisateur
    */
   async register(firstname, name, email, password) {
     let register = null;
@@ -52,8 +52,8 @@ const api = {
   // REQUETES SUR LES TREKS
   // =========================
   /**
-   *
-   * @returns Retourne la liste de toutes les randonnées stockées dans la base de données
+   * @summary Retourne la liste de toutes les randonnées stockées dans la base de données
+   * @returns Une réponse HTTP contenant toutes les randonnées de la base de donnée
    */
   async getAllTreks() {
     let treks = null;
@@ -66,9 +66,9 @@ const api = {
   },
 
   /**
-   *
+   * @summary Fonction qui retourne la liste de toutes les randonées stockées dans la base de donnée concernant la ville
    * @param {*} cityName le nom de la ville qui va nous permettre d'effectuer la recherche dans la base de données
-   * @returns Retourne la liste de toutes les randonées stockées dans la base de donnée concernant la ville
+   * @returns Une réponse HTTP contenant la liste des randonnées recherchées par nom de Ville
    */
   async getTreksByCity(cityName) {
     let treksByCity = null;
@@ -81,9 +81,9 @@ const api = {
   },
 
   /**
-   *
+   * @summary Fonction qui retourne la liste des randonées crées par cet utilisateur
    * @param {*} userId ID de l'utilistaeur permettant de récupérer les randonnées créer par cet utilisateur
-   * @returns Retourne la liste des randonées crées par cet utilisateur
+   * @returns Une réponse HTTP contenant les randonnées crées par cet utilisateur
    */
   async getTreksByUserId(userId) {
     let treksByUserId = null;
@@ -96,9 +96,9 @@ const api = {
   },
 
   /**
-   *
+   * @summary Fonction qui permet de supprimer une randonnée de la base de donnée
    * @param {*} trekId ID de la randonnée que la fonction va supprimer de la base de données
-   * @returns Retourne l'état de suppression de la randonnée
+   * @returns Une réponse HTTP contenant le status code 200 pour une suppression réussie
    */
   async deleteTrek(trekId, token) {
     let deleteTrek = null;
@@ -113,18 +113,16 @@ const api = {
   // REQUETES SUR LES USERS
   // ==========================
   /**
-   *
+   * @summary Fonction qui permet la modification des données utilisateurs
    * @param {*} firstname le nom de l'utilisateur à modifier
    * @param {*} name le prénom de l'utilisateur à modifier
    * @param {*} password la password de l'utilisateur à modifier
    * @param {*} email l'email de l'utilisateur à modifier
    * @param {*} userId l'id de l'utilisateur
-   * @returns retourne les nouvelles informations de l'utilisateur
+   * @returns Une réponse HTTP contenant les données de l'utilisateur récemment modifiées
    */
   async updateUser(firstname, name, password, email, userId, token) {
     let resultUpdate = null;
-    // voir plus tard avec le Back si on utilise le mot "Bearer"
-    // Mise en place du TOKEN dans le header de notre requête
     axiosInstance.defaults.headers.common.access_token = `${token.access_token}`;
     try {
       resultUpdate = await axiosInstance.put(`/users/${userId}`, {
@@ -140,9 +138,9 @@ const api = {
   },
 
   /**
-   *
+   * @summary Fonction qui permet de récupérer les informations d'un utilisateur via son ID
    * @param {*} userId ID de l'utilisateur à rechercher dans la base de données
-   * @returns Retourne les informations de l'utilisateur
+   * @returns Une réponse HTTP contenant les informations de l'utilisateur
    */
   async getUser(userId) {
     let resultUser = null;
