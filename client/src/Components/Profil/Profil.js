@@ -231,6 +231,17 @@ function Profil({ token }) {
               Consulter mes randonnées
             </button>
             <button
+              disabled
+              onClick={async () => {
+                try {
+                  console.log('Verification du contenu de userID', userId);
+                  console.log('Verification du contenu de token', token);
+                  const deleteUser = await api.deleteUser(userId, token);
+                  console.log(deleteUser);
+                } catch (error) {
+                  console.log(error);
+                }
+              }}
               type="button"
               className="bg-red-600 border border-red-300 text-white hover:text-black hover:bg-red-100 focus:ring-4 focus:ring-red-200  font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
               // Mettre en place SWAL + AXIOS pour la suppression du compte de l'utilisateur
