@@ -62,7 +62,7 @@ router
      * @param {Trek} request.body.required - trek info - multipart/form-data
      * @return {object} 200 - the new trek
      */
-  .post(upload.array('files', 5), validate('body', createSchema), controllerHandler(trekController.createTrek));
+  .post(tokenController(), upload.array('files', 5), validate('body', createSchema), controllerHandler(trekController.createTrek));
 
 router
   .route('/:id(\\d+)')
@@ -118,7 +118,7 @@ router
  * @param {addImage} request.body.required - ajouter nouvelle image - multipart/form-data
  * @returns {object} 200 - Url of new image
 */
-  .put(controllerHandler(trekController.checkMaxImage), upload.single('files'), controllerHandler(trekController.addImage));
+  .put(tokenController(), controllerHandler(trekController.checkMaxImage), upload.single('files'), controllerHandler(trekController.addImage));
 router
   .route('/deleteImage')
 /**
@@ -134,7 +134,7 @@ router
  * @param {deleteImage} request.body.required - trek info
  * @returns {object} 200 - Name of delete image
 */
-  .put(controllerHandler(trekController.deleteImage));
+  .put(tokenController(), controllerHandler(trekController.deleteImage));
 
 router
   .route('/user/:id(\\d+)')

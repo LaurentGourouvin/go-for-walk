@@ -1,4 +1,7 @@
+const bcrypt = require('bcrypt');
 const client = require('../config/db');
+
+const saltRounds = 10;
 
 module.exports = {
 
@@ -13,6 +16,8 @@ module.exports = {
   },
 
   async update(userId, user) {
+    // eslint-disable-next-line no-param-reassign
+    user.password = await bcrypt.hash(user.password, saltRounds);
     const fields = [];
     const values = [];
     Object.keys(user).forEach((key) => {

@@ -6,9 +6,9 @@ if (process.env.NODE_ENV !== 'production') {
   dotenv.config();
 }
 
-const app = require('./app');
+const port = process.env.PORT ?? 4000;
 
-const port = process.env.PORT ?? 3000;
+const app = require('./app');
 
 const server = http.createServer(app);
 

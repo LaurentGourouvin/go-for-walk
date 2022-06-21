@@ -31,7 +31,6 @@ module.exports = {
     if (!user) {
       throw new Error('no users found');
     }
-
     try {
       await userDataMapper.delet(req.params.id);
     } catch (error) {
