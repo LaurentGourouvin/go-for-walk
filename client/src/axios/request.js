@@ -111,6 +111,7 @@ const api = {
     return deleteTrek;
   },
   // REQUETES SUR LES USERS
+  // ==========================
   /**
    *
    * @param {*} firstname le nom de l'utilisateur à modifier
