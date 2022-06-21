@@ -217,10 +217,11 @@ function CreateTrekForm({ token }) {
           <span className="CreateTrekForm-label-text">Saississez des Coordonnées pour la randonnée :</span>
           <input
             className="CreateTrekForm-input shadow-lg rounded-md"
-            placeholder="Coordonnées de votre Randonnée au format : xxx.yyy.aaa "
+            placeholder="Coordonnées de votre Randonnée au format : xxx.yyy "
             id="coordinate"
             name="coordinate"
             type="number"
+            step="0.01"
             required
             value={coordinate}
             onChange={(event) => {
