@@ -20,7 +20,7 @@ function MyTreks({ token }) {
 
   // fonction pour décoder le token dans le useEffect
   const decodeToken = async () => {
-    if (token) {
+    if (token.access_token) {
       try {
         decodedToken = jwtDecode(token.access_token);
       } catch (error) {
