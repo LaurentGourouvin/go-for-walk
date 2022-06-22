@@ -60,8 +60,8 @@ function CreateTrekForm({ token }) {
           // dataCoordinate[1][1] = endCoordinate.lng;
 
           const dataCoordinate = [];
-          dataCoordinate.push(`${parseFloat(startCoordinate.lat)},${parseFloat(startCoordinate.lng)}`);
-          dataCoordinate.push(`${endCoordinate.lat},${endCoordinate.lng}`);
+          dataCoordinate.push(`${parseInt(startCoordinate.lat, 10)},${parseInt(startCoordinate.lng, 10)}`);
+          dataCoordinate.push(`${parseInt(endCoordinate.lat, 10)},${parseInt(endCoordinate.lng, 10)}`);
 
           console.log('tableau de coordonnée:', dataCoordinate);
           dataPicture.push(document.getElementById('pictures').files[0]);
