@@ -53,4 +53,20 @@
         height: auto;
         padding: .75rem;
     }
+    &-coordinate {
+        display: flex;
+        flex-direction: column;
+    }
+    &-input-coordinate {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+    .label-coordinate {
+        display: flex;
+        flex-direction: column;
+        margin: .5rem;
+        margin-top: 1rem;
+    }
 }

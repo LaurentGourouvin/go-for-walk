@@ -5,6 +5,7 @@ import jwtDecode from 'jwt-decode';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import api from '../../axios/request';
+import Map from '../Map/Map';
 
 function CreateTrekForm({ token }) {
   const [title, setTitle] = useState('');
@@ -18,6 +19,7 @@ function CreateTrekForm({ token }) {
   const [listCity, setListCity] = useState([]);
   const [codePostal, setCodePostal] = useState('');
   const [disableSelect, setDisableSelect] = useState(true);
+  const [startCoordinate, setStartCoordinate] = useState({ lat: 0, lng: 0 });
 
   const navigate = useNavigate();
 
@@ -194,23 +196,93 @@ function CreateTrekForm({ token }) {
           )}
 
         </label>
-        <label className="CreateTrekForm-label" htmlFor="coordinate" id="coordinate">
-          <span className="CreateTrekForm-label-text">Saississez des Coordonnées pour la randonnée :</span>
-          <input
-            className="CreateTrekForm-input shadow-lg rounded-md"
-            placeholder="Coordonnées de votre Randonnée au format : xxx.yyy "
-            id="coordinate"
-            name="coordinate"
-            type="number"
-            step="0.01"
-            required
-            value={coordinate}
-            onChange={(event) => {
-              setCoordinate(event.target.value);
-            }}
-          />
+        <div className="CreateTrekForm-coordinate">
+          <div className="CreateTrekForm-coordinate-top">
+            <label className="CreateTrekForm-label label-coordinate" htmlFor="coordinate" id="coordinate">
+              <span className="CreateTrekForm-label-text">Saississez des Coordonnées pour la randonnée :</span>
+              <div className="CreateTrekForm-input-coordinate">
+                <p>Point de départ: </p>
+                {/* <input
+                  className="CreateTrekForm-input shadow-lg rounded-md"
+                  placeholder="Coordonnées de votre Randonnée au format : xxx.yyy "
+                  id="coordinate"
+                  name="coordinate"
+                  type="number"
+                  step="0.01"
+                  required
+                  value={coordinate}
+                  onChange={(event) => {
+                    setCoordinate(event.target.value);
+                  }}
+                /> */}
 
-        </label>
+                <input
+                  className="CreateTrekForm-input shadow-lg rounded-md"
+                  placeholder="Latitude"
+                  id="coordinate"
+                  name="coordinate"
+                  type="number"
+                  step="0.01"
+                  required
+                  value={startCoordinate.lat}
+                  onChange={(event) => {
+                    setCoordinate(event.target.value);
+                  }}
+                  disabled
+                />
+
+                <input
+                  className="CreateTrekForm-input shadow-lg rounded-md"
+                  placeholder="Longitude"
+                  id="coordinate"
+                  name="coordinate"
+                  type="number"
+                  step="0.01"
+                  required
+                  value={startCoordinate.lng}
+                  onChange={(event) => {
+                    setCoordinate(event.target.value);
+                  }}
+                  disabled
+                />
+              </div>
+              <div className="CreateTrekForm-input-coordinate">
+                <p>Point de d'arrivée: </p>
+                <input
+                  className="CreateTrekForm-input shadow-lg rounded-md"
+                  placeholder="Latitude"
+                  id="coordinate"
+                  name="coordinate"
+                  type="number"
+                  step="0.01"
+                  required
+                  value={coordinate}
+                  onChange={(event) => {
+                    setCoordinate(event.target.value);
+                  }}
+                />
+                <input
+                  className="CreateTrekForm-input shadow-lg rounded-md"
+                  placeholder="Longitude"
+                  id="coordinate"
+                  name="coordinate"
+                  type="number"
+                  step="0.01"
+                  required
+                  value={coordinate}
+                  onChange={(event) => {
+                    setCoordinate(event.target.value);
+                  }}
+                />
+              </div>
+            </label>
+          </div>
+          <div className="CreateTrekForm-coordinate-bottom">
+            <Map setStartCoordinate={setStartCoordinate} />
+            {console.log(startCoordinate)}
+          </div>
+        </div>
+
         <label className="CreateTrekForm-label " htmlFor="pictures">
           <span className="CreateTrekForm-label-text">Ajouter une photo de votre randonée :</span>
           <input
