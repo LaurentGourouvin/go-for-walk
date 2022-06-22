@@ -15,3 +15,5 @@ const server = http.createServer(app);
 server.listen(port, () => {
   debug(`Listening on ${port}`);
 });
+
+module.exports = { port };
