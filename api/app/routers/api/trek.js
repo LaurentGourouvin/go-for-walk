@@ -52,6 +52,16 @@ router
   * @property {integer} difficulty_id.required - trek difficulty
 */
 /**
+  * A Trek is create with the following parameters :
+  * @typedef {object} trekUpdate
+  * @property {string} title - trek title
+  * @property {string} description - trek description
+  * @property {integer} distance - trek distance
+  * @property {integer} duration - trek duration
+  * @property {string} city - trek city
+  * @property {array<integer>} coordinate - trek coordinates
+*/
+/**
      * GET /api/treks
      * @summary Get all treks
      * @tags Treks
@@ -84,7 +94,7 @@ router
      * @tags Treks
      * @param {number} id.path.required - trek identifier
      * @param {string} access_token.header.required - access_token
-     * @param {Trek} request.body.required - trek info
+     * @param {trekUpdate} request.body.required - trek info
      */
   .put(tokenController(), validate('body', updateSchema), controllerHandler(trekController.updateTrek))
 /**
