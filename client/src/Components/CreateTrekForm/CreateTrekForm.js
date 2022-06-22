@@ -13,13 +13,19 @@ function CreateTrekForm({ token }) {
   const [distance, setDistance] = useState('');
   const [duration, setDuration] = useState('');
   const [city, setCity] = useState('');
-  const [coordinate, setCoordinate] = useState([]);
+
   const [pictures, setPictures] = useState([]);
   const [difficultyId, setDifficultyId] = useState('');
   const [listCity, setListCity] = useState([]);
   const [codePostal, setCodePostal] = useState('');
   const [disableSelect, setDisableSelect] = useState(true);
   const [startCoordinate, setStartCoordinate] = useState({ lat: 0, lng: 0 });
+  const [endCoordinate, setEndCoordinate] = useState({ lat: 0, lng: 0 });
+  const [startOrEndCoordinate, setStartOrEndCoordinate] = useState('');
+  const [trekPolyline, setTrekPolyline] = useState([[], []]);
+
+  // eslint-disable-next-line no-unused-vars
+  const triggerInChangeInput = new Event('onControlInput');
 
   const navigate = useNavigate();
 
@@ -41,13 +47,25 @@ function CreateTrekForm({ token }) {
       encType="multipart/form-data"
       onSubmit={async (event) => {
         event.preventDefault();
-
+        console.log("j'envoie mon formulaire");
         if (token.access_token) {
           const decodedToken = jwtDecode(token.access_token);
           const dataPicture = [];
+          // A VOIR AVEC LE BACK POUR AVOIR UN TABLEAU DE CE GENRE DANS LA BDD
+          // const dataCoordinate = [[], []];
+          // J'ajoute la coordonée de départ à dataCoordinate puis la valeur d'arrivée
+          // dataCoordinate[0][0] = startCoordinate.lat;
+          // dataCoordinate[0][1] = startCoordinate.lng;
+          // dataCoordinate[1][0] = endCoordinate.lat;
+          // dataCoordinate[1][1] = endCoordinate.lng;
+
           const dataCoordinate = [];
+          dataCoordinate.push(`${parseFloat(startCoordinate.lat)},${parseFloat(startCoordinate.lng)}`);
+          dataCoordinate.push(`${endCoordinate.lat},${endCoordinate.lng}`);
+
+          console.log('tableau de coordonnée:', dataCoordinate);
           dataPicture.push(document.getElementById('pictures').files[0]);
-          dataCoordinate.push(parseInt(coordinate, 10));
+          // dataCoordinate.push(parseInt(coordinate, 10));
 
           // Mise en place d'un formData car envoie de fichier.
           // L'envoi du fichier nous force à changer le content-type et l'encodage par défaut de notre formulaire.
@@ -72,6 +90,7 @@ function CreateTrekForm({ token }) {
           );
           try {
             const createTrek = await api.createTrek(token, formData);
+
             if (createTrek.status === 200) {
               navigate('/profil');
             }
@@ -200,6 +219,7 @@ function CreateTrekForm({ token }) {
           <div className="CreateTrekForm-coordinate-top">
             <label className="CreateTrekForm-label label-coordinate" htmlFor="coordinate" id="coordinate">
               <span className="CreateTrekForm-label-text">Saississez des Coordonnées pour la randonnée :</span>
+
               <div className="CreateTrekForm-input-coordinate">
                 <p>Point de départ: </p>
                 {/* <input
@@ -219,30 +239,24 @@ function CreateTrekForm({ token }) {
                 <input
                   className="CreateTrekForm-input shadow-lg rounded-md"
                   placeholder="Latitude"
-                  id="coordinate"
-                  name="coordinate"
+                  id="startLatCoord"
+                  name="startLatCoord"
                   type="number"
                   step="0.01"
                   required
                   value={startCoordinate.lat}
-                  onChange={(event) => {
-                    setCoordinate(event.target.value);
-                  }}
                   disabled
                 />
 
                 <input
                   className="CreateTrekForm-input shadow-lg rounded-md"
                   placeholder="Longitude"
-                  id="coordinate"
-                  name="coordinate"
+                  id="startLngCoord"
+                  name="startLngCoord"
                   type="number"
                   step="0.01"
                   required
                   value={startCoordinate.lng}
-                  onChange={(event) => {
-                    setCoordinate(event.target.value);
-                  }}
                   disabled
                 />
               </div>
@@ -251,35 +265,49 @@ function CreateTrekForm({ token }) {
                 <input
                   className="CreateTrekForm-input shadow-lg rounded-md"
                   placeholder="Latitude"
-                  id="coordinate"
-                  name="coordinate"
+                  id="endLatCoord"
+                  name="endLatCoord"
                   type="number"
                   step="0.01"
                   required
-                  value={coordinate}
-                  onChange={(event) => {
-                    setCoordinate(event.target.value);
-                  }}
+                  value={endCoordinate.lat}
                 />
                 <input
                   className="CreateTrekForm-input shadow-lg rounded-md"
                   placeholder="Longitude"
-                  id="coordinate"
-                  name="coordinate"
+                  id="endLngCoord"
+                  name="endLngCoord"
                   type="number"
                   step="0.01"
                   required
-                  value={coordinate}
-                  onChange={(event) => {
-                    setCoordinate(event.target.value);
-                  }}
+                  value={endCoordinate.lng}
                 />
               </div>
             </label>
           </div>
+
+          <select
+            name="startEndPosition"
+            id="startEndPosition"
+            onChange={(e) => {
+              console.log(e.target.value);
+              setStartOrEndCoordinate(e.target.value);
+            }}
+          >
+            <option value="null">Sasir une action</option>
+            <option value="start">Ajouter point de départ</option>
+            <option value="end">Ajouter point d'arrivée</option>
+          </select>
           <div className="CreateTrekForm-coordinate-bottom">
-            <Map setStartCoordinate={setStartCoordinate} />
-            {console.log(startCoordinate)}
+
+            <Map
+              setStartCoordinate={setStartCoordinate}
+              setEndCoordinate={setEndCoordinate}
+              defineStartOrEndPosition={startOrEndCoordinate}
+              setTrekPolyline={setTrekPolyline}
+              trekPolyline={trekPolyline}
+            />
+
           </div>
         </div>
 
@@ -332,7 +360,8 @@ function CreateTrekForm({ token }) {
             setDistance('');
             setDuration('');
             setCity('');
-            setCoordinate([]);
+            setStartCoordinate({ lat: 0, lng: 0 });
+            setEndCoordinate({ lat: 0, lng: 0 });
             setPictures([]);
             setDifficultyId('');
           }}
