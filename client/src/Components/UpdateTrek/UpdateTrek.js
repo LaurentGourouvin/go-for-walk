@@ -56,6 +56,7 @@ function UpdateTrek({ token }) {
           setUpdateDescription(data.description);
           // setUpdatePictures(data.pictures);
           setUpdateCoordinate(data.coordinate);
+          console.log(data);
         });
       axios.get('http://141.94.207.7:8080/api/labels')
         .then((res) => {
@@ -76,7 +77,17 @@ function UpdateTrek({ token }) {
             const decodedToken = jwtDecode(token.access_token);
             const { userId } = decodedToken;
             try {
+              console.log('id trek:', id);
+              console.log('userid:', userId);
+              console.log('updateTitle:', updateTitle);
+              console.log('updateDescription:', updateDescription);
+              console.log('updateDistance', updateDistance);
+              console.log('updateDuration:', updateDuration);
+              console.log('updateCity:', updateCity);
+              console.log('updateCoordinate:', updateCoordinate);
+              console.log('updateDifficulty:', updateDifficulty);
               const updateTrek = await api.updateTrek(token, id, userId, updateTitle, updateDescription, updateDistance, updateDuration, updateCity, updateCoordinate, updateDifficulty);
+              console.log('updateTrek', updateTrek);
               if (updateTrek.status === 200) {
                 swal('Votre randonnée a bien était mise à jour', '', 'success');
               }

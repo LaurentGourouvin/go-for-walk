@@ -174,13 +174,13 @@ const api = {
       updateTrekResult = await axiosInstance.put(`/treks/${trekId}`, {
         title: updateTitle,
         description: updateDescription,
-        distance: updateDistance,
-        duration: updateDuration,
+        distance: parseInt(updateDistance, 10),
+        duration: parseInt(updateDuration, 10),
         city: updateCity,
-        coordinate: updateCoordinate,
+        coordinate: [updateCoordinate],
         //  files: updatePictures,
         user_id: userId,
-        difficulty_id: updateDifficulty,
+        difficulty_id: parseInt(updateDifficulty, 10),
 
       });
     } catch (error) {
