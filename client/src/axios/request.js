@@ -114,20 +114,80 @@ const api = {
   },
 
   /**
-   * @summary Fonction qui retourne la liste des randonées crées par cet utilisateur
-   * @param {*} userId ID de l'utilistaeur permettant de récupérer les randonnées créer par cet utilisateur
-   * @returns Une réponse HTTP contenant les randonnées crées par cet utilisateur
+   * @summary Fonction qui permet de créer une randonnée
+   * @param {*} token Token afin d'avoir l'autorisation de back pour la création d'une randonnée
+   * @param {*} formData Formulaire contenant toute les informations necéssaires à la création d'une randonnée
+   * @returns Une réponse HTTP contenant les informations de la randonnée créée
    */
-  async getTreksByUserId(userId) {
-    let treksByUserId = null;
+  async createTrek(token, formData) {
+    let resultCreateTrek = null;
+    axiosInstance.defaults.headers.common.access_token = `${token.access_token}`;
     try {
-      treksByUserId = await axiosInstance.get(`/treks/user/${userId}`);
+      resultCreateTrek = await axiosInstance.post('/treks', formData, {
+        headers: {
+          'content-type': 'multipart/form-data',
+        },
+      });
+      if (resultCreateTrek.status === 200) {
+        swal('Votre randonnée a bien était créée', '', 'success');
+      }
     } catch (error) {
-      console.error(error);
+      switch (error.response.status) {
+        case 500:
+          swal('Oups, Veuillez réessayer une erreur innatendu s\'est produite', '', 'error');
+          console.log(error.response);
+          break;
+          // si l'on pas authorisé
+        case 401:
+          swal('Problème d\'autorisation veuillez recommencez', '', 'error');
+          console.log(error.request);
+          break;
+        case 404:
+          swal('Service indisponible pour le moment, veuillez nous excuser', '', 'info');
+          console.log(error.request);
+          break;
+        default:
+          swal('Une erreur innatendu s\'est produite, veuillez nous escuser du dérangement', '', 'error');
+          console.log(error);
+      }
     }
-    return treksByUserId;
+    return resultCreateTrek;
   },
+  /**
+   * @summary Fonction qui permet de mettre a jour un les informations d'une randonnée
+   * @param {*} token Token afin d'avoir l'autorisation de back pour la modification d'une randonnée
+   * @param {*} trekId ID de la randonnée necéssaire à la base de données pour la modifier
+   * @param {*} userId ID de l'utilisateur qui à créer cette randonnée
+   * @param {*} updateTitle Titre de la randonnée mis à jour
+   * @param {*} updateDescription Description de la randonnée mis à jour
+   * @param {*} updateDistance Distance de la randonnée mis à jour
+   * @param {*} updateDuration Durée de la randonnée mis à jour
+   * @param {*} updateCity Ville de la randonnée mis à jour
+   * @param {*} updateCoordinate Coordonées de la randonnée mis à jour
+   * @param {*} updateDifficulty Difficulté de la randonnée mis à jour
+   * @returns Une réponse HTTP contenant les informations de la randonnées mis à jour et la validation des modifications
+   */
+  async updateTrek(token, trekId, userId, updateTitle, updateDescription, updateDistance, updateDuration, updateCity, updateCoordinate, updateDifficulty) {
+    let updateTrekResult = null;
+    axiosInstance.defaults.headers.common.access_token = `${token.access_token}`;
+    try {
+      updateTrekResult = await axiosInstance.put(`/treks/${trekId}`, {
+        title: updateTitle,
+        description: updateDescription,
+        distance: updateDistance,
+        duration: updateDuration,
+        city: updateCity,
+        coordinate: updateCoordinate,
+        //  files: updatePictures,
+        user_id: userId,
+        difficulty_id: updateDifficulty,
 
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    return updateTrekResult;
+  },
   /**
    * @summary Fonction qui permet de supprimer une randonnée de la base de donnée
    * @param {*} trekId ID de la randonnée que la fonction va supprimer de la base de données
@@ -171,6 +231,21 @@ const api = {
   },
 
   /**
+   * @summary Fonction qui retourne la liste des randonées crées par cet utilisateur
+   * @param {*} userId ID de l'utilistaeur permettant de récupérer les randonnées créer par cet utilisateur
+   * @returns Une réponse HTTP contenant les randonnées crées par cet utilisateur
+   */
+  async getTreksByUserId(userId) {
+    let treksByUserId = null;
+    try {
+      treksByUserId = await axiosInstance.get(`/treks/user/${userId}`);
+    } catch (error) {
+      console.error(error);
+    }
+    return treksByUserId;
+  },
+
+  /**
    * @summary Fonction qui permet de récupérer les informations d'un utilisateur via son ID
    * @param {*} userId ID de l'utilisateur à rechercher dans la base de données
    * @returns Une réponse HTTP contenant les informations de l'utilisateur
@@ -186,46 +261,6 @@ const api = {
   },
 
   /**
-   * @summary Fonction qui permet de créer une randonnée
-   * @param {*} token Token afin d'avoir l'autorisation de back pour la création d'une randonnée
-   * @param {*} formData Formulaire contenant toute les informations necéssaires à la création d'une randonnée
-   * @returns Une réponse HTTP contenant les informations de la randonnée créée
-   */
-  async createTrek(token, formData) {
-    let resultCreateTrek = null;
-    axiosInstance.defaults.headers.common.access_token = `${token.access_token}`;
-    try {
-      resultCreateTrek = await axiosInstance.post('/treks', formData, {
-        headers: {
-          'content-type': 'multipart/form-data',
-        },
-      });
-      if (resultCreateTrek.status === 200) {
-        swal('Votre randonnée a bien était créée', '', 'success');
-      }
-    } catch (error) {
-      switch (error.response.status) {
-        case 500:
-          swal('Oups, Veuillez réessayer une erreur innatendu s\'est produite', '', 'error');
-          console.log(error.response);
-          break;
-          // si l'on pas authorisé
-        case 401:
-          swal('Problème d\'autorisation veuillez recommencez', '', 'error');
-          console.log(error.request);
-          break;
-        case 404:
-          swal('Service indisponible pour le moment, veuillez nous excuser', '', 'info');
-          console.log(error.request);
-          break;
-        default:
-          swal('Une erreur innatendu s\'est produite, veuillez nous escuser du dérangement', '', 'error');
-          console.log(error);
-      }
-    }
-    return resultCreateTrek;
-  },
-  /**
    * @summary Fonction qui permet de supprimer le compte de l'utilisateur dans la base de données
    * @param {*} userId ID de l'utilisateur à rechercher dans la base de données
    * @param {*} token Token afin d'avoir l'autorisation de back pour la suppression du profil
@@ -240,6 +275,47 @@ const api = {
       console.error(error);
     }
     return resultDeleteUser;
+  },
+  // REQUETES SUR LES PICTURES
+  // ==========================
+  /**
+ * @summary Fonction qui permet de supprimer une photo d'une randonnée dans la base de données
+ * @param {*} userId ID de l'utilisateur à rechercher dans la base de données
+ * @param {*} picture String contenant un lien pour pour une image
+ * @param {*} token Token afin d'avoir l'autorisation de back pour la suppression d'une image
+ * @returns Une réponse HTTP contenant la validation de suppression de l'image
+ */
+  async deletePicture(userId, picture, token) {
+    let resultDeletePicture = null;
+    axiosInstance.defaults.headers.common.access_token = `${token.access_token}`;
+    try {
+      resultDeletePicture = await axiosInstance.put('/treks/deleteImage', { id: userId, image: picture });
+    } catch (error) {
+      console.log(error);
+    }
+    return resultDeletePicture;
+  },
+  /**
+ * @summary Fonction qui permet d'ajouter une photo d'une randonnée dans la base de données
+ * @param {*} id ID du trek pour rechercher dans la base de données
+ * @param {*} token Token afin d'avoir l'autorisation de back pour l'ajout d'une image
+ * @param {*} formData Formulaire contenant les données necessaires à la base de données
+ * @returns Une réponse HTTP contenant la validation de l'ajout de l'image
+ */
+  async addPicture(id, token, formData) {
+    let resultAddPicture = null;
+    axiosInstance.defaults.headers.common.access_token = `${token.access_token}`;
+
+    try {
+      resultAddPicture = await axiosInstance.put(`/treks/addImage/${id}`, formData, {
+        headers: {
+          'content-type': 'multipart/form-data',
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    return resultAddPicture;
   },
 };
 
