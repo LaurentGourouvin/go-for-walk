@@ -26,12 +26,12 @@ module.exports = {
       fields.push(`${key} = $${1 + fields.length}`);
       values.push(user[key]);
     });
-    const result = await client.query(`UPDATE users SET ${fields} WHERE id = ${userId}`, values);
+    const result = await client.query(`UPDATE users SET ${fields} WHERE id = ${userId} RETURNING *`, values);
     return result.rows[0];
   },
 
   async disabledUser(userId) {
-    const result = await client.query('UPDATE "users" SET status = \'disabled\' WHERE id = $1', [userId]);
+    const result = await client.query('UPDATE "users" SET status = \'disabled\' WHERE id = $1 RETURNING *', [userId]);
     return result.rows[0];
   },
 };
