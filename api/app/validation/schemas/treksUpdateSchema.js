@@ -1,11 +1,11 @@
 const joi = require('joi');
 
 module.exports = joi.object({
-  title: joi.string(),
-  description: joi.string(),
-  distance: joi.number().integer(),
-  duration: joi.number().integer(),
-  city: joi.string(),
-  coordinate: joi.number().integer(),
-  pictures: joi.string(),
+  title: joi.string().optional(),
+  description: joi.string().optional(),
+  distance: joi.number().integer().optional(),
+  duration: joi.number().integer().optional(),
+  city: joi.string().optional(),
+  coordinate: joi.array().optional(),
+  pictures: joi.string().optional(),
 }).min(1).required();

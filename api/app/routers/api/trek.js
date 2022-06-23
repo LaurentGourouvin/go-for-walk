@@ -16,7 +16,9 @@ const storage = multer.diskStorage({
 const upload = multer({
   storage,
   fileFilter(req, file, cb) {
-    if ((file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpg' || file.mimetype === 'image/png')) {
+    const regex = /\.[a-z]*$/g;
+    const fileFilter = file.originalname.match(regex)[0];
+    if ((fileFilter === '.png' || fileFilter === '.jpg' || fileFilter === '.jpeg')) {
       return cb(null, true);
     }
     return cb(new Error('Format supported is only .png, .jpg and .jpeg '));
@@ -30,7 +32,7 @@ const updateSchema = require('../../validation/schemas/treksUpdateSchema');
 
 const tokenController = require('../../helpers/tokenController');
 
-// const log = require('../../helpers/consolelog');
+const log = require('../../helpers/consolelog');
 
 const router = express.Router();
 
@@ -42,12 +44,22 @@ router
   * @property {string} title.required - trek title
   * @property {string} description - trek description
   * @property {integer} distance - trek distance
-  * @property {integer} duration - trek duration
-  * @property {string} city - trek city
-  * @property {array<integer>} coordinate - trek coordinates
+  * @property {integer} duration.required - trek duration
+  * @property {string} city.required - trek city
+  * @property {array<string>} coordinate - trek coordinates
   * @property {string} files - trek pictures - binary
   * @property {integer} user_id.required - trek userId
   * @property {integer} difficulty_id.required - trek difficulty
+*/
+/**
+  * A Trek is create with the following parameters :
+  * @typedef {object} trekUpdate
+  * @property {string} title - trek title
+  * @property {string} description - trek description
+  * @property {integer} distance - trek distance
+  * @property {integer} duration - trek duration
+  * @property {string} city - trek city
+  * @property {array<string>} coordinate - trek coordinates
 */
 /**
      * GET /api/treks
@@ -63,7 +75,7 @@ router
      * @param {string} access_token.header.required - access_token
      * @return {object} 200 - the new trek
      */
-  .post(tokenController(), upload.array('files', 5), validate('body', createSchema), controllerHandler(trekController.createTrek));
+  .post(tokenController(), upload.array('files', 5), log(), validate('body', createSchema), controllerHandler(trekController.createTrek));
 
 router
   .route('/:id(\\d+)')
@@ -82,7 +94,7 @@ router
      * @tags Treks
      * @param {number} id.path.required - trek identifier
      * @param {string} access_token.header.required - access_token
-     * @param {Trek} request.body.required - trek info
+     * @param {trekUpdate} request.body.required - trek info
      */
   .put(tokenController(), validate('body', updateSchema), controllerHandler(trekController.updateTrek))
 /**

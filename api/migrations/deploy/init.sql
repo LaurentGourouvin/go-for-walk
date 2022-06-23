@@ -30,7 +30,7 @@ CREATE TABLE "treks" (
     "distance" INT,
     "duration" INT NOT NULL,
     "city" TEXT NOT NULL,
-    "coordinate" INT[] DEFAULT array[]::INT[],
+    "coordinate" TEXT[] DEFAULT array[]::TEXT[],
     "pictures" TEXT[] DEFAULT array[]::TEXT[],
     "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
     "updated_at" TIMESTAMPTZ ,
