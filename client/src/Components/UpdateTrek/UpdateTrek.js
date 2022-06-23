@@ -276,6 +276,7 @@ function UpdateTrek({ token }) {
               formData.append('files', tabPhoto);
               const addPicture = await api.addPicture(id, token, formData);
               if (addPicture.status === 200) {
+                setTrekDataPictures(addPicture.data.pictures);
                 swal('Votre photo a bien était rajouté', '', 'success');
               }
             } catch (error) {
