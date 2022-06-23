@@ -1,7 +1,7 @@
 .Profil {  
     background-color: rgba(255,255,255,.5);
     border-radius:  .5rem;
-    border: 1px solid rgb(96, 84, 90,1);
+    border: 1px solid rgba(96, 84, 90,.2);
     padding: 1rem;
     color: rgb(87, 98, 47);
 
@@ -33,7 +33,37 @@
     }
     &-input {
         padding: .25rem; 
+        margin: auto;
+        margin-left: 1rem;
         border: 1px solid rgb(179, 174, 176);
+        color: #ccd5ae;
+    }
+    &-input:focus {
+        color: #ccd5ae;
+        outline: .15rem solid #ccd5ae;
+    }
+    &-label{
+        margin-top: .25rem;
+        margin-bottom: .25rem;
+    }
+    &-span {
+        min-width: 100%;
+        display: block;
+    }
+    &-buttons-group {
+        margin: auto;
+        margin-top: 1.25rem;
+        width: 100%;
+    }
+    &-informations-h2 {
+        font-weight: 700;
+    }
+    &-informations-description {
+        padding: .5rem;
+        font-style: italic;
+    }
+    &-informations-description:hover {
+        background-color: rgba(87, 98, 47,.1);
     }
 }
 .msg-error {

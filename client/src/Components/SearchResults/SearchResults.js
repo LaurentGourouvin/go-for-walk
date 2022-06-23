@@ -1,40 +1,44 @@
 import PropTypes from 'prop-types';
-// import data from '../../dataStatic/data_treks';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import Trek from '../Trek/Trek';
 import './SearchResults.scss';
+import api from '../../axios/request';
 
-function SearchResults({ searchCity }) {
+function SearchResults({ searchCity, token }) {
   const [searchResult, setSearchResult] = useState([]);
 
   useEffect(() => {
     // si searchCity est vide je requête l'API pour recevoir TOUTES les randonnées
-    setSearchResult('');
-    const dataArray = [];
+    setSearchResult([]);
     if (searchCity === '') {
-      console.log('Je dois afficher toutes les randonnées du site');
       try {
-        axios.get('http://141.94.207.7:8080/api/treks')
-          .then((res) => {
-            const { data } = res;
-            setSearchResult(data);
-            console.log('resultat axios', res);
-            console.log('tout les randonnées du site:', dataArray);
-          });
+        // J'utilise des fonctions fléchées en mode ASYNCHRONE
+        // Si on ne passe pas par la création de fléchée pour effectuer des méthodes asynchrones dans notre useEffect
+        // React ne sera pas content et ça sera full erreur dans tout les sens.
+        // Un peu de documentation : https://devtrium.com/posts/async-functions-useeffect
+        const allTreks = async () => {
+          const treks = await api.getAllTreks();
+          if (treks) {
+            setSearchResult(treks.data);
+          }
+        };
+        allTreks();
       } catch (err) {
+        console.log('Bug dans SearchResult AllTreks');
         console.log(err);
       }
     } else {
       try {
-        axios.get(`http://141.94.207.7:8080/api/treks/${searchCity}`)
-          .then((res) => {
-            const { data } = res;
-            // dataArray.push(data);
-            setSearchResult(data);
-          });
+        const treksByCityName = async () => {
+          const treks = await api.getTreksByCity(searchCity);
+          if (treks) {
+            setSearchResult(treks.data);
+          }
+        };
+        treksByCityName();
       } catch (err) {
+        console.log('Bug dans SearchResult TreakByCityName');
         console.log(err);
       }
     }
@@ -54,8 +58,12 @@ function SearchResults({ searchCity }) {
       </div>
       <div className="SearchResults-cardContainer">
         {console.log('affichage de mon state', searchResult)}
-        {searchResult.length === 0
-          ? '' : searchResult.map((result) => <Trek key={result.id} data={result} />)}
+        {
+        searchResult.length === 0 && token
+          ? ''
+          : searchResult.map((result) => <Trek key={result.id} data={result} token={token} />)
+        }
+
       </div>
     </div>
   );
@@ -64,5 +72,6 @@ function SearchResults({ searchCity }) {
 
 SearchResults.propTypes = {
   searchCity: PropTypes.string.isRequired,
+  token: PropTypes.object.isRequired,
 };
 export default SearchResults;

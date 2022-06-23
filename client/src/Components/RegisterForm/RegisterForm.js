@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
 import './RegisterForm.scss';
+import api from '../../axios/request';
 
 function RegisterForm() {
   const [email, setEmail] = useState('');
@@ -15,23 +15,16 @@ function RegisterForm() {
   return (
     <form
       className="RegisterForm"
-      onSubmit={(event) => {
+      onSubmit={async (event) => {
         event.preventDefault();
         if (password !== confirmPassword) {
           swal('Votre mot de passe doit être identique');
         } else {
-          axios.post('http://141.94.207.7:8080/api/auth/register', {
-            firstname: firstName, name: lastName, email: email, password: password,
-          })
-            .then((res) => {
-              console.log(res);
-              swal('Votre compte à bien était créé', 'vous pouvez maintenant vous connecter', 'success');
-              navigate('/login');
-            })
-            .catch((error) => {
-              swal('Cette Email est déjà utilisé');
-              console.log(error);
-            });
+          const register = await api.register(firstName, lastName, email, password);
+          if (register) {
+            swal('Votre compte à bien était créé', 'vous pouvez maintenant vous connecter', 'success');
+            navigate('/login');
+          }
         }
       }}
     >
@@ -89,7 +82,7 @@ function RegisterForm() {
             placeholder="Votre mot de passe"
             id="password"
             name="password"
-            type="text"
+            type="password"
             required
             value={password}
             onChange={(event) => {
@@ -104,7 +97,7 @@ function RegisterForm() {
             placeholder="Confirmer votre mot de passe"
             id="confirmPassword"
             name="confirmPassword"
-            type="text"
+            type="password"
             required
             value={confirmPassword}
             onChange={(event) => {

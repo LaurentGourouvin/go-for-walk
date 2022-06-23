@@ -37,6 +37,7 @@
         "object-shorthand": "off",
         "react/jsx-uses-react": "off",
         "react/react-in-jsx-scope": "off",
-        "max-len": "off"
+        "max-len": "off",
+        "no-console": "off"
     }
 }
