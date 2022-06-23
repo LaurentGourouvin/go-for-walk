@@ -267,20 +267,20 @@ const api = {
   },
 
   /**
-   * @summary Fonction qui permet de supprimer le compte de l'utilisateur dans la base de données
+   * @summary Fonction qui permet de désactivé le compte de l'utilisateur dans la base de données
    * @param {*} userId ID de l'utilisateur à rechercher dans la base de données
-   * @param {*} token Token afin d'avoir l'autorisation de back pour la suppression du profil
+   * @param {*} token Token afin d'avoir l'autorisation de back pour la désactivation du profil
    * @returns Une réponse HTTP contenant la validation de suppression du compte
    */
-  async deleteUser(userId, token) {
-    let resultDeleteUser = null;
+  async disableUser(userId, token) {
+    let resultDisableUser = null;
     axiosInstance.defaults.headers.common.access_token = `${token.access_token}`;
     try {
-      resultDeleteUser = await axiosInstance.delete(`/users/${userId}`);
+      resultDisableUser = await axiosInstance.delete(`/users/${userId}`);
     } catch (error) {
       console.error(error);
     }
-    return resultDeleteUser;
+    return resultDisableUser;
   },
   // REQUETES SUR LES PICTURES
   // ==========================
