@@ -4,6 +4,6 @@ BEGIN;
 
 
 
-DROP TABLE "users", "difficulty", "treks";
+DROP TABLE "users", "difficulty", "treks", "comments";
 
 COMMIT;

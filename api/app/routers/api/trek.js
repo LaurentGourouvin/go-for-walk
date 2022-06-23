@@ -1,6 +1,7 @@
 const express = require('express');
-
 const multer = require('multer');
+const controllerHandler = require('../../helpers/controllerHandler');
+const trekController = require('../../controllers/api/trek');
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -15,7 +16,9 @@ const storage = multer.diskStorage({
 const upload = multer({
   storage,
   fileFilter(req, file, cb) {
-    if ((file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpg' || file.mimetype === 'image/png')) {
+    const regex = /\.[a-z]*$/g;
+    const fileFilter = file.originalname.match(regex)[0];
+    if ((fileFilter === '.png' || fileFilter === '.jpg' || fileFilter === '.jpeg')) {
       return cb(null, true);
     }
     return cb(new Error('Format supported is only .png, .jpg and .jpeg '));
@@ -26,8 +29,7 @@ const validate = require('../../validation/validator');
 
 const createSchema = require('../../validation/schemas/treksCreateSchema');
 const updateSchema = require('../../validation/schemas/treksUpdateSchema');
-const controllerHandler = require('../../helpers/controllerHandler');
-const trekController = require('../../controllers/api/trek');
+
 const tokenController = require('../../helpers/tokenController');
 
 const log = require('../../helpers/consolelog');
@@ -42,12 +44,22 @@ router
   * @property {string} title.required - trek title
   * @property {string} description - trek description
   * @property {integer} distance - trek distance
-  * @property {integer} duration - trek duration
-  * @property {string} city - trek city
-  * @property {array<integer>} coordinate - trek coordinates
+  * @property {integer} duration.required - trek duration
+  * @property {string} city.required - trek city
+  * @property {array<string>} coordinate - trek coordinates
   * @property {string} files - trek pictures - binary
   * @property {integer} user_id.required - trek userId
   * @property {integer} difficulty_id.required - trek difficulty
+*/
+/**
+  * A Trek is create with the following parameters :
+  * @typedef {object} trekUpdate
+  * @property {string} title - trek title
+  * @property {string} description - trek description
+  * @property {integer} distance - trek distance
+  * @property {integer} duration - trek duration
+  * @property {string} city - trek city
+  * @property {array<string>} coordinate - trek coordinate
 */
 /**
      * GET /api/treks
@@ -60,9 +72,10 @@ router
      * @summary Create one trek
      * @tags Treks
      * @param {Trek} request.body.required - trek info - multipart/form-data
+     * @param {string} access_token.header.required - access_token
      * @return {object} 200 - the new trek
      */
-  .post(upload.array('files', 5), validate('body', createSchema), controllerHandler(trekController.createTrek));
+  .post(tokenController(), upload.array('files', 5), log(), validate('body', createSchema), controllerHandler(trekController.createTrek));
 
 router
   .route('/:id(\\d+)')
@@ -80,14 +93,16 @@ router
      * @summary Update one Trek
      * @tags Treks
      * @param {number} id.path.required - trek identifier
-     * @param {Trek} request.body.required - trek info
+     * @param {string} access_token.header.required - access_token
+     * @param {trekUpdate} request.body.required - trek info
      */
-  .put(validate('body', updateSchema), tokenController(), controllerHandler(trekController.updateTrek))
+  .put(tokenController(), validate('body', updateSchema), controllerHandler(trekController.updateTrek))
 /**
  * DELETE /api/treks/{id}
  * @summary Delete one trek
  * @tags Treks
  * @param {number} id.path.required - trek identifier
+ * @param {string} access_token.header.required - access_token
  * @returns {object} 200 - trek supprimé
  */
   .delete(tokenController(), controllerHandler(trekController.deletTrek));
@@ -104,21 +119,22 @@ router
   .get(controllerHandler(trekController.getByCity));
 
 router
-  .route('/addImage')
+  .route('/addImage/:id(\\d+)')
 /**
   * add new image :
   * @typedef {object} addImage
-  * @property {number} id.path.required - trek id
   * @property {string} files - nouvelle image - binary
 */
 /**
- * PUT /api/treks/addImage
+ * PUT /api/treks/addImage/{id}
  * @summary Add new image
  * @tags Images
+ * @param {number} id.path.required - trek identifier
  * @param {addImage} request.body.required - ajouter nouvelle image - multipart/form-data
+ * @param {string} access_token.header.required - access_token
  * @returns {object} 200 - Url of new image
 */
-  .put(upload.single('files'), log(), controllerHandler(trekController.addImage));
+  .put(tokenController(), controllerHandler(trekController.checkMaxImage), upload.single('files'), controllerHandler(trekController.addImage));
 router
   .route('/deleteImage')
 /**
@@ -132,9 +148,10 @@ router
  * @summary Remove one image
  * @tags Images
  * @param {deleteImage} request.body.required - trek info
+ * @param {string} access_token.header.required - access_token
  * @returns {object} 200 - Name of delete image
 */
-  .put(controllerHandler(trekController.deleteImage));
+  .put(tokenController(), controllerHandler(trekController.deleteImage));
 
 router
   .route('/user/:id(\\d+)')

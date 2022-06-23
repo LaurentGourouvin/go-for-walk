@@ -6,12 +6,14 @@ if (process.env.NODE_ENV !== 'production') {
   dotenv.config();
 }
 
-const app = require('./app');
+const port = process.env.PORT ?? 8080;
 
-const port = process.env.PORT ?? 3000;
+const app = require('./app');
 
 const server = http.createServer(app);
 
 server.listen(port, () => {
   debug(`Listening on ${port}`);
 });
+
+module.exports = { port };

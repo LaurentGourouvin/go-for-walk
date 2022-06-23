@@ -2,7 +2,7 @@
 
 BEGIN;
 
-DROP TABLE IF EXISTS "treks", "users", "difficulty";
+DROP TABLE IF EXISTS "treks", "users", "difficulty", "comments";
 
 
 CREATE TABLE "users" (
@@ -30,12 +30,24 @@ CREATE TABLE "treks" (
     "distance" INT,
     "duration" INT NOT NULL,
     "city" TEXT NOT NULL,
-    "coordinate" INT[] DEFAULT array[]::INT[],
+    "coordinate" TEXT[] DEFAULT array[]::TEXT[],
     "pictures" TEXT[] DEFAULT array[]::TEXT[],
     "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
     "updated_at" TIMESTAMPTZ ,
     "user_id" INT NOT NULL REFERENCES "users"("id"),
     "difficulty_id" INT NOT NULL REFERENCES "difficulty"("id")
 );
+
+CREATE TABLE "comments" (
+    "id" int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    "title" TEXT NOT NULL,
+    "description" TEXT,
+    "note" INT NOT NULL,
+    "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
+    "updated_at" TIMESTAMPTZ,
+    "user_id" INT NOT NULL REFERENCES "users"("id"),
+    "trek_id" INT NOT NULL REFERENCES "treks"("id")
+);
+
 
 COMMIT;

@@ -35,7 +35,7 @@ const router = express.Router();
 
 router
   .route('/')
-  /**
+/**
  * A User is create with the following parameters :
      * @typedef {object} updateUser
      * @property {string} firstname - user firstname
@@ -70,13 +70,15 @@ router
      * @return {object} 200 - Utilisateur mis à jour
      */
   .put(upload.single('files'), log(), validate('body', updateSchema), controllerHandler(userController.updateUser))
+
 /**
  * DELETE /api/users/{id}
- * @summary Delete one user
+ * @summary Disabled one user
  * @tags Users
  * @param {number} id.path.required - user identifier
- * @returns {object} 200 - utilisateur supprimé
+ * @param {string} access_token.header.required - access_token
+ * @returns {object} 200 - utilisateur désact
  */
-  .delete(tokenController(), controllerHandler(userController.deletUser));
+  .delete(tokenController(), controllerHandler(userController.disabledUser));
 
 module.exports = router;

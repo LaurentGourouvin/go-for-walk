@@ -1,4 +1,7 @@
+const bcrypt = require('bcrypt');
 const client = require('../config/db');
+
+const saltRounds = 10;
 
 module.exports = {
 
@@ -13,6 +16,10 @@ module.exports = {
   },
 
   async update(userId, user) {
+    if (user.password) {
+      // eslint-disable-next-line no-param-reassign
+      user.password = await bcrypt.hash(user.password, saltRounds);
+    }
     const fields = [];
     const values = [];
     Object.keys(user).forEach((key) => {
@@ -23,8 +30,8 @@ module.exports = {
     return result.rows[0];
   },
 
-  async delet(userId) {
-    const result = await client.query('DELETE FROM "users" WHERE id = $1', [userId]);
+  async disabledUser(userId) {
+    const result = await client.query('UPDATE "users" SET status = \'disabled\' WHERE id = $1 RETURNING *', [userId]);
     return result.rows[0];
   },
 };

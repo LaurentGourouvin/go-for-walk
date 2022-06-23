@@ -57,7 +57,11 @@ module.exports = {
     if (req.files.length > 0) {
       const imagePath = [];
       req.files.forEach((file) => {
-        imagePath.push(`${process.env.API_ADRESS_VPS}uploads/${file.filename}`);
+        if (process.env.NODE_ENV === 'production') {
+          imagePath.push(`${process.env.API_ADRESS_VPS}uploads/${file.filename}`);
+        } else {
+          imagePath.push(`${process.env.API_ADRESS_LOCAL}uploads/${file.filename}`);
+        }
       });
       const trek = await trekDataMapper.create(req.body, imagePath);
       return res.json(trek);
@@ -69,8 +73,13 @@ module.exports = {
   },
 
   async addImage(req, res) {
-    const trekToUpdate = await trekDataMapper.findByPk(req.body.id);
-    const newImage = `${process.env.API_ADRESS_LOCAL}uploads/${req.file.filename}`;
+    const trekToUpdate = await trekDataMapper.findByPk(req.params.id);
+    let newImage;
+    if (process.env.NODE_ENV === 'production') {
+      newImage = `${process.env.API_ADRESS_VPS}uploads/${req.file.filename}`;
+    } else {
+      newImage = `${process.env.API_ADRESS_LOCAL}uploads/${req.file.filename}`;
+    }
     const trek = await trekDataMapper.addImage(trekToUpdate, newImage);
     return res.json(trek);
   },
@@ -84,5 +93,15 @@ module.exports = {
   async getTreksByUser(req, res) {
     const trekUserId = await trekDataMapper.findByUserPk(req.params.id);
     return res.json(trekUserId);
+  },
+
+  async checkMaxImage(req, res, next) {
+    const trekToCheck = await trekDataMapper.findByPk(req.params.id);
+    const myArray = trekToCheck.pictures;
+    if (myArray.length < 5) {
+      next();
+    } else {
+      res.send('You can not add more than 5 images');
+    }
   },
 };

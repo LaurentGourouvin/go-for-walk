@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 // import data from '../../dataStatic/data_profil';
+import swal from 'sweetalert';
 import authentification from '../../utils/sessionUser/sessionUser';
 import ImageWarning from './images/warning.png';
 import Map from '../Map/Map';
@@ -21,8 +22,83 @@ function Profil({ token }) {
   const [name, setName] = useState('');
   const [firstName, setFirstName] = useState('');
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [updateForm, setUpdateForm] = useState(false);
+
+  const [updateName, setUpdateName] = useState('');
+  const [updateFirstName, setUpdateFirstName] = useState('');
+  const [updateEmail, setUpdateEmail] = useState('');
+  const [updatePassword, setUpdatePassword] = useState('');
+
   let decodedToken = null;
   let userId = null;
+  const handleUpdateForm = (e) => {
+    e.preventDefault();
+    if (token) {
+      decodedToken = jwtDecode(token.access_token);
+      userId = decodedToken.userId;
+    }
+    const errorOnSubmitForm = [];
+
+    // Gestion d'erreur
+    if (updateName === '') {
+      errorOnSubmitForm.push({ label: 'updateName', value: 'Champs Name non renseigné' });
+    }
+    if (updateEmail === '') {
+      errorOnSubmitForm.push({ label: 'updateEmail', value: 'Champs Email non renseigné' });
+    }
+    if (updatePassword === '') {
+      errorOnSubmitForm.push({ label: 'updatePassword', value: 'Champs Password non renseigné' });
+    }
+    if (updateFirstName === '') {
+      errorOnSubmitForm.push({ label: 'updateName', value: 'Champs Prénom non renseigné' });
+    }
+
+    // Envoie du formulaire
+
+    if (errorOnSubmitForm.length > 0) {
+      swal({
+        title: 'Formulaire incomplet',
+        icon: 'error',
+      });
+    } else {
+      try {
+        axios.put(`http://141.94.207.7:8080/api/users/${userId}`, {
+          headers: {
+            Authorization: `bearer ${token.access_token}`,
+          },
+          data: {
+            firstname: updateFirstName,
+            name: updateName,
+            password: updatePassword,
+            email: updateEmail,
+          },
+        })
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((err) => {
+            console.error('error axios:', err);
+          });
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setUpdateForm(false);
+      }
+    }
+  };
+  const handleChangeUpdateEmail = (e) => {
+    setUpdateEmail(e.target.value);
+  };
+  const handleChangeUpdatePassword = (e) => {
+    setUpdatePassword(e.target.value);
+  };
+  const handleChangeUpdateName = (e) => {
+    setUpdateName(e.target.value);
+  };
+  const handleChangeUpdateFirstName = (e) => {
+    setUpdateFirstName(e.target.value);
+  };
 
   useEffect(() => {
     try {
@@ -38,6 +114,7 @@ function Profil({ token }) {
           setEmail(data.email);
           setName(data.name);
           setFirstName(data.firstname);
+          setPassword(data.password);
         });
     } catch (err) {
       console.log(err);
@@ -52,15 +129,78 @@ function Profil({ token }) {
           <div className="Profil-Informations">
             <h2 className="Profil-h2">Votre Profil</h2>
             <div className="Profil-Informations-Card m-7 p-6 max-w-sm bg-white/[.9] rounded-lg border border-white shadow-md dark:bg-gray-800 dark:border-gray-700 hover:shadow-lg">
-              <p>adresse mail {email}</p>
+              {!updateForm && (
+              <>
+                <p>adresse mail {email}</p>
+                <p>nom: {name}</p>
+                <p>prenom: {firstName}</p>
+              </>
+              )}
 
-              <p>nom: {name}</p>
-              <p>prenom: {firstName}</p>
+              {updateForm && (
+              <form className="Profil-form" onSubmit={handleUpdateForm}>
+                <label className="" htmlFor="email">
+                  <span>Email:</span>
+                  <input
+                    className="Profil-input"
+                    placeholder={email}
+                    type="email"
+                    value={updateEmail}
+                    onChange={handleChangeUpdateEmail}
+                  />
+                </label>
+                <label className="" htmlFor="password">
+                  <span>Password:</span>
+                  <input
+                    id="password"
+                    name="password"
+                    className="Profil-input"
+                    placeholder={password}
+                    type="password"
+                    value={updatePassword}
+                    onChange={handleChangeUpdatePassword}
+                  />
+                </label>
+                <label className="" htmlFor="name">
+                  <span>Name:</span>
+                  <input
+                    id="name"
+                    name="name"
+                    className="Profil-input"
+                    placeholder={name}
+                    type="text"
+                    value={updateName}
+                    onChange={handleChangeUpdateName}
+                  />
+                </label>
+                <label className="" htmlFor="firstname">
+                  <span>Firstname:</span>
+                  <input
+                    id="firstname"
+                    name="firstname"
+                    className="Profil-input"
+                    placeholder={firstName}
+                    type="text"
+                    value={updateFirstName}
+                    onChange={handleChangeUpdateFirstName}
+                  />
+                </label>
+                <button type="submit">Confirmer la mise à jour</button>
+                <button type="button" onClick={() => setUpdateForm(!updateForm)}>Annuler la mise à jour</button>
+              </form>
+              )}
 
             </div>
           </div>
           <div className="Profil-Actions">
-            <button type="button" className="bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Modifier le profil</button>
+            <button
+              onClick={() => {
+                setUpdateForm(true);
+              }}
+              type="button"
+              className="bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+            >Modifier le profil
+            </button>
             <button type="button" className="bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Consulter mes randonnées</button>
           </div>
         </div>
