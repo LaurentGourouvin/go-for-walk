@@ -205,39 +205,6 @@ function UpdateTrek({ token }) {
             />
           </label>
 
-          <div className="UpdateTrek-imgContainer">
-            {trekDataPictures.map((picture) => (
-              <div className="UpdateTrek-label-text" key={picture}> Photos de votre Randonnée
-                <img className="UpdateTrek-img" src={picture} alt={picture} />
-                <div
-                  className="UpdateTrek-deleteImgButton bg-red-500 text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                  onClick={async () => {
-                    try {
-                      const deletePicture = await api.deletePicture(id, picture, token);
-
-                      if (deletePicture.status === 200) {
-                        setTrekDataPictures(deletePicture.data.pictures);
-                        swal({
-                          title: 'Votre photo a bien était supprimé',
-                          icon: 'success',
-                        });
-                      } else {
-                        swal({
-                          title: 'Problème lors de la mise à jour des données',
-                          icon: 'error',
-                        });
-                      }
-                    } catch (error) {
-                      console.log(error);
-                    }
-                  }}
-                >Supprimer cette Photo
-                </div>
-
-              </div>
-            ))}
-          </div>
-
           <label className="UpdateTrek-label" htmlFor="difficulty">
             <span className="UpdateTrek-label-text">Difficulté de la Randonnée:</span>
             <select
@@ -255,53 +222,87 @@ function UpdateTrek({ token }) {
             </select>
           </label>
         </div>
+
         <div className="UpdateTrek--button-container">
           <button className="UpdateTrek--button bg-green-900 text-white hover:bg-green-800 active:bg-green-900 font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Validez</button>
 
         </div>
-
       </form>
+      <div className="UpdateTrek-container-bottom">
+        <div className="UpdateTrek-imgContainer">
+          {trekDataPictures.map((picture) => (
+            <div className="UpdateTrek-label-text" key={picture}> Photos de votre Randonnée
+              <img className="UpdateTrek-img" src={picture} alt={picture} />
+              <div
+                className="UpdateTrek-deleteImgButton bg-red-500 text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                onClick={async () => {
+                  try {
+                    const deletePicture = await api.deletePicture(id, picture, token);
 
-      <form
-        encType="multipart/form-data"
-        className="UpdateTrek-addImgButton bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-        onSubmit={async (event) => {
-          event.preventDefault();
+                    if (deletePicture.status === 200) {
+                      setTrekDataPictures(deletePicture.data.pictures);
+                      swal({
+                        title: 'Votre photo a bien était supprimé',
+                        icon: 'success',
+                      });
+                    } else {
+                      swal({
+                        title: 'Problème lors de la mise à jour des données',
+                        icon: 'error',
+                      });
+                    }
+                  } catch (error) {
+                    console.log(error);
+                  }
+                }}
+              >Supprimer cette Photo
+              </div>
 
-          console.log(updatePictures);
-          try {
-            const formData = new FormData();
-            const tabPhoto = document.getElementById('pictures').files[0];
-            console.log(tabPhoto);
-            formData.append('files', tabPhoto);
-            const addPicture = await api.addPicture(id, token, formData);
-            if (addPicture.status === 200) {
-              swal('Votre photo a bien était rajouté', '', 'success');
+            </div>
+          ))}
+        </div>
+
+        <form
+          encType="multipart/form-data"
+          className="UpdateTrek-addImgButton text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+          onSubmit={async (event) => {
+            event.preventDefault();
+
+            console.log(updatePictures);
+            try {
+              const formData = new FormData();
+              const tabPhoto = document.getElementById('pictures').files[0];
+              console.log(tabPhoto);
+              formData.append('files', tabPhoto);
+              const addPicture = await api.addPicture(id, token, formData);
+              if (addPicture.status === 200) {
+                swal('Votre photo a bien était rajouté', '', 'success');
+              }
+            } catch (error) {
+              console.log(error);
             }
-          } catch (error) {
-            console.log(error);
-          }
-        }}
-      >
-        <label className="UpdateTrek-label " htmlFor="pictures">
-          <span className="UpdateTrek-label-text">Ajouter une photo de votre randonée :</span>
-          <input
-            className="UpdateTrek-input label-photo shadow-lg rounded-md"
-            placeholder="Photos de votre Randonnée "
-            id="pictures"
-            name="pictures"
-            type="file"
-            accept="images/png, images/jpeg"
-            value={updatePictures}
-            onChange={(event) => {
-              setUpdatePictures(event.target.value);
-            }}
-          />
+          }}
+        >
+          <label className="UpdateTrek-label " htmlFor="pictures">
+            <span className="UpdateTrek-label-text">Ajouter une photo de votre randonée :</span>
+            <input
+              className="UpdateTrek-input label-photo shadow-lg rounded-md"
+              placeholder="Photos de votre Randonnée "
+              id="pictures"
+              name="pictures"
+              type="file"
+              accept="images/png, images/jpeg"
+              value={updatePictures}
+              onChange={(event) => {
+                setUpdatePictures(event.target.value);
+              }}
+            />
 
-        </label>
-        <button type="submit">Envoyer la Photo
-        </button>
-      </form>
+          </label>
+          <button className="UpdateTrek--button bg-green-900 text-white hover:bg-green-800 active:bg-green-900 font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Envoyer la Photo
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

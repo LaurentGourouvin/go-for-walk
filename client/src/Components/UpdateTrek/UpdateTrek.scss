@@ -8,6 +8,11 @@
         &-imgContainer {
             display: flex;
         }
+        &-container-bottom {
+            display: flex;
+            flex-direction: column;
+            align-items:center
+        }
 
         &-img {
             max-width: 250px;
@@ -27,7 +32,7 @@
         }
 
         &-addImgButton {
-            max-width: 150px;
+            max-width: 550px;
             text-align: center;
            margin-left: 3rem;
         }        
@@ -40,6 +45,11 @@
             display: flex;
             flex-direction: column;
             margin: auto;
+            max-width: 60%;
+        }
+        &-button-container {
+            display: flex;
+            justify-content: center;
         }
 
         &-label {
