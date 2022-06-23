@@ -12,7 +12,6 @@ module.exports = {
     return result.rows[0];
   },
   async delete(commentID) {
-    console.log(`coucou ${commentID}`);
     const result = await client.query('DELETE FROM comments WHERE id = $1 RETURNING *', [commentID]);
     return result.rows[0];
   },

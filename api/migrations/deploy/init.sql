@@ -46,7 +46,7 @@ CREATE TABLE "comments" (
     "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
     "updated_at" TIMESTAMPTZ,
     "user_id" INT NOT NULL REFERENCES "users"("id"),
-    "trek_id" INT NOT NULL REFERENCES "treks"("id")
+    "trek_id" INT NOT NULL REFERENCES "treks"("id") ON DELETE CASCADE
 );
 
 
