@@ -6,7 +6,6 @@ import swal from 'sweetalert';
 import { useNavigate } from 'react-router-dom';
 import authentification from '../../utils/sessionUser/sessionUser';
 import ImageWarning from './images/warning.png';
-import Map from '../Map/Map';
 import api from '../../axios/request';
 
 function Profil({ token }) {
@@ -73,6 +72,9 @@ function Profil({ token }) {
             title: 'Mise à jour effectuée',
             icon: 'success',
           });
+          setFirstName(updateFirstName);
+          setName(updateName);
+          setEmail(updateEmail);
         } else {
           swal({
             title: 'Problème lors de la mise à jour des données',
@@ -251,7 +253,6 @@ function Profil({ token }) {
           </div>
         </div>
       </div>
-      <Map />
     </>
   );
 }
