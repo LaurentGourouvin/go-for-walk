@@ -167,7 +167,7 @@ const api = {
    * @param {*} updateDifficulty Difficulté de la randonnée mis à jour
    * @returns Une réponse HTTP contenant les informations de la randonnées mis à jour et la validation des modifications
    */
-  async updateTrek(token, trekId, userId, updateTitle, updateDescription, updateDistance, updateDuration, updateCity, updateCoordinate, updateDifficulty) {
+  async updateTrek(token, trekId, userId, updateTitle, updateDescription, updateDistance, updateDuration, updateCity, updateCoordinate) {
     let updateTrekResult = null;
     axiosInstance.defaults.headers.common.access_token = `${token.access_token}`;
     try {
@@ -186,7 +186,7 @@ const api = {
         coordinate: updateCoordinate,
         //  files: updatePictures,
         // user_id: userId,
-        difficulty_id: updateDifficulty,
+        // difficulty_id: updateDifficulty,
 
       });
     } catch (error) {
