@@ -223,8 +223,8 @@ function UpdateTrek({ token }) {
           </label>
         </div>
 
-        <div className="UpdateTrek--button-container">
-          <button className="UpdateTrek--button bg-green-900 text-white hover:bg-green-800 active:bg-green-900 font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Validez</button>
+        <div className="UpdateTrek-button-container">
+          <button className="UpdateTrek-button bg-green-900 text-white hover:bg-green-800 active:bg-green-900 font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Validez</button>
 
         </div>
       </form>
@@ -299,7 +299,7 @@ function UpdateTrek({ token }) {
             />
 
           </label>
-          <button className="UpdateTrek--button bg-green-900 text-white hover:bg-green-800 active:bg-green-900 font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Envoyer la Photo
+          <button className="UpdateTrek-button bg-green-900 text-white hover:bg-green-800 active:bg-green-900 font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Envoyer la Photo
           </button>
         </form>
       </div>
