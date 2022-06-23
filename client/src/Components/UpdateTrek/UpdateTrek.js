@@ -238,39 +238,6 @@ function UpdateTrek({ token }) {
             ))}
           </div>
 
-          <label className="UpdateTrek-label " htmlFor="pictures">
-            <span className="UpdateTrek-label-text">Ajouter une photo de votre randonée :</span>
-            <input
-              className="UpdateTrek-input label-photo shadow-lg rounded-md"
-              placeholder="Photos de votre Randonnée "
-              id="pictures"
-              name="pictures"
-              type="file"
-              accept="images/png, images/jpeg"
-              value={updatePictures}
-              onChange={(event) => {
-                setUpdatePictures(event.target.value);
-              }}
-            />
-
-          </label>
-          <div
-            className="UpdateTrek-addImgButton bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-            onClick={async (event) => {
-              event.preventDefault();
-              const formData = new FormData();
-              formData.append('files', updatePictures);
-              try {
-                const addPicture = await api.addPicture(id, token, formData);
-                if (addPicture.status === 200) {
-                  swal('Votre photo a bien était rajouté', '', 'succes');
-                }
-              } catch (error) {
-                console.log(error);
-              }
-            }}
-          >Envoyer la Photo
-          </div>
           <label className="UpdateTrek-label" htmlFor="difficulty">
             <span className="UpdateTrek-label-text">Difficulté de la Randonnée:</span>
             <select
@@ -293,6 +260,47 @@ function UpdateTrek({ token }) {
 
         </div>
 
+      </form>
+
+      <form
+        encType="multipart/form-data"
+        className="UpdateTrek-addImgButton bg-green-500 text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+        onSubmit={async (event) => {
+          event.preventDefault();
+
+          console.log(updatePictures);
+          try {
+            const formData = new FormData();
+            const tabPhoto = document.getElementById('pictures').files[0];
+            console.log(tabPhoto);
+            formData.append('files', tabPhoto);
+            const addPicture = await api.addPicture(id, token, formData);
+            if (addPicture.status === 200) {
+              swal('Votre photo a bien était rajouté', '', 'success');
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        }}
+      >
+        <label className="UpdateTrek-label " htmlFor="pictures">
+          <span className="UpdateTrek-label-text">Ajouter une photo de votre randonée :</span>
+          <input
+            className="UpdateTrek-input label-photo shadow-lg rounded-md"
+            placeholder="Photos de votre Randonnée "
+            id="pictures"
+            name="pictures"
+            type="file"
+            accept="images/png, images/jpeg"
+            value={updatePictures}
+            onChange={(event) => {
+              setUpdatePictures(event.target.value);
+            }}
+          />
+
+        </label>
+        <button type="submit">Envoyer la Photo
+        </button>
       </form>
     </div>
   );
