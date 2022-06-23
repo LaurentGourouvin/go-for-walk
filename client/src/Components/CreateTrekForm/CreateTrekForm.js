@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './CreateTrekForm.scss';
 import PropTypes from 'prop-types';
 import jwtDecode from 'jwt-decode';
@@ -13,6 +13,8 @@ function CreateTrekForm({ token }) {
   const [distance, setDistance] = useState('');
   const [duration, setDuration] = useState('');
   const [city, setCity] = useState('');
+
+  const [labelArray, setLabelArray] = useState([]);
 
   const [pictures, setPictures] = useState([]);
   const [difficultyId, setDifficultyId] = useState('');
@@ -39,6 +41,17 @@ function CreateTrekForm({ token }) {
         console.log(error);
       });
   };
+
+  useEffect(() => {
+    try {
+      axios.get('http://141.94.207.7:8080/api/labels')
+        .then((res) => {
+          setLabelArray(res.data);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
 
   return (
 
@@ -342,9 +355,7 @@ function CreateTrekForm({ token }) {
           >
             {/* Faire en sorte que le SELECT provienne de la base de donnée */}
             <option value="">Choisir une Difficulté</option>
-            <option value="1">Facile</option>
-            <option value="2">Moyen</option>
-            <option value="3">Difficile</option>
+            {labelArray.map((label) => <option value={label.id}>{label.label}</option>)}
           </select>
         </label>
       </div>
