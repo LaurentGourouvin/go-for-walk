@@ -32,7 +32,7 @@ const updateSchema = require('../../validation/schemas/treksUpdateSchema');
 
 const tokenController = require('../../helpers/tokenController');
 
-// const log = require('../../helpers/consolelog');
+const log = require('../../helpers/consolelog');
 
 const router = express.Router();
 
@@ -44,9 +44,9 @@ router
   * @property {string} title.required - trek title
   * @property {string} description - trek description
   * @property {integer} distance - trek distance
-  * @property {integer} duration - trek duration
-  * @property {string} city - trek city
-  * @property {array<integer>} coordinate - trek coordinates
+  * @property {integer} duration.required - trek duration
+  * @property {string} city.required - trek city
+  * @property {array<string>} coordinate - trek coordinates
   * @property {string} files - trek pictures - binary
   * @property {integer} user_id.required - trek userId
   * @property {integer} difficulty_id.required - trek difficulty
@@ -59,7 +59,7 @@ router
   * @property {integer} distance - trek distance
   * @property {integer} duration - trek duration
   * @property {string} city - trek city
-  * @property {array<integer>} coordinate - trek coordinates
+  * @property {array<string>} coordinate - trek coordinate
 */
 /**
      * GET /api/treks
@@ -75,7 +75,7 @@ router
      * @param {string} access_token.header.required - access_token
      * @return {object} 200 - the new trek
      */
-  .post(tokenController(), upload.array('files', 5), validate('body', createSchema), controllerHandler(trekController.createTrek));
+  .post(tokenController(), upload.array('files', 5), log(), validate('body', createSchema), controllerHandler(trekController.createTrek));
 
 router
   .route('/:id(\\d+)')
