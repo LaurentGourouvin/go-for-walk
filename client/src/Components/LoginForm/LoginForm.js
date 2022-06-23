@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 // import swal from 'sweetalert';
+import swal from 'sweetalert';
 import authentification from '../../utils/sessionUser/sessionUser';
 import api from '../../axios/request';
 
@@ -26,11 +27,15 @@ function LoginForm({ setToken }) {
         event.preventDefault();
         try {
           const { data } = await api.login(email, password);
-          if (data) {
+          // On vérifie la présence d'un paramètre access_token dans l'objet data
+          if (data.access_token) {
+            console.log('ma data', data);
             setToken(data);
             // on défini si l'utilisateur est connecté ou non dans le local storage
             authentification.setLoggin(data);
             navigate('/profil');
+          } else if (data.errorMessage) {
+            swal('Votre compte est désactivé, veuillez contacter l\'administrateur du site à cette adresse mail : admin@admin.com', '', 'info');
           }
         } catch (err) {
           console.log('ici', err);
