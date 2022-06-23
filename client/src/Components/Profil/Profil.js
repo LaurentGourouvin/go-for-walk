@@ -8,7 +8,7 @@ import authentification from '../../utils/sessionUser/sessionUser';
 import ImageWarning from './images/warning.png';
 import api from '../../axios/request';
 
-function Profil({ token }) {
+function Profil({ token, setToken }) {
   const isLogged = authentification.checkLoggin(token);
   const navigate = useNavigate();
 
@@ -219,7 +219,6 @@ function Profil({ token }) {
             <button
               onClick={() => {
                 setUpdateForm(true);
-                console.log('mon token => ', token);
               }}
               type="button"
               className="bg-green-900 text-white hover:bg-green-800 active:bg-green-900 font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
@@ -233,20 +232,23 @@ function Profil({ token }) {
               Consulter mes randonnées
             </button>
             <button
-              disabled
               onClick={async () => {
                 try {
-                  console.log('Verification du contenu de userID', userId);
-                  console.log('Verification du contenu de token', token);
-                  const deleteUser = await api.deleteUser(userId, token);
-                  console.log(deleteUser);
+                  decodedToken = jwtDecode(token.access_token);
+                  userId = decodedToken.userId;
+                  const disableUser = await api.disableUser(userId, token);
+                  if (disableUser.status === 200) {
+                    setToken({});
+                    authentification.disconnectUser();
+                    swal('Votre compte a bien était désactivé', '', 'success');
+                    navigate('/');
+                  }
                 } catch (error) {
                   console.log(error);
                 }
               }}
               type="button"
               className="bg-red-600 border border-red-300 text-white hover:text-black hover:bg-red-100 focus:ring-4 focus:ring-red-200  font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-              // Mettre en place SWAL + AXIOS pour la suppression du compte de l'utilisateur
             >
               Supprimer votre compte
             </button>
@@ -259,5 +261,6 @@ function Profil({ token }) {
 
 Profil.propTypes = {
   token: PropTypes.object.isRequired,
+  setToken: PropTypes.func.isRequired,
 };
 export default Profil;
