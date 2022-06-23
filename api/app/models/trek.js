@@ -21,10 +21,10 @@ module.exports = {
       )
       )
       ) AS comments FROM treks
-      JOIN comments ON comments.trek_id = treks.id
-      JOIN users ON comments.user_id = users.id
+      LEFT OUTER JOIN comments ON comments.trek_id = treks.id
+      LEFT OUTER JOIN users ON comments.user_id = users.id
       WHERE treks.id = $1
-      GROUP BY treks.id, comments.trek_id;`, [trekId]);
+      GROUP BY treks.id, comments.trek_id`, [trekId]);
     return result.rows[0];
   },
 
