@@ -19,7 +19,6 @@ function App() {
   const [isLogged, setIsLogged] = useState(false);
 
   useEffect(() => {
-    console.log("#Refresh de l'APP");
     if (localStorage.getItem('isLogged') === 'true') {
       setIsLogged(true);
       setToken({ access_token: localStorage.getItem('access_token'), refresh_token: localStorage.getItem('refresh_token') });
