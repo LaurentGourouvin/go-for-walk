@@ -11,7 +11,6 @@ import api from '../../axios/request';
 function Profil({
   token, setToken, setIsLogged, isLogged,
 }) {
-  // const isLogged = authentification.checkLoggin(token);
   const navigate = useNavigate();
 
   // State initial du composant
@@ -85,7 +84,6 @@ function Profil({
   };
 
   useEffect(() => {
-    console.log('#PROFIL >> Re-render');
     try {
       // ajout d'une condition pour décoder le TOKEN seulement si celui-ci existe. Cela evitera des erreurs : ERROR ACCES TOKEN
       if (token.access_token) {
