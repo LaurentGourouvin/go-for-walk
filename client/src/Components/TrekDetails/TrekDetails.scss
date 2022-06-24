@@ -5,6 +5,10 @@
     padding: 1rem;
     color: rgb(87, 98, 47);
     position: relative;
+    
+    &-info-content {
+        padding-left: 1rem;
+    }
 
     &-container-head {
        display: flex;
@@ -21,7 +25,7 @@
     }
     &-container-head-left {
         border-radius:  .5rem;
-        
+        width: 50%;
         max-width:50%;
         margin-right:0.3rem;
         padding:0.2rem;
@@ -36,11 +40,9 @@
     &-h1 {
         font-size: 2.5rem;
         color: rgb(87, 98, 47);
-        
+        margin-bottom: 1rem;
         text-align: center;
-        
-        
-       
+           
     }
    
     &-container-info {
@@ -51,17 +53,36 @@
     &-info {
         background-color: rgba(87, 98, 47,.5);
         border-radius:  .5rem;
-        padding: 0.3rem;
-        margin:0.3rem;
+        padding: 1.3rem;
+        margin:1.3rem;
         display: flex;
         justify-content:center;
 
     }
     &-container-img {
             
-        margin-top: 0.5rem;
+        margin-top: 1.5rem;
         margin-bottom: 0.5rem;;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center
     }
+
+    &-img {
+        max-width:400px;
+        max-height: 250px;
+        margin: 2rem;
+    }
+    &-img:hover {
+        transition: 0.5s;
+        transform: scale(3);
+  
+    }
+    &-description {
+        text-align: justify;
+        padding: 1rem
+    }
+    
 
 
 }
