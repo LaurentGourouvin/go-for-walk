@@ -6,7 +6,7 @@ const saltRounds = 10;
 module.exports = {
 
   async findAll() {
-    const result = await client.query('SELECT * FROM users');
+    const result = await client.query('SELECT * FROM "users"');
     return result.rows;
   },
 
