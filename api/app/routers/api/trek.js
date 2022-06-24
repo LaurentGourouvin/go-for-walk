@@ -59,7 +59,7 @@ router
   * @property {integer} distance - trek distance
   * @property {integer} duration - trek duration
   * @property {string} city - trek city
-  * @property {array<string>} coordinate - trek coordinates
+  * @property {array<string>} coordinate - trek coordinate
 */
 /**
      * GET /api/treks

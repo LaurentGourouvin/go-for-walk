@@ -11,7 +11,20 @@ module.exports = {
   },
 
   async findByPk(trekId) {
-    const result = await client.query('SELECT * FROM treks WHERE id = $1', [trekId]);
+    const result = await client.query(`SELECT treks.*, json_agg(
+      json_build_object(
+      'infos', comments,
+      'author', json_build_object(
+      'id', users.id,
+      'firstname', users.firstname,
+      'name', users.name
+      )
+      )
+      ) AS comments FROM treks
+      LEFT OUTER JOIN comments ON comments.trek_id = treks.id
+      LEFT OUTER JOIN users ON comments.user_id = users.id
+      WHERE treks.id = $1
+      GROUP BY treks.id, comments.trek_id`, [trekId]);
     return result.rows[0];
   },
 
@@ -28,12 +41,12 @@ module.exports = {
       fields.push(`${key} = $${1 + fields.length}`);
       values.push(trekData[key]);
     });
-    const result = await client.query(`UPDATE treks SET ${fields} WHERE id = ${trekId}`, values);
+    const result = await client.query(`UPDATE treks SET ${fields} WHERE id = ${trekId} RETURNING *`, values);
     return result.rows[0];
   },
 
   async delet(id) {
-    const result = await client.query('DELETE FROM treks WHERE id = $1', [id]);
+    const result = await client.query('DELETE FROM treks WHERE id = $1 RETURNING *', [id]);
     return result.rows[0];
   },
 

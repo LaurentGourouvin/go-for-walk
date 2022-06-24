@@ -6,11 +6,6 @@
     color: rgb(87, 98, 47);
     position: relative;
 
-    &-button {
-        
-        
-    }
-
     &-container-head {
        display: flex;
        justify-content:space-between;
@@ -63,9 +58,7 @@
 
     }
     &-container-img {
-        
-        max-height: 500px;
-        
+            
         margin-top: 0.5rem;
         margin-bottom: 0.5rem;;
     }

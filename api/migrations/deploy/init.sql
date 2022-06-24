@@ -2,7 +2,7 @@
 
 BEGIN;
 
-DROP TABLE IF EXISTS "treks", "users", "difficulty";
+DROP TABLE IF EXISTS "treks", "users", "difficulty", "comments";
 
 
 CREATE TABLE "users" (
@@ -11,7 +11,7 @@ CREATE TABLE "users" (
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL UNIQUE,
     "password" TEXT NOT NULL,
-    "status" TEXT NOT NULL DEFAULT 'active',
+    "profil_picture" TEXT DEFAULT 'https://soccerpointeclaire.com/wp-content/uploads/2021/06/default-profile-pic-e1513291410505.jpg',
     "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
     "updated_at" TIMESTAMPTZ
 );
@@ -37,5 +37,17 @@ CREATE TABLE "treks" (
     "user_id" INT NOT NULL REFERENCES "users"("id"),
     "difficulty_id" INT NOT NULL REFERENCES "difficulty"("id")
 );
+
+CREATE TABLE "comments" (
+    "id" int GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    "title" TEXT NOT NULL,
+    "description" TEXT,
+    "note" INT NOT NULL,
+    "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
+    "updated_at" TIMESTAMPTZ,
+    "user_id" INT NOT NULL REFERENCES "users"("id"),
+    "trek_id" INT NOT NULL REFERENCES "treks"("id") ON DELETE CASCADE
+);
+
 
 COMMIT;

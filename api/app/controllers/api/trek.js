@@ -40,13 +40,8 @@ module.exports = {
     if (!trek) {
       throw new Error('no trek found');
     }
-    try {
-      await trekDataMapper.delet(req.params.id);
-    } catch (error) {
-      res.status(500);
-      throw new Error('Internal Server Error', { statusCode: 500 });
-    }
-    return res.json(trek);
+    const trekDelete = await trekDataMapper.delet(req.params.id);
+    return res.json(trekDelete);
   },
 
   async createTrek(req, res) {

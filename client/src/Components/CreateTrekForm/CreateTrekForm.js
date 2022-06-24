@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './CreateTrekForm.scss';
 import PropTypes from 'prop-types';
-// import jwtDecode from 'jwt-decode';
-import swal from 'sweetalert';
+import jwtDecode from 'jwt-decode';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import api from '../../axios/request';
+import Map from '../Map/Map';
 
 function CreateTrekForm({ token }) {
   const [title, setTitle] = useState('');
@@ -11,12 +13,23 @@ function CreateTrekForm({ token }) {
   const [distance, setDistance] = useState('');
   const [duration, setDuration] = useState('');
   const [city, setCity] = useState('');
-  const [coordinate, setCoordinate] = useState([]);
+
+  const [labelArray, setLabelArray] = useState([]);
+
   const [pictures, setPictures] = useState([]);
   const [difficultyId, setDifficultyId] = useState('');
   const [listCity, setListCity] = useState([]);
   const [codePostal, setCodePostal] = useState('');
   const [disableSelect, setDisableSelect] = useState(true);
+  const [startCoordinate, setStartCoordinate] = useState({ lat: 0, lng: 0 });
+  const [endCoordinate, setEndCoordinate] = useState({ lat: 0, lng: 0 });
+  const [startOrEndCoordinate, setStartOrEndCoordinate] = useState('');
+  const [trekPolyline, setTrekPolyline] = useState([[], []]);
+
+  // eslint-disable-next-line no-unused-vars
+  const triggerInChangeInput = new Event('onControlInput');
+
+  const navigate = useNavigate();
 
   const getCityNameByPostalCode = (sendCp) => {
     // Vérification si le code postal contient bien 5 chiffres
@@ -29,68 +42,75 @@ function CreateTrekForm({ token }) {
       });
   };
 
-  // const decodedToken = jwtDecode(token.access_token);
-  // console.log(decodedToken);
-  // const accessToken = token.access_token;
-
-  // const { userId } = decodedToken;
-  console.log(token);
+  useEffect(() => {
+    try {
+      axios.get('http://141.94.207.7:8080/api/labels')
+        .then((res) => {
+          setLabelArray(res.data);
+        });
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
 
   return (
 
     <form
       className="CreateTrekForm"
       encType="multipart/form-data"
-      onSubmit={(event) => {
+      onSubmit={async (event) => {
         event.preventDefault();
-        // console.log(token);
-        const dataPicture = [];
-        const dataCoordinate = [];
-        dataPicture.push(document.getElementById('pictures').files[0]);
-        dataCoordinate.push(parseInt(coordinate, 10));
+        console.log("j'envoie mon formulaire");
+        if (token.access_token) {
+          const decodedToken = jwtDecode(token.access_token);
+          const dataPicture = [];
+          // A VOIR AVEC LE BACK POUR AVOIR UN TABLEAU DE CE GENRE DANS LA BDD
+          // const dataCoordinate = [[], []];
+          // J'ajoute la coordonée de départ à dataCoordinate puis la valeur d'arrivée
+          // dataCoordinate[0][0] = startCoordinate.lat;
+          // dataCoordinate[0][1] = startCoordinate.lng;
+          // dataCoordinate[1][0] = endCoordinate.lat;
+          // dataCoordinate[1][1] = endCoordinate.lng;
 
-        // Mise en place d'un formData car envoie de fichier.
-        // L'envoi du fichier nous force à changer le content-type et l'encodage par défaut de notre formulaire.
-        // Côté Back l'utilisation de multer nous permet de leur envoyer les informations directement via un FormData
-        const formData = new FormData();
-        formData.append('title', title);
-        formData.append('description', description);
-        formData.append('distance', parseInt(distance, 10));
-        formData.append('duration', parseInt(duration, 10));
-        formData.append('city', city);
-        formData.append('coordinate', dataCoordinate);
-        formData.append('user_id', 2);
-        formData.append('difficulty_id', parseInt(difficultyId, 10));
+          const dataCoordinate = [];
+          dataCoordinate.push(`${parseInt(startCoordinate.lat, 10)},${parseInt(startCoordinate.lng, 10)}`);
+          dataCoordinate.push(`${parseInt(endCoordinate.lat, 10)},${parseInt(endCoordinate.lng, 10)}`);
 
-        console.log('Ville a envoyer au Back', city);
-        // ajout de plusieurs fichier aux formData de façon dynamique
-        const tabPhoto = document.getElementById('pictures').files;
-        Object.entries(tabPhoto).forEach(
+          console.log('tableau de coordonnée:', dataCoordinate);
+          dataPicture.push(document.getElementById('pictures').files[0]);
+          // dataCoordinate.push(parseInt(coordinate, 10));
+
+          // Mise en place d'un formData car envoie de fichier.
+          // L'envoi du fichier nous force à changer le content-type et l'encodage par défaut de notre formulaire.
+          // Côté Back l'utilisation de multer nous permet de leur envoyer les informations directement via un FormData
+          const formData = new FormData();
+          formData.append('title', title);
+          formData.append('description', description);
+          formData.append('distance', parseInt(distance, 10));
+          formData.append('duration', parseInt(duration, 10));
+          formData.append('city', city);
+          formData.append('coordinate', dataCoordinate);
+          formData.append('user_id', decodedToken.userId);
+          formData.append('difficulty_id', parseInt(difficultyId, 10));
+
+          // ajout de plusieurs fichier aux formData de façon dynamique
+          const tabPhoto = document.getElementById('pictures').files;
+          Object.entries(tabPhoto).forEach(
           // eslint-disable-next-line no-unused-vars
-          ([key, value]) => {
-            formData.append('files', value);
-          },
-        );
-
-        // Communication à notre API afin d'envoyé la requête de création d'une randonnée
-        axios.post(
-          'http://141.94.207.7:8080/api/treks',
-          formData,
-          {
-            headers: {
-              'content-type': 'multipart/form-data',
+            ([key, value]) => {
+              formData.append('files', value);
             },
-          },
+          );
+          try {
+            const createTrek = await api.createTrek(token, formData);
 
-        )
-          .then((res) => {
-            console.log(res);
-            swal('Randonnée Créée', 'success');
-          })
-          .catch((error) => {
-            swal('Cela na pas marché');
+            if (createTrek.status === 200) {
+              navigate('/profil');
+            }
+          } catch (error) {
             console.log(error);
-          });
+          }
+        }
       }}
     >
       <div className="CreateTrekForm-input-container">
@@ -186,7 +206,7 @@ function CreateTrekForm({ token }) {
           {/* Affichage conditionnel du select pour les villes  */}
           {disableSelect ? (
             <select name="city" id="city" disabled>
-              <option value="default">Sélectionner votre vilte</option>
+              <option value="default">Sélectionner votre ville</option>
             </select>
 
           ) : (
@@ -208,21 +228,102 @@ function CreateTrekForm({ token }) {
           )}
 
         </label>
-        <label className="CreateTrekForm-label" htmlFor="coordinate">
-          <span className="CreateTrekForm-label-text">Saississez des Coordonnées pour la randonnée :</span>
-          <input
-            className="CreateTrekForm-input shadow-lg rounded-md"
-            placeholder="Coordonnées de votre Randonnée au format : xxx.yyy.aaa "
-            id="coordinate"
-            name="coordinate"
-            type="number"
-            required
-            value={coordinate}
-            onChange={(event) => {
-              setCoordinate(event.target.value);
+        <div className="CreateTrekForm-coordinate">
+          <div className="CreateTrekForm-coordinate-top">
+            <label className="CreateTrekForm-label label-coordinate" htmlFor="coordinate" id="coordinate">
+              <span className="CreateTrekForm-label-text">Saississez des Coordonnées pour la randonnée :</span>
+
+              <div className="CreateTrekForm-input-coordinate">
+                <p>Point de départ: </p>
+                {/* <input
+                  className="CreateTrekForm-input shadow-lg rounded-md"
+                  placeholder="Coordonnées de votre Randonnée au format : xxx.yyy "
+                  id="coordinate"
+                  name="coordinate"
+                  type="number"
+                  step="0.01"
+                  required
+                  value={coordinate}
+                  onChange={(event) => {
+                    setCoordinate(event.target.value);
+                  }}
+                /> */}
+
+                <input
+                  className="CreateTrekForm-input shadow-lg rounded-md"
+                  placeholder="Latitude"
+                  id="startLatCoord"
+                  name="startLatCoord"
+                  type="number"
+                  step="0.01"
+                  required
+                  value={startCoordinate.lat}
+                  disabled
+                />
+
+                <input
+                  className="CreateTrekForm-input shadow-lg rounded-md"
+                  placeholder="Longitude"
+                  id="startLngCoord"
+                  name="startLngCoord"
+                  type="number"
+                  step="0.01"
+                  required
+                  value={startCoordinate.lng}
+                  disabled
+                />
+              </div>
+              <div className="CreateTrekForm-input-coordinate">
+                <p>Point de d'arrivée: </p>
+                <input
+                  className="CreateTrekForm-input shadow-lg rounded-md"
+                  placeholder="Latitude"
+                  id="endLatCoord"
+                  name="endLatCoord"
+                  type="number"
+                  step="0.01"
+                  required
+                  value={endCoordinate.lat}
+                />
+                <input
+                  className="CreateTrekForm-input shadow-lg rounded-md"
+                  placeholder="Longitude"
+                  id="endLngCoord"
+                  name="endLngCoord"
+                  type="number"
+                  step="0.01"
+                  required
+                  value={endCoordinate.lng}
+                />
+              </div>
+            </label>
+          </div>
+
+          <select
+            name="startEndPosition"
+            id="startEndPosition"
+            onChange={(e) => {
+              console.log(e.target.value);
+              setStartOrEndCoordinate(e.target.value);
             }}
-          />
-        </label>
+          >
+            <option value="null">Sasir une action</option>
+            <option value="start">Ajouter point de départ</option>
+            <option value="end">Ajouter point d'arrivée</option>
+          </select>
+          <div className="CreateTrekForm-coordinate-bottom">
+
+            <Map
+              setStartCoordinate={setStartCoordinate}
+              setEndCoordinate={setEndCoordinate}
+              defineStartOrEndPosition={startOrEndCoordinate}
+              setTrekPolyline={setTrekPolyline}
+              trekPolyline={trekPolyline}
+            />
+
+          </div>
+        </div>
+
         <label className="CreateTrekForm-label " htmlFor="pictures">
           <span className="CreateTrekForm-label-text">Ajouter une photo de votre randonée :</span>
           <input
@@ -252,18 +353,17 @@ function CreateTrekForm({ token }) {
               setDifficultyId(event.target.value);
             }}
           >
+            {/* Faire en sorte que le SELECT provienne de la base de donnée */}
             <option value="">Choisir une Difficulté</option>
-            <option value="1">Facile</option>
-            <option value="2">Moyen</option>
-            <option value="3">Difficile</option>
+            {labelArray.map((label) => <option value={label.id}>{label.label}</option>)}
           </select>
         </label>
       </div>
 
       <div className="RegisterForm--button-container">
-        <button className="RegisterForm--button bg-stone-500 text-white active:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Validez</button>
+        <button className="RegisterForm--button bg-green-900 text-white hover:bg-green-800 active:bg-green-900 font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Validez</button>
         <button
-          className="RegisterForm--button bg-stone-500 text-white active:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+          className="RegisterForm--button bg-red-600 border border-red-300 text-white hover:text-black hover:bg-red-100 focus:ring-4 focus:ring-red-200  font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
           type="button"
           onClick={() => {
             setTitle('');
@@ -271,7 +371,8 @@ function CreateTrekForm({ token }) {
             setDistance('');
             setDuration('');
             setCity('');
-            setCoordinate([]);
+            setStartCoordinate({ lat: 0, lng: 0 });
+            setEndCoordinate({ lat: 0, lng: 0 });
             setPictures([]);
             setDifficultyId('');
           }}

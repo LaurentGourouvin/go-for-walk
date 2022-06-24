@@ -3,6 +3,7 @@ const userRouter = require('./user');
 const authRouter = require('./auth');
 const trekRouter = require('./trek');
 const labelRouter = require('./label');
+const commentRouter = require('./comment');
 
 const router = express.Router();
 
@@ -17,6 +18,8 @@ router.use('/auth', authRouter);
 router.use('/users', userRouter);
 
 router.use('/treks', trekRouter);
+
+router.use('/comments', commentRouter);
 
 router.use('/labels', labelRouter);
 

@@ -5,4 +5,5 @@ module.exports = joi.object({
   name: joi.string().optional(),
   email: joi.string().email().optional(),
   password: joi.string().optional(),
+  files: joi.string().optional(),
 }).min(1).required();

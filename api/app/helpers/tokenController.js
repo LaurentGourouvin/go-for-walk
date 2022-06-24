@@ -3,11 +3,12 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-// eslint-disable-next-line consistent-return
 module.exports = () => (req, res, next) => {
   if (req.headers.access_token) {
     try {
-      jwt.verify(req.headers.access_token, process.env.ACCESS_TOKEN_SECRET);
+      const myUserToken = jwt.verify(req.headers.access_token, process.env.ACCESS_TOKEN_SECRET);
+      req.userId = myUserToken.userId;
+      return next();
     } catch (err) {
       return res.status(401).json({
         message: 'Invalid token',
@@ -16,5 +17,4 @@ module.exports = () => (req, res, next) => {
   } else {
     return res.status(401).json({ error: 'No token' });
   }
-  next();
 };
