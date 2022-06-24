@@ -22,7 +22,7 @@ const upload = multer({
   },
 });
 
-const log = require('../../helpers/consolelog');
+// const log = require('../../helpers/consolelog');
 
 const validate = require('../../validation/validator');
 const updateSchema = require('../../validation/schemas/usersUpdateSchema');
@@ -69,7 +69,7 @@ router
      * @param {updateUser} request.body.required - user info - multipart/form-data
      * @return {object} 200 - Utilisateur mis à jour
      */
-  .put(upload.single('files'), log(), validate('body', updateSchema), controllerHandler(userController.updateUser))
+  .put(upload.single('files'), validate('body', updateSchema), controllerHandler(userController.updateUser))
 
 /**
  * DELETE /api/users/{id}
