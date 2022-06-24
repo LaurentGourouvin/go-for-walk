@@ -1,4 +1,5 @@
 %syntax-version=1.0.0
 %project=goforwalk
 
-init 2022-06-09T11:48:21Z Bisschop Franck <bisschopfranck@gmail.com> # Initialisation des premières tables 
+init 2022-06-09T11:48:21Z Bisschop Franck <bisschopfranck@gmail.com> # Initialisation des premières tables
+status-user 2022-06-24T12:28:19Z Bisschop Franck <bisschopfranck@gmail.com> #      migrations/deploy/status-user.sql\n     migrations/revert/status-user.sql\n     migrations/verify/status-user.sql
