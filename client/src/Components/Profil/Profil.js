@@ -8,16 +8,12 @@ import authentification from '../../utils/sessionUser/sessionUser';
 import ImageWarning from './images/warning.png';
 import api from '../../axios/request';
 
-function Profil({ token, setToken }) {
-  const isLogged = authentification.checkLoggin(token);
+function Profil({
+  token, setToken, setIsLogged, isLogged,
+}) {
+  // const isLogged = authentification.checkLoggin(token);
   const navigate = useNavigate();
 
-  // Si l'utilisateur est connecté on lui affiche son dashboard
-  if (!isLogged) {
-    return (
-      <p className="msg-error p-2 bg-amber-50 rounded-md shadow-md"><img src={ImageWarning} alt="logo de warning" />Vous devez être connecté pour accéder à la page profil</p>
-    );
-  }
   // State initial du composant
   const [name, setName] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -44,18 +40,18 @@ function Profil({ token, setToken }) {
     const errorOnSubmitForm = [];
 
     // Gestion d'erreur
-    if (updateName === '') {
-      errorOnSubmitForm.push({ label: 'updateName', value: 'Champs Name non renseigné' });
-    }
-    if (updateEmail === '') {
-      errorOnSubmitForm.push({ label: 'updateEmail', value: 'Champs Email non renseigné' });
-    }
-    if (updatePassword === '') {
-      errorOnSubmitForm.push({ label: 'updatePassword', value: 'Champs Password non renseigné' });
-    }
-    if (updateFirstName === '') {
-      errorOnSubmitForm.push({ label: 'updateName', value: 'Champs Prénom non renseigné' });
-    }
+    // if (updateName === '') {
+    //   errorOnSubmitForm.push({ label: 'updateName', value: 'Champs Name non renseigné' });
+    // }
+    // if (updateEmail === '') {
+    //   errorOnSubmitForm.push({ label: 'updateEmail', value: 'Champs Email non renseigné' });
+    // }
+    // if (updatePassword === '') {
+    //   errorOnSubmitForm.push({ label: 'updatePassword', value: 'Champs Password non renseigné' });
+    // }
+    // if (updateFirstName === '') {
+    //   errorOnSubmitForm.push({ label: 'updateName', value: 'Champs Prénom non renseigné' });
+    // }
 
     // Envoie du formulaire
 
@@ -88,6 +84,7 @@ function Profil({ token, setToken }) {
       }
     }
   };
+
   const handleChangeUpdateEmail = (e) => {
     setUpdateEmail(e.target.value);
   };
@@ -102,12 +99,17 @@ function Profil({ token, setToken }) {
   };
 
   useEffect(() => {
+    console.log('#PROFIL >> Re-render');
     try {
       // ajout d'une condition pour décoder le TOKEN seulement si celui-ci existe. Cela evitera des erreurs : ERROR ACCES TOKEN
       if (token.access_token) {
         decodedToken = jwtDecode(token.access_token);
         userId = decodedToken.userId;
+      } else {
+        decodedToken = jwtDecode(localStorage.getItem('access_token'));
+        userId = decodedToken.userId;
       }
+
       const getUser = async (id) => {
         const user = await api.getUser(id);
         if (user) {
@@ -115,13 +117,21 @@ function Profil({ token, setToken }) {
           setName(user.data.name);
           setFirstName(user.data.firstname);
           setPassword(user.data.password);
+          setIsLogged(true);
         }
       };
       getUser(userId);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
-  }, []);
+  }, [isLogged]);
+
+  // Si l'utilisateur est connecté on lui affiche son dashboard
+  if (!isLogged) {
+    return (
+      <p className="msg-error p-2 bg-amber-50 rounded-md shadow-md"><img src={ImageWarning} alt="logo de warning" />Vous devez être connecté pour accéder à la page profil</p>
+    );
+  }
   return (
     <>
       <h1 className="Profil-h1">Bonjour {firstName} {name}</h1>
@@ -262,5 +272,7 @@ function Profil({ token, setToken }) {
 Profil.propTypes = {
   token: PropTypes.object.isRequired,
   setToken: PropTypes.func.isRequired,
+  setIsLogged: PropTypes.func.isRequired,
+  isLogged: PropTypes.bool.isRequired,
 };
 export default Profil;
