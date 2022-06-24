@@ -224,12 +224,20 @@ const api = {
     let resultUpdate = null;
     axiosInstance.defaults.headers.common.access_token = `${token.access_token}`;
     try {
-      resultUpdate = await axiosInstance.put(`/users/${userId}`, {
-        firstname,
-        name,
-        password,
-        email,
-      });
+      if (password === '') {
+        resultUpdate = await axiosInstance.put(`/users/${userId}`, {
+          firstname,
+          name,
+          email,
+        });
+      } else {
+        resultUpdate = await axiosInstance.put(`/users/${userId}`, {
+          firstname,
+          name,
+          password,
+          email,
+        });
+      }
     } catch (error) {
       console.error(error);
     }

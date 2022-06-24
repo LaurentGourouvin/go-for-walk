@@ -18,6 +18,7 @@ function Profil({
   const [name, setName] = useState('');
   const [firstName, setFirstName] = useState('');
   const [email, setEmail] = useState('');
+  // eslint-disable-next-line no-unused-vars
   const [password, setPassword] = useState('');
   const [updateForm, setUpdateForm] = useState(false);
 
@@ -39,22 +40,7 @@ function Profil({
     }
     const errorOnSubmitForm = [];
 
-    // Gestion d'erreur
-    // if (updateName === '') {
-    //   errorOnSubmitForm.push({ label: 'updateName', value: 'Champs Name non renseigné' });
-    // }
-    // if (updateEmail === '') {
-    //   errorOnSubmitForm.push({ label: 'updateEmail', value: 'Champs Email non renseigné' });
-    // }
-    // if (updatePassword === '') {
-    //   errorOnSubmitForm.push({ label: 'updatePassword', value: 'Champs Password non renseigné' });
-    // }
-    // if (updateFirstName === '') {
-    //   errorOnSubmitForm.push({ label: 'updateName', value: 'Champs Prénom non renseigné' });
-    // }
-
     // Envoie du formulaire
-
     if (errorOnSubmitForm.length > 0) {
       swal({
         title: 'Formulaire incomplet',
@@ -173,7 +159,7 @@ function Profil({
                     id="password"
                     name="password"
                     className="Profil-input shadow-lg rounded-md"
-                    placeholder={password}
+                    placeholder="mot de passe"
                     type="password"
                     value={updatePassword}
                     onChange={handleChangeUpdatePassword}
@@ -228,6 +214,9 @@ function Profil({
           <div className="Profil-Actions">
             <button
               onClick={() => {
+                setUpdateFirstName(firstName);
+                setUpdateEmail(email);
+                setUpdateName(name);
                 setUpdateForm(true);
               }}
               type="button"
