@@ -83,7 +83,7 @@ router
      * GET /api/treks/{id}
      * @summary Get one trek
      * @tags Treks
-     * @param {number} id.path.required - trek identifier
+     * @param {number} id.path.required - trek identify
      * @returns {object} 200 - An array of treks
      * @returns {object} 204 - No Trek Found but request ok
      */
@@ -92,7 +92,7 @@ router
      * PUT /api/treks/{id}
      * @summary Update one Trek
      * @tags Treks
-     * @param {number} id.path.required - trek identifier
+     * @param {number} id.path.required - trek identify
      * @param {string} access_token.header.required - access_token
      * @param {trekUpdate} request.body.required - trek info
      */
@@ -101,7 +101,7 @@ router
  * DELETE /api/treks/{id}
  * @summary Delete one trek
  * @tags Treks
- * @param {number} id.path.required - trek identifier
+ * @param {number} id.path.required - trek identify
  * @param {string} access_token.header.required - access_token
  * @returns {object} 200 - trek supprimé
  */
@@ -129,7 +129,7 @@ router
  * PUT /api/treks/addImage/{id}
  * @summary Add new image
  * @tags Images
- * @param {number} id.path.required - trek identifier
+ * @param {number} id.path.required - trek identify
  * @param {addImage} request.body.required - ajouter nouvelle image - multipart/form-data
  * @param {string} access_token.header.required - access_token
  * @returns {object} 200 - Url of new image
@@ -141,7 +141,7 @@ router
   * Remove image from a trek :
   * @typedef {object} deleteImage
   * @property {number} id.path.required - trek id
-  * @property {string} image.required - url de l'image
+  * @property {string} image.required - picture url
 */
 /**
  * PUT /api/treks/deleteImage

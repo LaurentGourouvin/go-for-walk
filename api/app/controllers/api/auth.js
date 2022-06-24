@@ -18,7 +18,7 @@ module.exports = {
     try {
       const userFound = await authDataMapper.login(user);
       if (userFound.status === 'disabled') {
-        return res.json({ errorMessage: 'utilisateur désactivé' });
+        return res.json({ errorMessage: 'user disabled' });
       }
       const jwtTokens = jwt.jwtTokens(userFound);
       return res.json(jwtTokens);
