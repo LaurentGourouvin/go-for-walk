@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import swal from 'sweetalert';
 import jwtDecode from 'jwt-decode';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import api from '../../axios/request';
 import './UpdateTrek.scss';
 
@@ -26,6 +26,7 @@ function UpdateTrek({ token }) {
   const [codePostal, setCodePostal] = useState('');
   const [disableSelect, setDisableSelect] = useState(true);
 
+  const navigate = useNavigate();
   // const [updateCoordinate, setUpdateCoordinate] = useState(0);
 
   // const navigate = useNavigate();
@@ -90,6 +91,7 @@ function UpdateTrek({ token }) {
               console.log('updateTrek', updateTrek);
               if (updateTrek.status === 200) {
                 swal('Votre randonnée a bien était mise à jour', '', 'success');
+                navigate(`/trek/${id}`);
               }
             } catch (error) {
               console.log(error);

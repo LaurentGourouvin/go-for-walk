@@ -8,7 +8,7 @@ import swal from 'sweetalert';
 import authentification from '../../utils/sessionUser/sessionUser';
 import api from '../../axios/request';
 
-function LoginForm({ setToken }) {
+function LoginForm({ setToken, setIsLogged }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   // const [loggedUser, setLoggedUser] = useState({});
@@ -33,6 +33,7 @@ function LoginForm({ setToken }) {
             setToken(data);
             // on défini si l'utilisateur est connecté ou non dans le local storage
             authentification.setLoggin(data);
+            setIsLogged(true);
             navigate('/profil');
           } else if (data.errorMessage) {
             swal('Votre compte est désactivé, veuillez contacter l\'administrateur du site à cette adresse mail : admin@admin.com', '', 'info');
@@ -82,7 +83,7 @@ function LoginForm({ setToken }) {
 }
 
 LoginForm.propTypes = {
-
+  setIsLogged: PropTypes.func.isRequired,
   setToken: PropTypes.func.isRequired,
 };
 

@@ -1,5 +1,5 @@
 import './App.scss';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Header from '../Header/Header';
 import LoginForm from '../LoginForm/LoginForm';
@@ -15,16 +15,25 @@ import UpdateTrek from '../UpdateTrek/UpdateTrek';
 function App() {
   const [token, setToken] = useState({});
   const [searchCity, setSearchCity] = useState('');
+  const [isLogged, setIsLogged] = useState(false);
+
+  useEffect(() => {
+    console.log("#Refresh de l'APP");
+    if (localStorage.getItem('isLogged') === 'true') {
+      setIsLogged(true);
+      setToken({ access_token: localStorage.getItem('access_token'), refresh_token: localStorage.getItem('refresh_token') });
+    }
+  }, [isLogged]);
 
   return (
     <div className="App">
       <div className="main">
-        <Header token={token} setToken={setToken} />
+        <Header token={token} setToken={setToken} isLogged={isLogged} setIsLogged={setIsLogged} />
         <Routes>
           <Route path="/" element={<SearchBar setSearchCity={setSearchCity} />} />
-          <Route path="/login" element={<LoginForm setToken={setToken} />} />
+          <Route path="/login" element={<LoginForm setToken={setToken} setIsLogged={setIsLogged} />} />
           <Route path="/register" element={<RegisterForm />} />
-          <Route path="/profil" element={<Profil token={token} setToken={setToken} />} />
+          <Route path="/profil" element={<Profil token={token} setToken={setToken} isLogged={isLogged} setIsLogged={setIsLogged} />} />
           <Route path="/MyTreks" element={<MyTreks token={token} />} />
           <Route path="/search" element={<SearchResults searchCity={searchCity} token={token} />} />
           <Route path="/trek/create" element={<CreateTrekForm token={token} />} />

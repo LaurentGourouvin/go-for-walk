@@ -4,8 +4,8 @@ import logo from './images/logo.png';
 import './Header.scss';
 import authentification from '../../utils/sessionUser/sessionUser';
 
-function Header({ token, setToken }) {
-  if (!token.access_token) {
+function Header({ setToken, isLogged, setIsLogged }) {
+  if (!isLogged) {
     return (
       <div className="Header">
         <Link to="/">
@@ -35,6 +35,7 @@ function Header({ token, setToken }) {
         className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline"
         onClick={() => {
           setToken({});
+          setIsLogged(false);
           authentification.disconnectUser();
         }}
       > Deconnexion
@@ -46,8 +47,8 @@ function Header({ token, setToken }) {
 }
 
 Header.propTypes = {
-
-  token: PropTypes.object.isRequired,
+  isLogged: PropTypes.bool.isRequired,
+  setIsLogged: PropTypes.func.isRequired,
   setToken: PropTypes.func.isRequired,
 };
 
