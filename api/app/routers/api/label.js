@@ -20,7 +20,7 @@ router
      * GET /api/labels/{id}
      * @summary Get one label
      * @tags Labels
-     * @param {number} id.path.required - label identifier
+     * @param {number} id.path.required - label identify
      * @returns {object} 200 - one label
      */
   .get(controllerHandler(labelController.getById));

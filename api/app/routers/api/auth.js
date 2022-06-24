@@ -22,7 +22,7 @@ router
      * @summary Create New User
      * @tags Auth
      * @param {userTest} request.body.required - user info
-     * @returns {object} 200 - Utilisateur crée
+     * @returns {object} 200 - User create
      */
   .post(validate('body', createSchema), controllerHandler(authController.register));
 
