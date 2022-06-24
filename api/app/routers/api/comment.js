@@ -3,6 +3,8 @@ const express = require('express');
 const controllerHandler = require('../../helpers/controllerHandler');
 const commentController = require('../../controllers/api/comment');
 
+const tokenController = require('../../helpers/tokenController');
+
 const router = express.Router();
 
 router
@@ -13,19 +15,17 @@ router
      * @property {string} title - comment title
      * @property {string} description -comment description
      * @property {number} note - note
-     * @property {number} user_id - user id
      * @property {number} trek_id - trek id
  */
 /**
      * POST /api/comments
      * @summary Post a comment
      * @tags Comment
-     * @param {number} id.path.required - trek id
      * @param {postComment} request.body.required
      * @param {string} access_token.header - access_token
      * @returns {object} 200 - Comment create
      */
-  .post(controllerHandler(commentController.create));
+  .post(tokenController(), controllerHandler(commentController.create));
 router
   .route('/:id(\\d+)')
 /**
