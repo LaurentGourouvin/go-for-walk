@@ -2,12 +2,13 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import './TrekDetails.scss';
+import MapTrek from '../MapTrek/MapTrek';
 
 function TrekDetails() {
   const { id } = useParams();
   const [trekData, setTrekData] = useState({});
   const [trekDataPictures, setTrekDataPictures] = useState([]);
-
+  const [mapCoordinate, setMapCoordinate] = useState([[], []]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,6 +18,12 @@ function TrekDetails() {
           const { data } = res;
           setTrekData(data);
           setTrekDataPictures(res.data.pictures);
+          const mapPoint = [];
+          mapPoint.push([parseInt(data.coordinate[0], 10), parseInt(data.coordinate[1], 10)]);
+          mapPoint.push([parseInt(data.coordinate[2], 10), parseInt(data.coordinate[3], 10)]);
+          setMapCoordinate(mapPoint);
+          console.log('information de la randonnée:', data);
+          console.log('tableau des coordonées', mapPoint);
         });
     } catch (err) {
       console.log(err);
@@ -46,7 +53,8 @@ function TrekDetails() {
           </div>
         </div>
         <div className="TrekDetails-container-head-right">
-          ICI LE COMPOSANT MAP
+
+          {mapCoordinate.length > 0 ? <MapTrek mapCoordinate={mapCoordinate} /> : ''}
         </div>
       </div>
       <div className="TrekDetails-container-main">
