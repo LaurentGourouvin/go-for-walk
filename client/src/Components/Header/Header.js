@@ -1,25 +1,47 @@
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { useState } from 'react';
 import logo from './images/logo.png';
 import './Header.scss';
 import authentification from '../../utils/sessionUser/sessionUser';
+import HeaderMobile from './HeaderMobile/HeaderMobile';
 
 function Header({ setToken, isLogged, setIsLogged }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   if (!isLogged) {
     return (
-      <div className="Header">
-        <Link to="/">
-          <h1 className="Header--website-title"><img className="Header--Logo" src={logo} alt="Go For Walk Logo Website" /></h1>
-        </Link>
-        <div className="Header--burger-menu space-y-2">
-          <div className="w-8 h-0.5 bg-white" />
-          <div className="w-8 h-0.5 bg-white" />
-          <div className="w-8 h-0.5 bg-white" />
+      <>
+        <div className="Header">
+          <Link to="/">
+            <h1 className="Header--website-title"><img className="Header--Logo" src={logo} alt="Go For Walk Logo Website" /></h1>
+          </Link>
+          <div className="Header--burger-control-menu space-y-2">
+            {!menuOpen
+                && (
+                <Link
+                  to="#"
+                  className="Header-ligne-icone-burger"
+                  onClick={() => {
+                    setMenuOpen(!menuOpen);
+                  }}
+                >
+                  ☰
+                </Link>
+                )}
+
+          </div>
+          {menuOpen && <HeaderMobile setMenuOpen={setMenuOpen} />}
+          <div className="Header-menu">
+            <Link to="/register" className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline">Inscription</Link>
+            <Link to="/login" className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline">Connexion</Link>
+            <Link to="/about" className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline">A propos</Link>
+          </div>
         </div>
-        <Link to="/register" className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline">Inscription</Link>
-        <Link to="/login" className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline">Connexion</Link>
-        <Link to="/about" className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline">A propos</Link>
-      </div>
+        <div className="Header-logo-mobile">
+          <Link to="/"><img className="Header-img-logo-mobile" src={logo} alt="Go For Walk Logo Website" /></Link>
+        </div>
+      </>
     );
   }
   return (
