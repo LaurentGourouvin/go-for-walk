@@ -10,6 +10,9 @@ function TrekDetails() {
   const [trekDataPictures, setTrekDataPictures] = useState([]);
   const [mapCoordinate, setMapCoordinate] = useState([[], []]);
   const [difficultyLabel, setDifficultyLabel] = useState('');
+  const [startMarker, setStartMarker] = useState('');
+  const [endMarker, setEndMarker] = useState();
+  const [loading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,18 +22,33 @@ function TrekDetails() {
           const { data } = res;
           setTrekData(data);
           setTrekDataPictures(res.data.pictures);
+
+          // Création d'un tableau contenant les coordonées de la randonnée afin de la dessiner sur Leaflet
           const mapPoint = [];
           mapPoint.push([parseInt(data.coordinate[0], 10), parseInt(data.coordinate[1], 10)]);
           mapPoint.push([parseInt(data.coordinate[2], 10), parseInt(data.coordinate[3], 10)]);
           setMapCoordinate(mapPoint);
-          console.log('information de la randonnée:', data);
-          console.log('tableau des coordonées', mapPoint);
+
+          // Création d'un OBJ contenant LAT et LNG pour les coordonées du market sur Leaflet
+          const positionStartMarker = {
+            lat: Number(data.coordinate[0]),
+            lng: Number(data.coordinate[1]),
+          };
+          setStartMarker(positionStartMarker);
+
+          // Création d'un OBJ contenant LAT et LNG pour les coordonées du market sur Leaflet
+          const positionEndMarker = {
+            lat: Number(data.coordinate[2]),
+            lng: Number(data.coordinate[3]),
+          };
+          setEndMarker(positionEndMarker);
+
           axios.get(`http://141.94.207.7:8080/api/labels/${data.difficulty_id}`)
             .then((response) => {
               const resultDifficultyLabel = response;
               setDifficultyLabel(resultDifficultyLabel.data.label);
-            //  setDifficultyLabel(resultDifficultyLabel.label);
             });
+          setIsLoading(true);
         });
     } catch (err) {
       console.log(err);
@@ -78,7 +96,7 @@ function TrekDetails() {
         </div>
         <div className="TrekDetails-container-head-right">
 
-          {mapCoordinate.length > 0 ? <MapTrek mapCoordinate={mapCoordinate} /> : ''}
+          {loading && <MapTrek mapCoordinate={mapCoordinate} startMarker={startMarker} endMarker={endMarker} /> }
         </div>
       </div>
       <div className="TrekDetails-container-main">
