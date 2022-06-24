@@ -113,6 +113,7 @@ function CreateTrekForm({ token }) {
         }
       }}
     >
+      <h1 className="CreateTrekForm-title">Bienvenu dans le formulaire de création de randonnée</h1>
       <div className="CreateTrekForm-input-container">
 
         <label className="CreateTrekForm-label" htmlFor="title">
@@ -146,7 +147,7 @@ function CreateTrekForm({ token }) {
           />
         </label>
         <label className="CreateTrekForm-label" htmlFor="distance">
-          <span className="CreateTrekForm-label-text">Choisissez une Distance pour la randonnée :</span>
+          <span className="CreateTrekForm-label-text">Choisissez une Distance pour la randonnée ( en KM ) :</span>
           <input
             className="CreateTrekForm-input shadow-lg rounded-md"
             placeholder="Estimation d'une Distance pour votre Randonnée"
@@ -161,7 +162,7 @@ function CreateTrekForm({ token }) {
           />
         </label>
         <label className="CreateTrekForm-label" htmlFor="duration">
-          <span className="CreateTrekForm-label-text">Choisissez une Durée pour la randonnée :</span>
+          <span className="CreateTrekForm-label-text">Choisissez une Durée pour la randonnée ( en Minutes ) :</span>
           <input
             className="CreateTrekForm-input shadow-lg rounded-md"
             placeholder="Estimation d'une Durée pour votre Randonnée"
