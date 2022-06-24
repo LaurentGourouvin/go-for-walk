@@ -172,22 +172,12 @@ const api = {
     axiosInstance.defaults.headers.common.access_token = `${token.access_token}`;
     try {
       updateTrekResult = await axiosInstance.put(`/treks/${trekId}`, {
-        // * @property {string} title - trek title
-        // * @property {string} description - trek description
-        // * @property {integer} distance - trek distance
-        // * @property {integer} duration - trek duration
-        // * @property {string} city - trek city
-        // * @property {array<integer>} coordinate - trek coordinates
         title: updateTitle,
         description: updateDescription,
         distance: updateDistance,
         duration: updateDuration,
         city: updateCity,
         coordinate: updateCoordinate,
-        //  files: updatePictures,
-        // user_id: userId,
-        // difficulty_id: updateDifficulty,
-
       });
     } catch (error) {
       console.log(error);
