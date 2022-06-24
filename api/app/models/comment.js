@@ -15,4 +15,10 @@ module.exports = {
     const result = await client.query('DELETE FROM comments WHERE id = $1 RETURNING *', [commentID]);
     return result.rows[0];
   },
+  async checkIfAlreadyComment(userId) {
+    const result = await client.query(`SELECT users.id AS userid, comments.trek_id AS trek_id_from_comment FROM users
+    JOIN comments ON users.id = comments.user_id
+    WHERE user_id = $1`, [userId]);
+    return result.rows;
+  },
 };
