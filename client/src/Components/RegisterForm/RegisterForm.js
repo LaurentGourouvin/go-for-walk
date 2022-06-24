@@ -22,7 +22,7 @@ function RegisterForm() {
         } else {
           const register = await api.register(firstName, lastName, email, password);
           if (register) {
-            swal('Votre compte à bien était créé', 'vous pouvez maintenant vous connecter', 'success');
+            swal('Votre compte à bien été créé', 'vous pouvez maintenant vous connecter', 'success');
             navigate('/login');
           }
         }
