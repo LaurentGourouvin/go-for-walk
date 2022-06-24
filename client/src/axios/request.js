@@ -129,7 +129,7 @@ const api = {
         },
       });
       if (resultCreateTrek.status === 200) {
-        swal('Votre randonnée a bien était créée', '', 'success');
+        swal('Votre randonnée a bien été créée', '', 'success');
       }
     } catch (error) {
       switch (error.response.status) {
