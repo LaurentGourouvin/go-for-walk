@@ -15,6 +15,7 @@
         background-position-x: 95%;
         background-position-y: 50%;
         background-size: 42px;
+        width: 100%;
     }
     &-cityNameInput::placeholder {
         color: #ccd5ae;
@@ -26,4 +27,17 @@
         font-size: 1.5rem;
         font-style: italic;
     }
+
+    form {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 640px){
+    .SearchBar {
+        form {
+            width: 80%;
+        }
+    }
+
 }
