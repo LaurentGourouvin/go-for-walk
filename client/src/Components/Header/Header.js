@@ -51,7 +51,23 @@ function Header({ setToken, isLogged, setIsLogged }) {
         <h1 className="Header--website-title"><img className="Header--Logo" src={logo} alt="Go For Walk Logo Website" /></h1>
       </Link>
       <Link to="/trek/create" className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline"> Créer une Randonnée</Link>
-      {/* <Link to="/" className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline" onClick={() => setToken({})}> Deconnexion</Link> */}
+
+      <div className="Header--burger-control-menu space-y-2">
+        {!menuOpen
+                && (
+                <Link
+                  to="#"
+                  className="Header-ligne-icone-burger"
+                  onClick={() => {
+                    setMenuOpen(!menuOpen);
+                  }}
+                >
+                  ☰
+                </Link>
+                )}
+
+      </div>
+      {menuOpen && <HeaderMobile setMenuOpen={setMenuOpen} />}
       <Link
         to="/"
         className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline"

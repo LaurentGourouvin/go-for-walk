@@ -42,10 +42,14 @@
     &-logo-mobile {
         display: none;
     }
+
     &-burger-menu-content{
         display: none;
     }
     .hidden {
+        display: none;
+    }
+    &--burger-control-menu {
         display: none;
     }
     &-burger-menu-content-close {
