@@ -34,6 +34,18 @@ function HeaderMobile({
             </Link>
           )
           : <Link to="/login" onClick={closeMenu}><li className="Header-burger-menu-content-li">Connexion</li></Link>}
+
+        {isLogged === 'true'
+          ? (
+            <Link
+              to="/trek/create"
+              onClick={closeMenu}
+              className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline"
+            >
+              <li className="Header-burger-menu-content-li">Créer une Randonnée</li>
+            </Link>
+          )
+          : ''}
         <Link to="about" onClick={closeMenu}><li className="Header-burger-menu-content-li">A propos</li></Link>
 
       </ul>
