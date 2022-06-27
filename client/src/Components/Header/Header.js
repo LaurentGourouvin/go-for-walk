@@ -50,6 +50,7 @@ function Header({ setToken, isLogged, setIsLogged }) {
   return (
     <>
       <div className="Header">
+        {localStorage.getItem('isLogged') === 'true' ? <Link to="/profil" className="Header--a Header--profil-mobile ease-linear transform hover:scale-110 transition duration-150 px-6 inline">Mon profil</Link> : ''}
         <Link to="/">
           <h1 className="Header--website-title"><img className="Header--Logo" src={logo} alt="Go For Walk Logo Website" /></h1>
         </Link>
