@@ -48,3 +48,12 @@
 .btnForm {
     margin-left: 2.25rem;
 }
+
+@media screen and (max-width: 640px){
+    .LoginForm {
+        width: 95%;
+        margin: auto;
+        padding: .5rem;
+    }
+
+}

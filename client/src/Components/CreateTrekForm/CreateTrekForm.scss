@@ -76,3 +76,25 @@
         margin-bottom: 2rem;
     }
 }
+@media screen and (max-width: 640px){
+    .CreateTrekForm {
+        width: 95%;
+        margin: auto;
+
+        &-input-container {
+            width: 90%;
+            text-align: left;
+        }
+
+        &-label {
+            flex-direction: column;  
+        }
+
+        &-input-coordinate {
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+    }
+}
