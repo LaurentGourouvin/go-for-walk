@@ -4,10 +4,17 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
+    border-radius: .5rem;
     
     &-Title-1 {
         color: rgb(87, 98, 47);
         font-style: italic;
         font-size: 2.5rem;
+    }
+}
+@media screen and (max-width: 640px){
+    .MyTreks {
+        width: 95%;
+        margin: auto;
     }
 }
