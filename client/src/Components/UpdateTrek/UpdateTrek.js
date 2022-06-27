@@ -226,17 +226,18 @@ function UpdateTrek({ token }) {
         </div>
 
         <div className="UpdateTrek-button-container">
-          <button className="UpdateTrek-button bg-green-900 text-white hover:bg-green-800 active:bg-green-900 font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Validez</button>
+          <button className="UpdateTrek-button bg-stone-500 text-white hover:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Validez</button>
 
         </div>
       </form>
       <div className="UpdateTrek-container-bottom">
         <div className="UpdateTrek-imgContainer">
           {trekDataPictures.map((picture) => (
-            <div className="UpdateTrek-label-text" key={picture}> Photos de votre Randonnée
+            <div className="UpdateTrek-label-text" key={picture}>
+              <span className="UpdateTrek-label-text-span"> Photos de votre Randonnée</span>
               <img className="UpdateTrek-img" src={picture} alt={picture} />
               <div
-                className="UpdateTrek-deleteImgButton bg-red-500 text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                className="UpdateTrek-deleteImgButton bg-stone-500 text-white hover:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                 onClick={async () => {
                   try {
                     const deletePicture = await api.deletePicture(id, picture, token);
@@ -302,7 +303,7 @@ function UpdateTrek({ token }) {
             />
 
           </label>
-          <button className="UpdateTrek-button bg-green-900 text-white hover:bg-green-800 active:bg-green-900 font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Envoyer la Photo
+          <button className="UpdateTrek-button bg-stone-500 text-white hover:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Envoyer la Photo
           </button>
         </form>
       </div>

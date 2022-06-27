@@ -102,6 +102,7 @@ function Profil({
           setFirstName(user.data.firstname);
           setPassword(user.data.password);
           setIsLogged(true);
+          console.log(user);
         }
       };
       getUser(userId);
@@ -138,7 +139,6 @@ function Profil({
                 <p className="Profil-informations-description">{firstName}</p>
               </>
               )}
-
               {updateForm && (
               <form className="Profil-form" onSubmit={handleUpdateForm}>
                 <label className="Profil-label" htmlFor="email">
@@ -188,9 +188,9 @@ function Profil({
                   />
                 </label>
                 <div className="Profil-buttons-group">
-                  <button className="bg-green-900 text-white active:bg-green-900 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Confirmer la mise à jour</button>
+                  <button className="bg-stone-500 text-white hover:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Confirmer la mise à jour</button>
                   <button
-                    className="bg-red-600 border border-red-300 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    className="bg-stone-500 text-white hover:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() => {
                       setUpdateForm(!updateForm);
@@ -218,12 +218,12 @@ function Profil({
                 setUpdateForm(true);
               }}
               type="button"
-              className="bg-green-900 text-white hover:bg-green-800 active:bg-green-900 font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              className="bg-stone-500 text-white active:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
             >Modifier le profil
             </button>
             <button
               type="button"
-              className="bg-green-900 text-white hover:bg-green-800 active:bg-green-900 font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              className="bg-stone-500 text-white active:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
               onClick={() => { navigate('/MyTreks'); }}
             >
               Consulter mes randonnées
@@ -245,7 +245,7 @@ function Profil({
                 }
               }}
               type="button"
-              className="bg-red-600 border border-red-300 text-white hover:text-black hover:bg-red-100 focus:ring-4 focus:ring-red-200  font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              className="bg-stone-500 text-white active:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
             >
               Supprimer votre compte
             </button>

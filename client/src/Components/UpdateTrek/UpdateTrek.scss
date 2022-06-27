@@ -28,7 +28,7 @@
         &-deleteImgButton {
             max-width: 150px;
             text-align: center;
-           margin-left: 3rem;
+            margin: auto;
         }
 
         &-addImgButton {
@@ -76,11 +76,19 @@
 
         &-label-text {
             color: rgb(87, 98, 47);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: .75rem;
+
         }
 
         &-inputFiles {
 
             padding: none;
+        }
+        &-label-text-span {
+            text-align: center;
         }
         .label-photo {
             height: auto;
