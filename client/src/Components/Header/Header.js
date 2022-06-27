@@ -9,6 +9,7 @@ import HeaderMobile from './HeaderMobile/HeaderMobile';
 function Header({ setToken, isLogged, setIsLogged }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // Affichage du menu en mode déconnecté
   if (!isLogged) {
     return (
       <>
@@ -44,43 +45,53 @@ function Header({ setToken, isLogged, setIsLogged }) {
       </>
     );
   }
+
+  // Affichage du menu lorsque l'on est connecté
   return (
+    <>
+      <div className="Header">
+        <Link to="/">
+          <h1 className="Header--website-title"><img className="Header--Logo" src={logo} alt="Go For Walk Logo Website" /></h1>
+        </Link>
+        {menuOpen && <HeaderMobile setMenuOpen={setMenuOpen} />}
+        <div className="Header--burger-control-menu space-y-2">
+          {!menuOpen
+                  && (
+                  <Link
+                    to="#"
+                    className="Header-ligne-icone-burger"
+                    onClick={() => {
+                      setMenuOpen(!menuOpen);
+                    }}
+                  >
+                    ☰
+                  </Link>
+                  )}
 
-    <div className="Header">
-      <Link to="/">
-        <h1 className="Header--website-title"><img className="Header--Logo" src={logo} alt="Go For Walk Logo Website" /></h1>
-      </Link>
-      <Link to="/trek/create" className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline"> Créer une Randonnée</Link>
+        </div>
+        <div className="Header-menu">
+          <Link to="/trek/create" className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline"> Créer une Randonnée</Link>
 
-      <div className="Header--burger-control-menu space-y-2">
-        {!menuOpen
-                && (
-                <Link
-                  to="#"
-                  className="Header-ligne-icone-burger"
-                  onClick={() => {
-                    setMenuOpen(!menuOpen);
-                  }}
-                >
-                  ☰
-                </Link>
-                )}
+          <Link
+            to="/"
+            className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline"
+            onClick={() => {
+              setToken({});
+              setIsLogged(false);
+              authentification.disconnectUser();
+            }}
+          > Deconnexion
+          </Link>
+
+          <Link to="/profil" className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline">Mon profil</Link>
+          <Link to="/about" className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline">A propos</Link>
+        </div>
 
       </div>
-      {menuOpen && <HeaderMobile setMenuOpen={setMenuOpen} />}
-      <Link
-        to="/"
-        className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline"
-        onClick={() => {
-          setToken({});
-          setIsLogged(false);
-          authentification.disconnectUser();
-        }}
-      > Deconnexion
-      </Link>
-      <Link to="/profil" className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline">Mon profil</Link>
-      <Link to="/about" className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline">A propos</Link>
-    </div>
+      <div className="Header-logo-mobile">
+        <Link to="/"><img className="Header-img-logo-mobile" src={logo} alt="Go For Walk Logo Website" /></Link>
+      </div>
+    </>
   );
 }
 
