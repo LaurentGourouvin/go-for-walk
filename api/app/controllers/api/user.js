@@ -22,8 +22,13 @@ module.exports = {
     if (!user) {
       throw new Error('no users found');
     }
+    let picProfile;
     if (req.file !== undefined) {
-      const picProfile = `${process.env.API_ADRESS_LOCAL}uploads/${req.file.filename}`;
+      if (process.env.NODE_ENV === 'production') {
+        picProfile = `${process.env.API_ADRESS_VPS}uploads/${req.file.filename}`;
+      } else {
+        picProfile = `${process.env.API_ADRESS_LOCAL}uploads/${req.file.filename}`;
+      }
       req.body.profil_picture = picProfile;
     }
     const userUpdate = await userDataMapper.update(req.params.id, req.body);
