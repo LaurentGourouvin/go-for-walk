@@ -23,7 +23,7 @@ function SearchBar({ setSearchCity }) {
 
         <input
           type="text"
-          className="SearchBar-cityNameInput rounded shadow-lg py-4 px-4 w-96 hover:shadow-xl"
+          className="SearchBar-cityNameInput rounded shadow-lg py-4 px-4 hover:shadow-xl"
           placeholder="Saisir le nom d'une ville"
           value={cityName}
           onChange={handleChangeCityName}
