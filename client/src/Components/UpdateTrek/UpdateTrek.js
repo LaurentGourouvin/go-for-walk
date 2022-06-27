@@ -43,26 +43,31 @@ function UpdateTrek({ token }) {
 
   useEffect(() => {
     try {
-      axios.get(`http://141.94.207.7:8080/api/treks/${id}`)
-        .then((res) => {
-          const { data } = res;
-          setTrekData(data);
-          setTrekDataPictures(res.data.pictures);
-          setUpdateDistance(data.distance);
-          setUpdateDuration(data.duration);
-          setUpdateDuration(data.duration);
-          setUpdateTitle(data.title);
-          setUpdateCity(data.city);
-          setUpdateDifficulty(data.difficulty_id);
-          setUpdateDescription(data.description);
+      const getTrek = async (trekId) => {
+        const trek = await api.getTrekById(trekId);
+        if (trek.status === 200) {
+          setTrekData(trek.data);
+          setTrekDataPictures(trek.data.pictures);
+          setUpdateDistance(trek.distance);
+          setUpdateDuration(trek.duration);
+          setUpdateDuration(trek.duration);
+          setUpdateTitle(trek.title);
+          setUpdateCity(trek.city);
+          setUpdateDifficulty(trek.difficulty_id);
+          setUpdateDescription(trek.description);
           // setUpdatePictures(data.pictures);
-          setUpdateCoordinate(data.coordinate);
-          console.log(data);
-        });
-      axios.get('http://141.94.207.7:8080/api/labels')
-        .then((res) => {
-          setLabelArray(res.data);
-        });
+          setUpdateCoordinate(trek.coordinate);
+        }
+      };
+      getTrek(id);
+      const getLabel = async () => {
+        const label = await api.getLabel();
+        if (label.status === 200) {
+          console.log(label);
+          setLabelArray(label.data);
+        }
+      };
+      getLabel();
     } catch (err) {
       console.log(err);
     }

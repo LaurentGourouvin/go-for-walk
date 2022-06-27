@@ -1,8 +1,9 @@
-import axios from 'axios';
+// import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import './TrekDetails.scss';
 import MapTrek from '../MapTrek/MapTrek';
+import api from '../../axios/request';
 
 function TrekDetails() {
   const { id } = useParams();
@@ -17,39 +18,43 @@ function TrekDetails() {
 
   useEffect(() => {
     try {
-      axios.get(`http://141.94.207.7:8080/api/treks/${id}`)
-        .then((res) => {
-          const { data } = res;
-          setTrekData(data);
-          setTrekDataPictures(res.data.pictures);
+      const getTrekById = async (trekId) => {
+        const trek = await api.getTrekById(trekId);
+        if (trek.status === 200) {
+          setTrekData(trek.data);
+          setTrekDataPictures(trek.data.pictures);
 
           // Création d'un tableau contenant les coordonées de la randonnée afin de la dessiner sur Leaflet
           const mapPoint = [];
-          mapPoint.push([parseInt(data.coordinate[0], 10), parseInt(data.coordinate[1], 10)]);
-          mapPoint.push([parseInt(data.coordinate[2], 10), parseInt(data.coordinate[3], 10)]);
+          mapPoint.push([parseInt(trek.data.coordinate[0], 10), parseInt(trek.data.coordinate[1], 10)]);
+          mapPoint.push([parseInt(trek.data.coordinate[2], 10), parseInt(trek.data.coordinate[3], 10)]);
           setMapCoordinate(mapPoint);
 
           // Création d'un OBJ contenant LAT et LNG pour les coordonées du market sur Leaflet
           const positionStartMarker = {
-            lat: Number(data.coordinate[0]),
-            lng: Number(data.coordinate[1]),
+            lat: Number(trek.data.coordinate[0]),
+            lng: Number(trek.data.coordinate[1]),
           };
           setStartMarker(positionStartMarker);
 
           // Création d'un OBJ contenant LAT et LNG pour les coordonées du market sur Leaflet
           const positionEndMarker = {
-            lat: Number(data.coordinate[2]),
-            lng: Number(data.coordinate[3]),
+            lat: Number(trek.data.coordinate[2]),
+            lng: Number(trek.data.coordinate[3]),
           };
           setEndMarker(positionEndMarker);
 
-          axios.get(`http://141.94.207.7:8080/api/labels/${data.difficulty_id}`)
-            .then((response) => {
-              const resultDifficultyLabel = response;
-              setDifficultyLabel(resultDifficultyLabel.data.label);
-            });
+          const getLabelById = async (labelId) => {
+            const label = await api.getLabelById(labelId);
+            if (label.status === 200) {
+              setDifficultyLabel(label.data.label);
+            }
+          };
+          getLabelById(trek.data.difficulty_id);
           setIsLoading(true);
-        });
+        }
+      };
+      getTrekById(id);
     } catch (err) {
       console.log(err);
     }

@@ -44,10 +44,14 @@ function CreateTrekForm({ token }) {
 
   useEffect(() => {
     try {
-      axios.get('http://141.94.207.7:8080/api/labels')
-        .then((res) => {
-          setLabelArray(res.data);
-        });
+      const getLabel = async () => {
+        const label = await api.getLabel();
+        if (label.status === 200) {
+          console.log(label);
+          setLabelArray(label.data);
+        }
+      };
+      getLabel();
     } catch (err) {
       console.log(err);
     }

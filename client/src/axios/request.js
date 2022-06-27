@@ -97,7 +97,20 @@ const api = {
     }
     return treks;
   },
-
+  /**
+   * @summary Fonction qui permet de rechercher un trek en fonction de son id dans la base de données
+   * @param {*} id l'identifiant du trek à rechercher dans la base de données
+   * @returns une élément HTTP contenant la randonnée qui correspond à cet id
+   */
+  async getTrekById(id) {
+    let trek = null;
+    try {
+      trek = await axiosInstance.get(`/treks/${id}`);
+    } catch (error) {
+      console.log(error);
+    }
+    return trek;
+  },
   /**
    * @summary Fonction qui retourne la liste de toutes les randonées stockées dans la base de donnée concernant la ville
    * @param {*} cityName le nom de la ville qui va nous permettre d'effectuer la recherche dans la base de données
@@ -320,6 +333,37 @@ const api = {
       console.log(error);
     }
     return resultAddPicture;
+  },
+  // REQUETES SUR LES LABELS
+  // ==========================
+  /**
+   * @summary Fonction qui permet de récupérer tout les Labels dans la base de données
+   * @returns une réponse HTTP contenant la liste des labels
+   */
+  async getLabel() {
+    let resultGetLabel = null;
+
+    try {
+      resultGetLabel = await axiosInstance.get('/labels');
+    } catch (error) {
+      console.log(error);
+    }
+    return resultGetLabel;
+  },
+  /**
+ * @summary Fonction qui permet de récupérer le nom du label en fonction de son id
+ * @param {*} id identifiant qui nous permet de rechercher le label dans la base de données
+ * @returns une réponse HTTP contenant le label qui correspond à cet id
+ */
+  async getLabelById(id) {
+    let resultGetOneLabel = null;
+
+    try {
+      resultGetOneLabel = await axiosInstance.get(`/labels/${id}`);
+    } catch (error) {
+      console.log(error);
+    }
+    return resultGetOneLabel;
   },
 };
 
