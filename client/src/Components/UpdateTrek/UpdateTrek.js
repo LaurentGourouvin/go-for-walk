@@ -198,7 +198,7 @@ function UpdateTrek({ token }) {
             />
           </label>
           <label className="UpdateTrek-label" htmlFor="duration">
-            <span className="UpdateTreklabel-text">Durée de la Randonnée:</span>
+            <span className="UpdateTreklabel-text">Durée de la Randonnée ( en Minutes ):</span>
             <input
               id="duration"
               name="duration"
@@ -213,7 +213,7 @@ function UpdateTrek({ token }) {
           </label>
 
           <label className="UpdateTrek-label" htmlFor="difficulty">
-            <span className="UpdateTrek-label-text">Difficulté de la Randonnée:</span>
+            <span className="UpdateTrek-label-text">Difficulté de la Randonnée ( en KM ):</span>
             <select
               value={updateDifficulty}
               name="difficulty"
