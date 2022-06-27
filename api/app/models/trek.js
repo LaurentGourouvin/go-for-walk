@@ -20,7 +20,9 @@ module.exports = {
       'name', users.name
       )
       )
-      ) AS comments FROM treks
+      )
+      FILTER (WHERE comments.id IS NOT NULL)
+      AS comments FROM treks
       LEFT OUTER JOIN comments ON comments.trek_id = treks.id
       LEFT OUTER JOIN users ON comments.user_id = users.id
       WHERE treks.id = $1
