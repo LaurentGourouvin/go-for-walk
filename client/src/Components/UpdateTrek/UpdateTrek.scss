@@ -124,5 +124,10 @@
             width: 100%;
             margin-left: 0;
         }
+
+        &-imgContainer {
+            display: flex;
+            flex-direction: column;
+        }
     }
 }
