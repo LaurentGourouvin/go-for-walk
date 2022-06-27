@@ -57,7 +57,6 @@ function SearchResults({ searchCity, token }) {
 
       </div>
       <div className="SearchResults-cardContainer">
-        {console.log('affichage de mon state', searchResult)}
         {
         searchResult.length === 0 && token
           ? ''
@@ -68,7 +67,6 @@ function SearchResults({ searchCity, token }) {
     </div>
   );
 }
-// Se baser sur data pour le moment ensuite se baser sur un state contenant les données
 
 SearchResults.propTypes = {
   searchCity: PropTypes.string.isRequired,

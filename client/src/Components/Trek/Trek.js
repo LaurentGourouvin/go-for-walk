@@ -30,7 +30,7 @@ function Trek({ data, token, setTreksByUserId }) {
 
       <div className="Trek-buttons-group">
         <Link to={`/trek/${data.id}`}>
-          <footer className="bg-green-900 text-white active:bg-green-900 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+          <footer className="bg-stone-500 text-white hover:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
             Voir le détail de la randonée
           </footer>
         </Link>
@@ -39,7 +39,7 @@ function Trek({ data, token, setTreksByUserId }) {
         ? (
           <Link to={`/updateTrek/${data.id}`}>
             <button
-              className="Trek-button bg-blue-500 text-white active:bg-blue-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              className="Trek-button bg-stone-500 text-white hover:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
               type="button"
               onClick={() => {
 
@@ -54,7 +54,7 @@ function Trek({ data, token, setTreksByUserId }) {
       userId === data.user_id && location.pathname === '/MyTreks'
         ? (
           <button
-            className="Trek-button bg-red-500 text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+            className="Trek-button bg-stone-500 text-white hover:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
             type="button"
             onClick={() => {
               swal('Voulez vous supprimer la randonée?', `${data.title}`, {

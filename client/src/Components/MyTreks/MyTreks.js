@@ -38,7 +38,6 @@ function MyTreks({ token }) {
       const getTreks = async () => {
         try {
           const treks = await api.getTreksByUserId(decodedToken.userId);
-          console.log('treks de la bdd :', treks);
           if (treks) {
             setTreksByUserId(treks.data);
           }

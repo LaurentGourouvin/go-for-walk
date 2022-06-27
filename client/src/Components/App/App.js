@@ -11,6 +11,7 @@ import SearchResults from '../SearchResults/SearchResults';
 import CreateTrekForm from '../CreateTrekForm/CreateTrekForm';
 import TrekDetails from '../TrekDetails/TrekDetails';
 import UpdateTrek from '../UpdateTrek/UpdateTrek';
+import About from '../About/About';
 
 function App() {
   const [token, setToken] = useState({});
@@ -18,7 +19,6 @@ function App() {
   const [isLogged, setIsLogged] = useState(false);
 
   useEffect(() => {
-    console.log("#Refresh de l'APP");
     if (localStorage.getItem('isLogged') === 'true') {
       setIsLogged(true);
       setToken({ access_token: localStorage.getItem('access_token'), refresh_token: localStorage.getItem('refresh_token') });
@@ -39,6 +39,7 @@ function App() {
           <Route path="/trek/create" element={<CreateTrekForm token={token} />} />
           <Route path="/trek/:id" element={<TrekDetails />} />
           <Route path="/updateTrek/:id" element={<UpdateTrek token={token} />} />
+          <Route path="about" element={<About />} />
         </Routes>
       </div>
     </div>

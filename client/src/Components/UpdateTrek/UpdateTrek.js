@@ -43,26 +43,31 @@ function UpdateTrek({ token }) {
 
   useEffect(() => {
     try {
-      axios.get(`http://141.94.207.7:8080/api/treks/${id}`)
-        .then((res) => {
-          const { data } = res;
-          setTrekData(data);
-          setTrekDataPictures(res.data.pictures);
-          setUpdateDistance(data.distance);
-          setUpdateDuration(data.duration);
-          setUpdateDuration(data.duration);
-          setUpdateTitle(data.title);
-          setUpdateCity(data.city);
-          setUpdateDifficulty(data.difficulty_id);
-          setUpdateDescription(data.description);
+      const getTrek = async (trekId) => {
+        const trek = await api.getTrekById(trekId);
+        if (trek.status === 200) {
+          setTrekData(trek.data);
+          setTrekDataPictures(trek.data.pictures);
+          setUpdateDistance(trek.distance);
+          setUpdateDuration(trek.duration);
+          setUpdateDuration(trek.duration);
+          setUpdateTitle(trek.title);
+          setUpdateCity(trek.city);
+          setUpdateDifficulty(trek.difficulty_id);
+          setUpdateDescription(trek.description);
           // setUpdatePictures(data.pictures);
-          setUpdateCoordinate(data.coordinate);
-          console.log(data);
-        });
-      axios.get('http://141.94.207.7:8080/api/labels')
-        .then((res) => {
-          setLabelArray(res.data);
-        });
+          setUpdateCoordinate(trek.coordinate);
+        }
+      };
+      getTrek(id);
+      const getLabel = async () => {
+        const label = await api.getLabel();
+        if (label.status === 200) {
+          console.log(label);
+          setLabelArray(label.data);
+        }
+      };
+      getLabel();
     } catch (err) {
       console.log(err);
     }
@@ -226,17 +231,18 @@ function UpdateTrek({ token }) {
         </div>
 
         <div className="UpdateTrek-button-container">
-          <button className="UpdateTrek-button bg-green-900 text-white hover:bg-green-800 active:bg-green-900 font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Validez</button>
+          <button className="UpdateTrek-button bg-stone-500 text-white hover:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Validez</button>
 
         </div>
       </form>
       <div className="UpdateTrek-container-bottom">
         <div className="UpdateTrek-imgContainer">
           {trekDataPictures.map((picture) => (
-            <div className="UpdateTrek-label-text" key={picture}> Photos de votre Randonnée
+            <div className="UpdateTrek-label-text" key={picture}>
+              <span className="UpdateTrek-label-text-span"> Photos de votre Randonnée</span>
               <img className="UpdateTrek-img" src={picture} alt={picture} />
               <div
-                className="UpdateTrek-deleteImgButton bg-red-500 text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                className="UpdateTrek-deleteImgButton bg-stone-500 text-white hover:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                 onClick={async () => {
                   try {
                     const deletePicture = await api.deletePicture(id, picture, token);
@@ -302,7 +308,7 @@ function UpdateTrek({ token }) {
             />
 
           </label>
-          <button className="UpdateTrek-button bg-green-900 text-white hover:bg-green-800 active:bg-green-900 font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Envoyer la Photo
+          <button className="UpdateTrek-button bg-stone-500 text-white hover:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Envoyer la Photo
           </button>
         </form>
       </div>

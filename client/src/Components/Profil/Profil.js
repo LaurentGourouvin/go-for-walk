@@ -11,13 +11,13 @@ import api from '../../axios/request';
 function Profil({
   token, setToken, setIsLogged, isLogged,
 }) {
-  // const isLogged = authentification.checkLoggin(token);
   const navigate = useNavigate();
 
   // State initial du composant
   const [name, setName] = useState('');
   const [firstName, setFirstName] = useState('');
   const [email, setEmail] = useState('');
+  // eslint-disable-next-line no-unused-vars
   const [password, setPassword] = useState('');
   const [updateForm, setUpdateForm] = useState(false);
 
@@ -39,22 +39,7 @@ function Profil({
     }
     const errorOnSubmitForm = [];
 
-    // Gestion d'erreur
-    // if (updateName === '') {
-    //   errorOnSubmitForm.push({ label: 'updateName', value: 'Champs Name non renseigné' });
-    // }
-    // if (updateEmail === '') {
-    //   errorOnSubmitForm.push({ label: 'updateEmail', value: 'Champs Email non renseigné' });
-    // }
-    // if (updatePassword === '') {
-    //   errorOnSubmitForm.push({ label: 'updatePassword', value: 'Champs Password non renseigné' });
-    // }
-    // if (updateFirstName === '') {
-    //   errorOnSubmitForm.push({ label: 'updateName', value: 'Champs Prénom non renseigné' });
-    // }
-
     // Envoie du formulaire
-
     if (errorOnSubmitForm.length > 0) {
       swal({
         title: 'Formulaire incomplet',
@@ -99,7 +84,6 @@ function Profil({
   };
 
   useEffect(() => {
-    console.log('#PROFIL >> Re-render');
     try {
       // ajout d'une condition pour décoder le TOKEN seulement si celui-ci existe. Cela evitera des erreurs : ERROR ACCES TOKEN
       if (token.access_token) {
@@ -118,6 +102,7 @@ function Profil({
           setFirstName(user.data.firstname);
           setPassword(user.data.password);
           setIsLogged(true);
+          console.log(user);
         }
       };
       getUser(userId);
@@ -154,7 +139,6 @@ function Profil({
                 <p className="Profil-informations-description">{firstName}</p>
               </>
               )}
-
               {updateForm && (
               <form className="Profil-form" onSubmit={handleUpdateForm}>
                 <label className="Profil-label" htmlFor="email">
@@ -173,7 +157,7 @@ function Profil({
                     id="password"
                     name="password"
                     className="Profil-input shadow-lg rounded-md"
-                    placeholder={password}
+                    placeholder="mot de passe"
                     type="password"
                     value={updatePassword}
                     onChange={handleChangeUpdatePassword}
@@ -204,9 +188,9 @@ function Profil({
                   />
                 </label>
                 <div className="Profil-buttons-group">
-                  <button className="bg-green-900 text-white active:bg-green-900 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Confirmer la mise à jour</button>
+                  <button className="bg-stone-500 text-white hover:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Confirmer la mise à jour</button>
                   <button
-                    className="bg-red-600 border border-red-300 text-white font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                    className="bg-stone-500 text-white hover:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() => {
                       setUpdateForm(!updateForm);
@@ -228,15 +212,18 @@ function Profil({
           <div className="Profil-Actions">
             <button
               onClick={() => {
+                setUpdateFirstName(firstName);
+                setUpdateEmail(email);
+                setUpdateName(name);
                 setUpdateForm(true);
               }}
               type="button"
-              className="bg-green-900 text-white hover:bg-green-800 active:bg-green-900 font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              className="bg-stone-500 text-white active:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
             >Modifier le profil
             </button>
             <button
               type="button"
-              className="bg-green-900 text-white hover:bg-green-800 active:bg-green-900 font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              className="bg-stone-500 text-white active:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
               onClick={() => { navigate('/MyTreks'); }}
             >
               Consulter mes randonnées
@@ -258,7 +245,7 @@ function Profil({
                 }
               }}
               type="button"
-              className="bg-red-600 border border-red-300 text-white hover:text-black hover:bg-red-100 focus:ring-4 focus:ring-red-200  font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              className="bg-stone-500 text-white active:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
             >
               Supprimer votre compte
             </button>

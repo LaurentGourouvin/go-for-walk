@@ -21,6 +21,7 @@ const authentification = {
    */
   disconnectUser() {
     localStorage.setItem('isLogged', 'false');
+    localStorage.removeItem('isLogged');
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
   },

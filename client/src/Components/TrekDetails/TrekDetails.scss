@@ -5,6 +5,10 @@
     padding: 1rem;
     color: rgb(87, 98, 47);
     position: relative;
+    
+    &-info-content {
+        padding-left: 1rem;
+    }
 
     &-container-head {
        display: flex;
@@ -13,16 +17,13 @@
     }
     &-container-head-right {
         border-radius:  .5rem;
-        border: 1px solid rgb(96, 84, 90,1);
-        max-width:50%;
         width:50%;
         margin-left:0.3rem;
         padding:0.2rem;
     }
     &-container-head-left {
         border-radius:  .5rem;
-        
-        max-width:50%;
+        width: 50%;
         margin-right:0.3rem;
         padding:0.2rem;
         background-color: rgba(87, 98, 47,.15);
@@ -36,11 +37,9 @@
     &-h1 {
         font-size: 2.5rem;
         color: rgb(87, 98, 47);
-        
+        margin-bottom: 1rem;
         text-align: center;
-        
-        
-       
+           
     }
    
     &-container-info {
@@ -51,22 +50,73 @@
     &-info {
         background-color: rgba(87, 98, 47,.5);
         border-radius:  .5rem;
-        padding: 0.3rem;
-        margin:0.3rem;
+        padding: 1.3rem;
+        margin:1.3rem;
         display: flex;
         justify-content:center;
 
     }
     &-container-img {
-            
-        margin-top: 0.5rem;
+        margin-top: 1.5rem;
         margin-bottom: 0.5rem;;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center
     }
 
-
+    &-img {
+        max-width:400px;
+        max-height: 250px;
+        margin: 2rem;
+    }
+    &-img:hover {
+        transition: 0.5s;
+        transform: scale(2);
+        z-index: 1;
+        position: relative;
+        bottom: 4rem;
+    }
+    &-description {
+        text-align: justify;
+        padding: 1rem
+    }
+    
 }
+
 #map {
     height: 500px;
     border: 3px solid #ccd5ae;
     border-radius: .5rem;
+    z-index: 0;
 }
+
+@media screen and (max-width: 640px){
+    .TrekDetails {
+        width: 95%;
+        margin: auto;
+        border: 1px solid rgba(96, 84, 90,.2);
+        
+        &-container-head {
+            flex-direction: column;
+            width: 95%;
+            align-items: center;
+            margin: auto;
+         }
+         &-container-head-right {
+            border-radius:  .5rem;
+            width: 100%;
+            margin-top: .75rem;
+            margin-bottom: .75rem;
+        }
+        &-container-head-left {
+            margin-top: .75rem;
+            border-radius:  .5rem;
+            background-color: rgba(87, 98, 47,.15);
+            width: 100%;
+        }
+        &-img {
+            width: 35%;
+        }
+    }
+}
+

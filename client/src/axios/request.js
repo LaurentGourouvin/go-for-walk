@@ -97,7 +97,20 @@ const api = {
     }
     return treks;
   },
-
+  /**
+   * @summary Fonction qui permet de rechercher un trek en fonction de son id dans la base de données
+   * @param {*} id l'identifiant du trek à rechercher dans la base de données
+   * @returns une élément HTTP contenant la randonnée qui correspond à cet id
+   */
+  async getTrekById(id) {
+    let trek = null;
+    try {
+      trek = await axiosInstance.get(`/treks/${id}`);
+    } catch (error) {
+      console.log(error);
+    }
+    return trek;
+  },
   /**
    * @summary Fonction qui retourne la liste de toutes les randonées stockées dans la base de donnée concernant la ville
    * @param {*} cityName le nom de la ville qui va nous permettre d'effectuer la recherche dans la base de données
@@ -129,7 +142,7 @@ const api = {
         },
       });
       if (resultCreateTrek.status === 200) {
-        swal('Votre randonnée a bien était créée', '', 'success');
+        swal('Votre randonnée a bien été créée', '', 'success');
       }
     } catch (error) {
       switch (error.response.status) {
@@ -172,22 +185,12 @@ const api = {
     axiosInstance.defaults.headers.common.access_token = `${token.access_token}`;
     try {
       updateTrekResult = await axiosInstance.put(`/treks/${trekId}`, {
-        // * @property {string} title - trek title
-        // * @property {string} description - trek description
-        // * @property {integer} distance - trek distance
-        // * @property {integer} duration - trek duration
-        // * @property {string} city - trek city
-        // * @property {array<integer>} coordinate - trek coordinates
         title: updateTitle,
         description: updateDescription,
         distance: updateDistance,
         duration: updateDuration,
         city: updateCity,
         coordinate: updateCoordinate,
-        //  files: updatePictures,
-        // user_id: userId,
-        // difficulty_id: updateDifficulty,
-
       });
     } catch (error) {
       console.log(error);
@@ -224,12 +227,20 @@ const api = {
     let resultUpdate = null;
     axiosInstance.defaults.headers.common.access_token = `${token.access_token}`;
     try {
-      resultUpdate = await axiosInstance.put(`/users/${userId}`, {
-        firstname,
-        name,
-        password,
-        email,
-      });
+      if (password === '') {
+        resultUpdate = await axiosInstance.put(`/users/${userId}`, {
+          firstname,
+          name,
+          email,
+        });
+      } else {
+        resultUpdate = await axiosInstance.put(`/users/${userId}`, {
+          firstname,
+          name,
+          password,
+          email,
+        });
+      }
     } catch (error) {
       console.error(error);
     }
@@ -322,6 +333,37 @@ const api = {
       console.log(error);
     }
     return resultAddPicture;
+  },
+  // REQUETES SUR LES LABELS
+  // ==========================
+  /**
+   * @summary Fonction qui permet de récupérer tout les Labels dans la base de données
+   * @returns une réponse HTTP contenant la liste des labels
+   */
+  async getLabel() {
+    let resultGetLabel = null;
+
+    try {
+      resultGetLabel = await axiosInstance.get('/labels');
+    } catch (error) {
+      console.log(error);
+    }
+    return resultGetLabel;
+  },
+  /**
+ * @summary Fonction qui permet de récupérer le nom du label en fonction de son id
+ * @param {*} id identifiant qui nous permet de rechercher le label dans la base de données
+ * @returns une réponse HTTP contenant le label qui correspond à cet id
+ */
+  async getLabelById(id) {
+    let resultGetOneLabel = null;
+
+    try {
+      resultGetOneLabel = await axiosInstance.get(`/labels/${id}`);
+    } catch (error) {
+      console.log(error);
+    }
+    return resultGetOneLabel;
   },
 };
 
