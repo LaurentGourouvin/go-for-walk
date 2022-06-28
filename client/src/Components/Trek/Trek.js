@@ -23,7 +23,6 @@ function Trek({ data, token, setTreksByUserId }) {
       <hr className="Trek-hr" />
       <figure className="imgTrek">
         {data.pictures ? <img src={data.pictures[0]} alt="Illustration Trek" /> : <img src="" alt="Illustration Trek" /> }
-        {/* <img src={data.pictures[0]} alt="Illustration Trek" /> */}
       </figure>
 
       <main>{data.description}</main>
@@ -106,3 +105,5 @@ Trek.defaultProps = {
   setTreksByUserId: PropTypes.func,
 };
 export default Trek;
+
+// REVIEW OK -- laurent
