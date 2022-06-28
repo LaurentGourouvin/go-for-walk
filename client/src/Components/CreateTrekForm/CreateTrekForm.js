@@ -235,19 +235,6 @@ function CreateTrekForm({ token }) {
 
               <div className="CreateTrekForm-input-coordinate">
                 <p>Point de départ: </p>
-                {/* <input
-                  className="CreateTrekForm-input shadow-lg rounded-md"
-                  placeholder="Coordonnées de votre Randonnée au format : xxx.yyy "
-                  id="coordinate"
-                  name="coordinate"
-                  type="number"
-                  step="0.01"
-                  required
-                  value={coordinate}
-                  onChange={(event) => {
-                    setCoordinate(event.target.value);
-                  }}
-                /> */}
 
                 <input
                   className="CreateTrekForm-input shadow-lg rounded-md"
