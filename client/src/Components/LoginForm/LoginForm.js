@@ -1,9 +1,7 @@
 import './LoginForm.scss';
 import { useState } from 'react';
-// import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-// import swal from 'sweetalert';
 import swal from 'sweetalert';
 import authentification from '../../utils/sessionUser/sessionUser';
 import api from '../../axios/request';
@@ -11,7 +9,6 @@ import api from '../../axios/request';
 function LoginForm({ setToken, setIsLogged }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // const [loggedUser, setLoggedUser] = useState({});
   const navigate = useNavigate();
 
   const resetForm = () => {
@@ -88,3 +85,5 @@ LoginForm.propTypes = {
 };
 
 export default LoginForm;
+
+// REVIEW OK -- Laurent
