@@ -19,3 +19,22 @@
         text-align: center;
     }
 }
+
+@media screen and (max-width: 640px){
+    .PageNotFound {
+        flex-direction: column;
+
+        &-title {
+            font-size: 2rem;
+        }
+        &-left {
+            width: 90%;
+            margin-bottom: 2rem;
+        }
+    
+        &-right {
+            width: 90%;
+        }
+    }
+
+}
