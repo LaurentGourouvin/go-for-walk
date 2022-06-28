@@ -102,7 +102,6 @@ function Profil({
           setFirstName(user.data.firstname);
           setPassword(user.data.password);
           setIsLogged(true);
-          console.log(user);
         }
       };
       getUser(userId);
@@ -263,3 +262,5 @@ Profil.propTypes = {
   isLogged: PropTypes.bool.isRequired,
 };
 export default Profil;
+
+// Review ok ( Dorian )

@@ -47,7 +47,6 @@ function CreateTrekForm({ token }) {
       const getLabel = async () => {
         const label = await api.getLabel();
         if (label.status === 200) {
-          console.log(label);
           setLabelArray(label.data);
         }
       };
@@ -64,7 +63,6 @@ function CreateTrekForm({ token }) {
       encType="multipart/form-data"
       onSubmit={async (event) => {
         event.preventDefault();
-        console.log("j'envoie mon formulaire");
         if (token.access_token) {
           const decodedToken = jwtDecode(token.access_token);
           const dataPicture = [];
@@ -80,7 +78,6 @@ function CreateTrekForm({ token }) {
           dataCoordinate.push(`${parseInt(startCoordinate.lat, 10)},${parseInt(startCoordinate.lng, 10)}`);
           dataCoordinate.push(`${parseInt(endCoordinate.lat, 10)},${parseInt(endCoordinate.lng, 10)}`);
 
-          console.log('tableau de coordonnée:', dataCoordinate);
           dataPicture.push(document.getElementById('pictures').files[0]);
           // dataCoordinate.push(parseInt(coordinate, 10));
 
@@ -198,7 +195,6 @@ function CreateTrekForm({ token }) {
               if (event.target.value.length === 5) {
                 getCityNameByPostalCode(event.target.value);
                 setDisableSelect(!disableSelect);
-                console.log(listCity);
               } else {
                 setDisableSelect(true);
               }
@@ -226,7 +222,6 @@ function CreateTrekForm({ token }) {
               }}
             >
               <option value="default">Selectionner votre ville</option>
-              {console.log(listCity)}
               {listCity.map((oneCity) => (<option key={oneCity.code} value={oneCity.nom}>{oneCity.nom}</option>))}
 
             </select>
@@ -308,7 +303,6 @@ function CreateTrekForm({ token }) {
             name="startEndPosition"
             id="startEndPosition"
             onChange={(e) => {
-              console.log(e.target.value);
               setStartOrEndCoordinate(e.target.value);
             }}
           >
@@ -393,3 +387,5 @@ CreateTrekForm.propTypes = {
   token: PropTypes.object.isRequired,
 };
 export default CreateTrekForm;
+
+// Review ok ( Dorian )

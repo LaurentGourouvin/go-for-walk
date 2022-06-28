@@ -25,7 +25,6 @@ function SearchResults({ searchCity, token }) {
         };
         allTreks();
       } catch (err) {
-        console.log('Bug dans SearchResult AllTreks');
         console.log(err);
       }
     } else {
@@ -38,7 +37,6 @@ function SearchResults({ searchCity, token }) {
         };
         treksByCityName();
       } catch (err) {
-        console.log('Bug dans SearchResult TreakByCityName');
         console.log(err);
       }
     }
@@ -73,3 +71,5 @@ SearchResults.propTypes = {
   token: PropTypes.object.isRequired,
 };
 export default SearchResults;
+
+// Review ok ( Dorian )
