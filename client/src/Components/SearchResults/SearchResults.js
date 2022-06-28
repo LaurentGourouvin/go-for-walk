@@ -72,4 +72,4 @@ SearchResults.propTypes = {
 };
 export default SearchResults;
 
-// Review ok ( Dorian )
+// Review ok ( Dorian ) / Laurent
