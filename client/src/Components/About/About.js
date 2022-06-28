@@ -1,3 +1,5 @@
+// REVIEW OK -- Laurent
+
 import './About.scss';
 
 function About() {
@@ -6,7 +8,7 @@ function About() {
       <h1 className="About-title">Qui sommes-nous ?</h1>
       <div className="About-cardContainer">
         <div className="About-card">
-          <img className="About-img rounded-full " src="./images/léo.jpg" alt="" />
+          <img className="About-img rounded-full " src="./images/léo.jpg" alt="Léo Wolff" />
           <div className="About-spanContainer">
             <span className="About-cardName">Léo Wolff</span>
             <span className="About-role-back"> Lead Dev Back</span>
@@ -16,7 +18,7 @@ function About() {
           </div>
         </div>
         <div className="About-card">
-          <img className="About-img rounded-full " src="./images/franck.png" alt="" />
+          <img className="About-img rounded-full " src="./images/franck.png" alt="Franck Bisschop" />
           <div className="About-spanContainer">
             <span className="About-cardName">Franck Bisschop</span>
             <span className="About-role-back">Git Master</span>
@@ -36,7 +38,7 @@ function About() {
           </div>
         </div>
         <div className="About-card">
-          <img className="About-img rounded-full " src="./images/dodo.jpg" alt="" />
+          <img className="About-img rounded-full " src="./images/dodo.jpg" alt="Dorian Albiges" />
           <div className="About-spanContainer">
             <span className="About-cardName">Dorian Albiges</span>
             <span className="About-role-front">Lead Dev Front</span>

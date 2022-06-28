@@ -1,3 +1,5 @@
+// REVIEW OK -- Laurent
+
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
@@ -34,13 +36,29 @@ function Header({ setToken, isLogged, setIsLogged }) {
           </div>
           {menuOpen && <HeaderMobile setMenuOpen={setMenuOpen} />}
           <div className="Header-menu">
-            <Link to="/register" className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline">Inscription</Link>
-            <Link to="/login" className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline">Connexion</Link>
-            <Link to="/about" className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline">A propos</Link>
+            <Link
+              to="/register"
+              className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline"
+            >
+              Inscription
+            </Link>
+            <Link
+              to="/login"
+              className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline"
+            >Connexion
+            </Link>
+            <Link
+              to="/about"
+              className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline"
+            >
+              A propos
+            </Link>
           </div>
         </div>
         <div className="Header-logo-mobile">
-          <Link to="/"><img className="Header-img-logo-mobile" src={logo} alt="Go For Walk Logo Website" /></Link>
+          <Link to="/">
+            <img className="Header-img-logo-mobile" src={logo} alt="Go For Walk Logo Website" />
+          </Link>
         </div>
       </>
     );
@@ -71,7 +89,12 @@ function Header({ setToken, isLogged, setIsLogged }) {
 
         </div>
         <div className="Header-menu">
-          <Link to="/trek/create" className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline"> Créer une Randonnée</Link>
+          <Link
+            to="/trek/create"
+            className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline"
+          >
+            Créer une Randonnée
+          </Link>
 
           <Link
             to="/"
@@ -81,16 +104,29 @@ function Header({ setToken, isLogged, setIsLogged }) {
               setIsLogged(false);
               authentification.disconnectUser();
             }}
-          > Deconnexion
+          >
+            Deconnexion
           </Link>
 
-          <Link to="/profil" className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline">Mon profil</Link>
-          <Link to="/about" className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline">A propos</Link>
+          <Link
+            to="/profil"
+            className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline"
+          >
+            Mon profil
+          </Link>
+          <Link
+            to="/about"
+            className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline"
+          >
+            A propos
+          </Link>
         </div>
 
       </div>
       <div className="Header-logo-mobile">
-        <Link to="/"><img className="Header-img-logo-mobile" src={logo} alt="Go For Walk Logo Website" /></Link>
+        <Link to="/">
+          <img className="Header-img-logo-mobile" src={logo} alt="Go For Walk Logo Website" />
+        </Link>
       </div>
     </>
   );
