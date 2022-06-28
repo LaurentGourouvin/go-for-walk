@@ -27,9 +27,6 @@ function UpdateTrek({ token }) {
   const [disableSelect, setDisableSelect] = useState(true);
 
   const navigate = useNavigate();
-  // const [updateCoordinate, setUpdateCoordinate] = useState(0);
-
-  // const navigate = useNavigate();
   const getCityNameByPostalCode = (sendCp) => {
     // Vérification si le code postal contient bien 5 chiffres
     axios.get(`https://geo.api.gouv.fr/communes?codePostal=${sendCp}`)
@@ -55,7 +52,6 @@ function UpdateTrek({ token }) {
           setUpdateCity(trek.city);
           setUpdateDifficulty(trek.difficulty_id);
           setUpdateDescription(trek.description);
-          // setUpdatePictures(data.pictures);
           setUpdateCoordinate(trek.coordinate);
         }
       };
@@ -72,6 +68,7 @@ function UpdateTrek({ token }) {
       console.log(err);
     }
   }, []);
+
   return (
     <div className="UpdateTrek">
       <h1 className="UpdateTrek-h1">Bienvenu sur la modification de votre Randonnée</h1>
@@ -83,15 +80,6 @@ function UpdateTrek({ token }) {
             const decodedToken = jwtDecode(token.access_token);
             const { userId } = decodedToken;
             try {
-              console.log('id trek:', id);
-              console.log('userid:', userId);
-              console.log('updateTitle:', updateTitle);
-              console.log('updateDescription:', updateDescription);
-              console.log('updateDistance', updateDistance);
-              console.log('updateDuration:', updateDuration);
-              console.log('updateCity:', updateCity);
-              console.log('updateCoordinate:', updateCoordinate);
-              console.log('updateDifficulty:', updateDifficulty);
               const updateTrek = await api.updateTrek(token, id, userId, updateTitle, updateDescription, updateDistance, updateDuration, updateCity, updateCoordinate, updateDifficulty);
               console.log('updateTrek', updateTrek);
               if (updateTrek.status === 200) {
@@ -176,7 +164,7 @@ function UpdateTrek({ token }) {
                   setUpdateCity(e.target.value);
                 }}
               >
-                <option value="default">Selectionner votre ville</option>
+                <option value="default">Sélectionner votre ville</option>
                 {listCity.map((oneCity) => (<option key={oneCity.code} value={oneCity.nom}>{oneCity.nom}</option>))}
 
               </select>
@@ -184,7 +172,7 @@ function UpdateTrek({ token }) {
 
           </label>
           <label className="UpdateTrek-label" htmlFor="distance">
-            <span className="UpdateTreklabel-text">Distance de la Randonnée:</span>
+            <span className="UpdateTreklabel-text">Distance de la Randonnée :</span>
             <input
               id="distance"
               name="distance"
@@ -275,12 +263,10 @@ function UpdateTrek({ token }) {
           className="UpdateTrek-addImgButton text-white active:bg-green-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
           onSubmit={async (event) => {
             event.preventDefault();
-
-            console.log(updatePictures);
             try {
               const formData = new FormData();
               const tabPhoto = document.getElementById('pictures').files[0];
-              console.log(tabPhoto);
+
               formData.append('files', tabPhoto);
               const addPicture = await api.addPicture(id, token, formData);
               if (addPicture.status === 200) {
@@ -319,3 +305,9 @@ UpdateTrek.propTypes = {
   token: PropTypes.object.isRequired,
 };
 export default UpdateTrek;
+
+// REVIEW OK -- Laurent
+// Modification à effectuer
+// =====
+// Vérifier les labels du formulaire (km, minutes etc.)
+// Il manque les inputs des coordoonées
