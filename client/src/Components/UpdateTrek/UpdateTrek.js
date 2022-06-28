@@ -172,7 +172,7 @@ function UpdateTrek({ token }) {
 
           </label>
           <label className="UpdateTrek-label" htmlFor="distance">
-            <span className="UpdateTreklabel-text">Distance de la Randonnée :</span>
+            <span className="UpdateTreklabel-text">Distance de la Randonnée ( en KM ):</span>
             <input
               id="distance"
               name="distance"
@@ -201,7 +201,7 @@ function UpdateTrek({ token }) {
           </label>
 
           <label className="UpdateTrek-label" htmlFor="difficulty">
-            <span className="UpdateTrek-label-text">Difficulté de la Randonnée ( en KM ):</span>
+            <span className="UpdateTrek-label-text">Difficulté de la Randonnée :</span>
             <select
               value={updateDifficulty}
               name="difficulty"
@@ -309,5 +309,5 @@ export default UpdateTrek;
 // REVIEW OK -- Laurent
 // Modification à effectuer
 // =====
-// Vérifier les labels du formulaire (km, minutes etc.)
+// Vérifier les labels du formulaire (km, minutes etc.) -- ok !
 // Il manque les inputs des coordoonées
