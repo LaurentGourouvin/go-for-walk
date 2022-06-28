@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../../axios/request';
 import './UpdateTrek.scss';
+import MapTrek from '../MapTrek/MapTrek';
+import Map from '../Map/Map';
 
 function UpdateTrek({ token }) {
   const { id } = useParams();
@@ -19,12 +21,21 @@ function UpdateTrek({ token }) {
   const [updateDuration, setUpdateDuration] = useState(0);
   const [updateDifficulty, setUpdateDifficulty] = useState(0);
   const [updatePictures, setUpdatePictures] = useState('');
-  const [updateCoordinate, setUpdateCoordinate] = useState([]);
+  // const [updateCoordinate, setUpdateCoordinate] = useState([]);
 
   const [labelArray, setLabelArray] = useState([]);
   const [listCity, setListCity] = useState([]);
   const [codePostal, setCodePostal] = useState('');
   const [disableSelect, setDisableSelect] = useState(true);
+
+  const [mapCoordinate, setMapCoordinate] = useState([[], []]);
+  const [startMarker, setStartMarker] = useState('');
+  const [endMarker, setEndMarker] = useState();
+  const [newCoordinate, setNewCoordinate] = useState(true);
+  const [startCoordinate, setStartCoordinate] = useState({ lat: 0, lng: 0 });
+  const [endCoordinate, setEndCoordinate] = useState({ lat: 0, lng: 0 });
+  const [startOrEndCoordinate, setStartOrEndCoordinate] = useState('');
+  const [trekPolyline, setTrekPolyline] = useState([[], []]);
 
   const navigate = useNavigate();
   const getCityNameByPostalCode = (sendCp) => {
@@ -43,23 +54,43 @@ function UpdateTrek({ token }) {
       const getTrek = async (trekId) => {
         const trek = await api.getTrekById(trekId);
         if (trek.status === 200) {
+          // Création d'un tableau contenant les coordonées de la randonnée afin de la dessiner sur Leaflet
+          const mapPoint = [];
+          mapPoint.push([parseInt(trek.data.coordinate[0], 10), parseInt(trek.data.coordinate[1], 10)]);
+          mapPoint.push([parseInt(trek.data.coordinate[2], 10), parseInt(trek.data.coordinate[3], 10)]);
+          setMapCoordinate(mapPoint);
+
+          // Création d'un OBJ contenant LAT et LNG pour les coordonées du market sur Leaflet
+          const positionStartMarker = {
+            lat: Number(trek.data.coordinate[0]),
+            lng: Number(trek.data.coordinate[1]),
+          };
+          setStartMarker(positionStartMarker);
+
+          // Création d'un OBJ contenant LAT et LNG pour les coordonées du market sur Leaflet
+          const positionEndMarker = {
+            lat: Number(trek.data.coordinate[2]),
+            lng: Number(trek.data.coordinate[3]),
+          };
+          setEndMarker(positionEndMarker);
+
           setTrekData(trek.data);
           setTrekDataPictures(trek.data.pictures);
-          setUpdateDistance(trek.distance);
-          setUpdateDuration(trek.duration);
-          setUpdateDuration(trek.duration);
-          setUpdateTitle(trek.title);
-          setUpdateCity(trek.city);
-          setUpdateDifficulty(trek.difficulty_id);
-          setUpdateDescription(trek.description);
-          setUpdateCoordinate(trek.coordinate);
+          setUpdateDistance(trek.data.distance);
+          setUpdateDuration(trek.data.duration);
+          setUpdateDuration(trek.data.duration);
+          setUpdateTitle(trek.data.title);
+          setUpdateCity(trek.data.city);
+          setUpdateDifficulty(trek.data.difficulty_id);
+          setUpdateDescription(trek.data.description);
+
+          setNewCoordinate(false);
         }
       };
       getTrek(id);
       const getLabel = async () => {
         const label = await api.getLabel();
         if (label.status === 200) {
-          console.log(label);
           setLabelArray(label.data);
         }
       };
@@ -79,9 +110,16 @@ function UpdateTrek({ token }) {
           if (token.access_token) {
             const decodedToken = jwtDecode(token.access_token);
             const { userId } = decodedToken;
+            const dataCoordinate = [];
+            // dataCoordinate.push(`${parseInt(startCoordinate.lat, 10)},${parseInt(startCoordinate.lng, 10)}`);
+            dataCoordinate.push(parseInt(startCoordinate.lat, 10));
+            dataCoordinate.push(parseInt(startCoordinate.lng, 10));
+            dataCoordinate.push(parseInt(endCoordinate.lat, 10));
+            dataCoordinate.push(parseInt(endCoordinate.lng, 10));
+
+            // dataCoordinate.push(`${parseInt(endCoordinate.lat, 10)},${parseInt(endCoordinate.lng, 10)}`);
             try {
-              const updateTrek = await api.updateTrek(token, id, userId, updateTitle, updateDescription, updateDistance, updateDuration, updateCity, updateCoordinate, updateDifficulty);
-              console.log('updateTrek', updateTrek);
+              const updateTrek = await api.updateTrek(token, id, userId, updateTitle, updateDescription, updateDistance, updateDuration, updateCity, dataCoordinate, updateDifficulty);
               if (updateTrek.status === 200) {
                 swal('Votre randonnée a bien était mise à jour', '', 'success');
                 navigate(`/trek/${id}`);
@@ -121,7 +159,8 @@ function UpdateTrek({ token }) {
               }}
             />
           </label>
-
+          {
+}
           <label className="UpdateTrek-label" htmlFor="cp">
             <span className="UpdateTreklabel-text">Saisir code postal:</span>
             <input
@@ -217,9 +256,94 @@ function UpdateTrek({ token }) {
             </select>
           </label>
         </div>
+        <button type="button" className="UpdateTrek-button bg-stone-500 text-white hover:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" onClick={() => { setNewCoordinate(!newCoordinate); }}>Modifier les coordonées de la randonnée</button>
+
+        {!newCoordinate && <MapTrek mapCoordinate={mapCoordinate} startMarker={startMarker} endMarker={endMarker} /> }
+        {newCoordinate && (
+        <div className="UpdateTrek-coordinate">
+          <div className="UpdateTrek-coordinate-top">
+            <label className="UpdateTrek-label label-coordinate" htmlFor="coordinate" id="coordinate">
+              <span className="UpdateTrek-label-text">Saississez des Coordonnées pour la randonnée :</span>
+
+              <div className="UpdateTrek-input-coordinate">
+                <p>Point de départ: </p>
+
+                <input
+                  className="UpdateTrek-input shadow-lg rounded-md"
+                  placeholder="Latitude"
+                  id="startLatCoord"
+                  name="startLatCoord"
+                  type="number"
+                  step="0.01"
+                  required
+                  value={startCoordinate.lat}
+                  disabled
+                />
+
+                <input
+                  className="UpdateTrek-input shadow-lg rounded-md"
+                  placeholder="Longitude"
+                  id="startLngCoord"
+                  name="startLngCoord"
+                  type="number"
+                  step="0.01"
+                  required
+                  value={startCoordinate.lng}
+                  disabled
+                />
+              </div>
+              <div className="UpdateTrek-input-coordinate">
+                <p>Point de d'arrivée: </p>
+                <input
+                  className="UpdateTrek-input shadow-lg rounded-md"
+                  placeholder="Latitude"
+                  id="endLatCoord"
+                  name="endLatCoord"
+                  type="number"
+                  step="0.01"
+                  required
+                  value={endCoordinate.lat}
+                />
+                <input
+                  className="UpdateTrek-input shadow-lg rounded-md"
+                  placeholder="Longitude"
+                  id="endLngCoord"
+                  name="endLngCoord"
+                  type="number"
+                  step="0.01"
+                  required
+                  value={endCoordinate.lng}
+                />
+              </div>
+            </label>
+          </div>
+
+          <select
+            name="startEndPosition"
+            id="startEndPosition"
+            onChange={(e) => {
+              setStartOrEndCoordinate(e.target.value);
+            }}
+          >
+            <option value="null">Saisir une action</option>
+            <option value="start">Ajouter point de départ</option>
+            <option value="end">Ajouter point d'arrivée</option>
+          </select>
+
+          <div className="UpdateTrek-coordinate-bottom" />
+
+          <Map
+            setStartCoordinate={setStartCoordinate}
+            setEndCoordinate={setEndCoordinate}
+            defineStartOrEndPosition={startOrEndCoordinate}
+            setTrekPolyline={setTrekPolyline}
+            trekPolyline={trekPolyline}
+          />
+        </div>
+        )}
 
         <div className="UpdateTrek-button-container">
-          <button className="UpdateTrek-button bg-stone-500 text-white hover:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Validez</button>
+          <button className="UpdateTrek-button bg-stone-500 text-white hover:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Mise à jour de la randonnée</button>
 
         </div>
       </form>

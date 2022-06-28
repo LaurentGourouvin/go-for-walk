@@ -66,13 +66,6 @@ function CreateTrekForm({ token }) {
         if (token.access_token) {
           const decodedToken = jwtDecode(token.access_token);
           const dataPicture = [];
-          // A VOIR AVEC LE BACK POUR AVOIR UN TABLEAU DE CE GENRE DANS LA BDD
-          // const dataCoordinate = [[], []];
-          // J'ajoute la coordonée de départ à dataCoordinate puis la valeur d'arrivée
-          // dataCoordinate[0][0] = startCoordinate.lat;
-          // dataCoordinate[0][1] = startCoordinate.lng;
-          // dataCoordinate[1][0] = endCoordinate.lat;
-          // dataCoordinate[1][1] = endCoordinate.lng;
 
           const dataCoordinate = [];
           dataCoordinate.push(`${parseInt(startCoordinate.lat, 10)},${parseInt(startCoordinate.lng, 10)}`);
