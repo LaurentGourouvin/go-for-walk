@@ -1,0 +1,21 @@
+.PageNotFound {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    margin: auto;
+
+    &-title {
+        font-size: 4rem;
+        text-align: center;
+        color: rgb(87, 98, 47);
+        font-weight: 700;
+    }
+    &-left {
+        width: 45%;
+    }
+    &-right {
+        width: 45%;
+        text-align: center;
+    }
+}
