@@ -293,7 +293,7 @@ function CreateTrekForm({ token }) {
               setStartOrEndCoordinate(e.target.value);
             }}
           >
-            <option value="null">Sasir une action</option>
+            <option value="null">Saisir une action</option>
             <option value="start">Ajouter point de départ</option>
             <option value="end">Ajouter point d'arrivée</option>
           </select>
@@ -347,7 +347,7 @@ function CreateTrekForm({ token }) {
       </div>
 
       <div className="RegisterForm--button-container">
-        <button className="RegisterForm--button bg-stone-500 text-white hover:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Validez</button>
+        <button className="RegisterForm--button bg-stone-500 text-white hover:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Valider</button>
         <button
           className="RegisterForm--button bg-stone-500 text-white hover:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
           type="button"
