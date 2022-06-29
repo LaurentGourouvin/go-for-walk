@@ -37,3 +37,5 @@ SearchBar.propTypes = {
   setSearchCity: PropTypes.func.isRequired,
 };
 export default SearchBar;
+
+// Review ok ( Dorian )

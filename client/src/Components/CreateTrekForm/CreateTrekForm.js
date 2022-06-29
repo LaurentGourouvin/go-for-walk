@@ -47,7 +47,6 @@ function CreateTrekForm({ token }) {
       const getLabel = async () => {
         const label = await api.getLabel();
         if (label.status === 200) {
-          console.log(label);
           setLabelArray(label.data);
         }
       };
@@ -64,23 +63,14 @@ function CreateTrekForm({ token }) {
       encType="multipart/form-data"
       onSubmit={async (event) => {
         event.preventDefault();
-        console.log("j'envoie mon formulaire");
         if (token.access_token) {
           const decodedToken = jwtDecode(token.access_token);
           const dataPicture = [];
-          // A VOIR AVEC LE BACK POUR AVOIR UN TABLEAU DE CE GENRE DANS LA BDD
-          // const dataCoordinate = [[], []];
-          // J'ajoute la coordonée de départ à dataCoordinate puis la valeur d'arrivée
-          // dataCoordinate[0][0] = startCoordinate.lat;
-          // dataCoordinate[0][1] = startCoordinate.lng;
-          // dataCoordinate[1][0] = endCoordinate.lat;
-          // dataCoordinate[1][1] = endCoordinate.lng;
 
           const dataCoordinate = [];
           dataCoordinate.push(`${parseInt(startCoordinate.lat, 10)},${parseInt(startCoordinate.lng, 10)}`);
           dataCoordinate.push(`${parseInt(endCoordinate.lat, 10)},${parseInt(endCoordinate.lng, 10)}`);
 
-          console.log('tableau de coordonnée:', dataCoordinate);
           dataPicture.push(document.getElementById('pictures').files[0]);
           // dataCoordinate.push(parseInt(coordinate, 10));
 
@@ -198,7 +188,6 @@ function CreateTrekForm({ token }) {
               if (event.target.value.length === 5) {
                 getCityNameByPostalCode(event.target.value);
                 setDisableSelect(!disableSelect);
-                console.log(listCity);
               } else {
                 setDisableSelect(true);
               }
@@ -226,7 +215,6 @@ function CreateTrekForm({ token }) {
               }}
             >
               <option value="default">Selectionner votre ville</option>
-              {console.log(listCity)}
               {listCity.map((oneCity) => (<option key={oneCity.code} value={oneCity.nom}>{oneCity.nom}</option>))}
 
             </select>
@@ -240,19 +228,6 @@ function CreateTrekForm({ token }) {
 
               <div className="CreateTrekForm-input-coordinate">
                 <p>Point de départ: </p>
-                {/* <input
-                  className="CreateTrekForm-input shadow-lg rounded-md"
-                  placeholder="Coordonnées de votre Randonnée au format : xxx.yyy "
-                  id="coordinate"
-                  name="coordinate"
-                  type="number"
-                  step="0.01"
-                  required
-                  value={coordinate}
-                  onChange={(event) => {
-                    setCoordinate(event.target.value);
-                  }}
-                /> */}
 
                 <input
                   className="CreateTrekForm-input shadow-lg rounded-md"
@@ -308,11 +283,10 @@ function CreateTrekForm({ token }) {
             name="startEndPosition"
             id="startEndPosition"
             onChange={(e) => {
-              console.log(e.target.value);
               setStartOrEndCoordinate(e.target.value);
             }}
           >
-            <option value="null">Sasir une action</option>
+            <option value="null">Saisir une action</option>
             <option value="start">Ajouter point de départ</option>
             <option value="end">Ajouter point d'arrivée</option>
           </select>
@@ -366,7 +340,7 @@ function CreateTrekForm({ token }) {
       </div>
 
       <div className="RegisterForm--button-container">
-        <button className="RegisterForm--button bg-stone-500 text-white hover:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Validez</button>
+        <button className="RegisterForm--button bg-stone-500 text-white hover:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Valider</button>
         <button
           className="RegisterForm--button bg-stone-500 text-white hover:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
           type="button"
@@ -393,3 +367,5 @@ CreateTrekForm.propTypes = {
   token: PropTypes.object.isRequired,
 };
 export default CreateTrekForm;
+
+// Review ok ( Dorian )

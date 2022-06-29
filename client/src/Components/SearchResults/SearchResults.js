@@ -25,7 +25,6 @@ function SearchResults({ searchCity, token }) {
         };
         allTreks();
       } catch (err) {
-        console.log('Bug dans SearchResult AllTreks');
         console.log(err);
       }
     } else {
@@ -38,7 +37,6 @@ function SearchResults({ searchCity, token }) {
         };
         treksByCityName();
       } catch (err) {
-        console.log('Bug dans SearchResult TreakByCityName');
         console.log(err);
       }
     }
@@ -52,7 +50,7 @@ function SearchResults({ searchCity, token }) {
         </h1>
         <h2 className="SearchResults-Title-2">
           {searchCity ? `Pour la ville de ${searchCity}` : 'Pour la France entière'}
-          <Link to="/"><p className="SearchResults-Subtitle">Retour accueil</p></Link>
+          <Link to="/"><p className="bg-stone-500 text-white hover:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 text-center">Retour accueil</p></Link>
         </h2>
 
       </div>
@@ -73,3 +71,5 @@ SearchResults.propTypes = {
   token: PropTypes.object.isRequired,
 };
 export default SearchResults;
+
+// Review ok ( Dorian ) / Laurent

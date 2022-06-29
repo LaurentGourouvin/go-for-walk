@@ -1,3 +1,5 @@
+// REVIEW OK -- Laurent
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
@@ -31,7 +33,7 @@ function RegisterForm() {
       <div className="RegisterForm--input-container">
         <h1 className="RegisterForm-h1">Création d'un profil personnel</h1>
         <label className="RegisterForm--label" htmlFor="email">
-          <span className="RegisterForm--label--text">Adresse mail :</span>
+          <span className="RegisterForm--label--text">Adresse email :</span>
           <input
             className="RegisterForm--input shadow-lg rounded-md"
             placeholder="Votre adresse mail"
@@ -108,7 +110,7 @@ function RegisterForm() {
       </div>
 
       <div className="RegisterForm--button-container">
-        <button className="RegisterForm--button bg-stone-500 text-white active:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Validez</button>
+        <button className="RegisterForm--button bg-stone-500 text-white active:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="submit">Valider</button>
         <button
           className="RegisterForm--button bg-stone-500 text-white active:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
           type="button"

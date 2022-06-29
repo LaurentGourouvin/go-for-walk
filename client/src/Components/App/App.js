@@ -12,6 +12,7 @@ import CreateTrekForm from '../CreateTrekForm/CreateTrekForm';
 import TrekDetails from '../TrekDetails/TrekDetails';
 import UpdateTrek from '../UpdateTrek/UpdateTrek';
 import About from '../About/About';
+import PageNotFound from '../PageNotFound/PageNotFound';
 
 function App() {
   const [token, setToken] = useState({});
@@ -39,7 +40,8 @@ function App() {
           <Route path="/trek/create" element={<CreateTrekForm token={token} />} />
           <Route path="/trek/:id" element={<TrekDetails />} />
           <Route path="/updateTrek/:id" element={<UpdateTrek token={token} />} />
-          <Route path="about" element={<About />} />
+          <Route path="/about" element={<About />} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </div>
     </div>

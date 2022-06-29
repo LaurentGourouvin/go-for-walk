@@ -1,3 +1,5 @@
+// REVIEW OK -- Laurent
+
 import './About.scss';
 
 function About() {
@@ -6,17 +8,17 @@ function About() {
       <h1 className="About-title">Qui sommes-nous ?</h1>
       <div className="About-cardContainer">
         <div className="About-card">
-          <img className="About-img rounded-full " src="./images/léo.jpg" alt="" />
+          <img className="About-img rounded-full " src="./images/léo.jpg" alt="Léo Wolff" />
           <div className="About-spanContainer">
             <span className="About-cardName">Léo Wolff</span>
             <span className="About-role-back"> Lead Dev Back</span>
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <svg xmlns="http://www.w3.org/2000/svg" className="About-icon h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
             </svg>
           </div>
         </div>
         <div className="About-card">
-          <img className="About-img rounded-full " src="./images/franck.png" alt="" />
+          <img className="About-img rounded-full " src="./images/franck.png" alt="Franck Bisschop" />
           <div className="About-spanContainer">
             <span className="About-cardName">Franck Bisschop</span>
             <span className="About-role-back">Git Master</span>
@@ -36,7 +38,7 @@ function About() {
           </div>
         </div>
         <div className="About-card">
-          <img className="About-img rounded-full " src="./images/dodo.jpg" alt="" />
+          <img className="About-img rounded-full " src="./images/dodo.jpg" alt="Dorian Albiges" />
           <div className="About-spanContainer">
             <span className="About-cardName">Dorian Albiges</span>
             <span className="About-role-front">Lead Dev Front</span>
