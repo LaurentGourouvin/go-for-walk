@@ -37,9 +37,9 @@ function App() {
           <Route path="/profil" element={<Profil token={token} setToken={setToken} isLogged={isLogged} setIsLogged={setIsLogged} />} />
           <Route path="/MyTreks" element={<MyTreks token={token} />} />
           <Route path="/search" element={<SearchResults searchCity={searchCity} token={token} />} />
-          <Route path="/trek/create" element={<CreateTrekForm token={token} />} />
+          <Route path="/trek/create" element={<CreateTrekForm token={token} isLogged={isLogged} />} />
           <Route path="/trek/:id" element={<TrekDetails />} />
-          <Route path="/updateTrek/:id" element={<UpdateTrek token={token} />} />
+          <Route path="/updateTrek/:id" element={<UpdateTrek token={token} isLogged={isLogged} />} />
           <Route path="/about" element={<About />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>

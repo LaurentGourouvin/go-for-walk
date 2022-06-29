@@ -6,8 +6,9 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import api from '../../axios/request';
 import Map from '../Map/Map';
+import ImageWarning from './images/warning.png';
 
-function CreateTrekForm({ token }) {
+function CreateTrekForm({ token, isLogged }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [distance, setDistance] = useState('');
@@ -55,7 +56,11 @@ function CreateTrekForm({ token }) {
       console.log(err);
     }
   }, []);
-
+  if (!isLogged) {
+    return (
+      <p className="msg-error p-2 bg-amber-50 rounded-md shadow-md"><img src={ImageWarning} alt="logo de warning" />Vous devez être connecté pour accéder à la page profil</p>
+    );
+  }
   return (
 
     <form
@@ -362,7 +367,7 @@ function CreateTrekForm({ token }) {
 }
 
 CreateTrekForm.propTypes = {
-
+  isLogged: PropTypes.bool.isRequired,
   token: PropTypes.object.isRequired,
 };
 export default CreateTrekForm;

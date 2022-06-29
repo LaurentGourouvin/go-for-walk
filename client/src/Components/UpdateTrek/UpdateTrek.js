@@ -8,8 +8,9 @@ import api from '../../axios/request';
 import './UpdateTrek.scss';
 import MapTrek from '../MapTrek/MapTrek';
 import Map from '../Map/Map';
+import ImageWarning from './images/warning.png';
 
-function UpdateTrek({ token }) {
+function UpdateTrek({ token, isLogged }) {
   const { id } = useParams();
   const [trekData, setTrekData] = useState({});
   const [trekDataPictures, setTrekDataPictures] = useState([]);
@@ -100,6 +101,12 @@ function UpdateTrek({ token }) {
     }
   }, []);
 
+  // Si l'utilisateur est connecté on lui affiche son dashboard
+  if (!isLogged) {
+    return (
+      <p className="msg-error p-2 bg-amber-50 rounded-md shadow-md"><img src={ImageWarning} alt="logo de warning" />Vous devez être connecté pour accéder à la page profil</p>
+    );
+  }
   return (
     <div className="UpdateTrek">
       <h1 className="UpdateTrek-h1">Bienvenu sur la modification de votre Randonnée</h1>
@@ -427,6 +434,7 @@ function UpdateTrek({ token }) {
 }
 UpdateTrek.propTypes = {
   token: PropTypes.object.isRequired,
+  isLogged: PropTypes.bool.isRequired,
 };
 export default UpdateTrek;
 
