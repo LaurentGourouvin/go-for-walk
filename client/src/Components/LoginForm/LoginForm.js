@@ -26,17 +26,16 @@ function LoginForm({ setToken, setIsLogged }) {
           const { data } = await api.login(email, password);
           // On vérifie la présence d'un paramètre access_token dans l'objet data
           if (data.access_token) {
-            console.log('ma data', data);
             setToken(data);
             // on défini si l'utilisateur est connecté ou non dans le local storage
             authentification.setLoggin(data);
             setIsLogged(true);
             navigate('/profil');
           } else if (data.errorMessage) {
-            swal('Votre compte est désactivé, veuillez contacter l\'administrateur du site à cette adresse mail : admin@admin.com', '', 'info');
+            swal('Votre compte est désactivé, veuillez contacter l\'administrateur du site .', '', 'info');
           }
         } catch (err) {
-          console.log('ici', err);
+          console.log(err);
         }
       }}
     >
