@@ -141,7 +141,7 @@ function UpdateTrek({ token, isLogged }) {
                 const updateTrek = await api.updateTrek(token, id, userId, updateTitle, updateDescription, updateDistance, updateDuration, updateCity, dataCoordinate, updateDifficulty);
                 if (updateTrek.status === 200) {
                   swal('Votre randonnée a bien était mise à jour', '', 'success');
-                  navigate(`/trek/${id}`);
+                  navigate('/MyTreks');
                 }
               } catch (error) {
                 console.log(error);
