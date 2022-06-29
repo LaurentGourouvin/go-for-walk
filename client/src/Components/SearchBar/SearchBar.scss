@@ -15,7 +15,8 @@
         background-position-x: 95%;
         background-position-y: 50%;
         background-size: 42px;
-        width: 100%;
+        margin: auto;
+        width: 50%;
     }
     &-cityNameInput::placeholder {
         color: #ccd5ae;
@@ -30,6 +31,7 @@
 
     form {
         width: 100%;
+        text-align: center;
     }
 }
 
