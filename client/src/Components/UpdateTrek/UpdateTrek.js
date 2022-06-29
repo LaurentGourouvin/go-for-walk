@@ -90,7 +90,8 @@ function UpdateTrek({ token, isLogged }) {
           setUpdateCity(trek.data.city);
           setUpdateDifficulty(trek.data.difficulty_id);
           setUpdateDescription(trek.data.description);
-
+          setStartCoordinate({ lat: trek.data.coordinate[0], lng: trek.data.coordinate[1] });
+          setEndCoordinate({ lat: trek.data.coordinate[2], lng: trek.data.coordinate[3] });
           setNewCoordinate(false);
         }
       };
