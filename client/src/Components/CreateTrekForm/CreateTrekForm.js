@@ -340,7 +340,7 @@ function CreateTrekForm({ token, isLogged }) {
           >
             {/* Faire en sorte que le SELECT provienne de la base de donnée */}
             <option value="">Choisir une Difficulté</option>
-            {labelArray.map((label) => <option value={label.id}>{label.label}</option>)}
+            {labelArray.map((label) => <option key={label.id} value={label.id}>{label.label}</option>)}
           </select>
         </label>
       </div>
