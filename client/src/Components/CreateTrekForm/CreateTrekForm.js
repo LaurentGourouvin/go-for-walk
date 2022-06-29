@@ -72,7 +72,6 @@ function CreateTrekForm({ token }) {
           dataCoordinate.push(`${parseInt(endCoordinate.lat, 10)},${parseInt(endCoordinate.lng, 10)}`);
 
           dataPicture.push(document.getElementById('pictures').files[0]);
-          // dataCoordinate.push(parseInt(coordinate, 10));
 
           // Mise en place d'un formData car envoie de fichier.
           // L'envoi du fichier nous force à changer le content-type et l'encodage par défaut de notre formulaire.
