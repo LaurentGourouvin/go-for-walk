@@ -235,8 +235,9 @@ function Profil({
                   const disableUser = await api.disableUser(userId, token);
                   if (disableUser.status === 200) {
                     setToken({});
+                    setIsLogged(false);
                     authentification.disconnectUser();
-                    swal('Votre compte a bien était désactivé', '', 'success');
+                    swal('Votre compte a bien était désactivé, si vous souhaité que vos données ne soit pas conservé veuillez contacter l\'administreteur du site', '', 'success');
                     navigate('/');
                   }
                 } catch (error) {
@@ -246,7 +247,7 @@ function Profil({
               type="button"
               className="bg-stone-500 text-white active:bg-stone-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
             >
-              Supprimer votre compte
+              Désactiver votre compte
             </button>
           </div>
         </div>
