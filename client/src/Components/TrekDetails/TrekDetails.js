@@ -26,8 +26,8 @@ function TrekDetails() {
 
           // Création d'un tableau contenant les coordonées de la randonnée afin de la dessiner sur Leaflet
           const mapPoint = [];
-          mapPoint.push([parseInt(trek.data.coordinate[0], 10), parseInt(trek.data.coordinate[1], 10)]);
-          mapPoint.push([parseInt(trek.data.coordinate[2], 10), parseInt(trek.data.coordinate[3], 10)]);
+          mapPoint.push([trek.data.coordinate[0], trek.data.coordinate[1]]);
+          mapPoint.push([trek.data.coordinate[2], trek.data.coordinate[3]]);
           setMapCoordinate(mapPoint);
 
           // Création d'un OBJ contenant LAT et LNG pour les coordonées du market sur Leaflet
