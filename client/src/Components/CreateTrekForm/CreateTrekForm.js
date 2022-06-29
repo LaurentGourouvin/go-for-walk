@@ -27,9 +27,6 @@ function CreateTrekForm({ token, isLogged }) {
   const [startOrEndCoordinate, setStartOrEndCoordinate] = useState('');
   const [trekPolyline, setTrekPolyline] = useState([[], []]);
 
-  // eslint-disable-next-line no-unused-vars
-  const triggerInChangeInput = new Event('onControlInput');
-
   const navigate = useNavigate();
 
   const getCityNameByPostalCode = (sendCp) => {
@@ -73,8 +70,8 @@ function CreateTrekForm({ token, isLogged }) {
           const dataPicture = [];
 
           const dataCoordinate = [];
-          dataCoordinate.push(`${parseInt(startCoordinate.lat, 10)},${parseInt(startCoordinate.lng, 10)}`);
-          dataCoordinate.push(`${parseInt(endCoordinate.lat, 10)},${parseInt(endCoordinate.lng, 10)}`);
+          dataCoordinate.push(`${startCoordinate.lat},${startCoordinate.lng}`);
+          dataCoordinate.push(`${endCoordinate.lat},${endCoordinate.lng}`);
 
           dataPicture.push(document.getElementById('pictures').files[0]);
 

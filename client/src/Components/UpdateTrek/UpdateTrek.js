@@ -64,8 +64,8 @@ function UpdateTrek({ token, isLogged }) {
         if (trek.status === 200) {
           // Création d'un tableau contenant les coordonées de la randonnée afin de la dessiner sur Leaflet
           const mapPoint = [];
-          mapPoint.push([parseInt(trek.data.coordinate[0], 10), parseInt(trek.data.coordinate[1], 10)]);
-          mapPoint.push([parseInt(trek.data.coordinate[2], 10), parseInt(trek.data.coordinate[3], 10)]);
+          mapPoint.push([trek.data.coordinate[0], trek.data.coordinate[1]]);
+          mapPoint.push([trek.data.coordinate[2], trek.data.coordinate[3]]);
           setMapCoordinate(mapPoint);
 
           // Création d'un OBJ contenant LAT et LNG pour les coordonées du market sur Leaflet
@@ -85,7 +85,6 @@ function UpdateTrek({ token, isLogged }) {
           setTrekData(trek.data);
           setTrekDataPictures(trek.data.pictures);
           setUpdateDistance(trek.data.distance);
-          setUpdateDuration(trek.data.duration);
           setUpdateDuration(trek.data.duration);
           setUpdateTitle(trek.data.title);
           setUpdateCity(trek.data.city);
@@ -135,10 +134,8 @@ function UpdateTrek({ token, isLogged }) {
               const { userId } = decodedToken;
               const dataCoordinate = [];
               // Création du tableau des coordonnée à envoyer à la BDD
-              dataCoordinate.push(parseInt(startCoordinate.lat, 10));
-              dataCoordinate.push(parseInt(startCoordinate.lng, 10));
-              dataCoordinate.push(parseInt(endCoordinate.lat, 10));
-              dataCoordinate.push(parseInt(endCoordinate.lng, 10));
+              dataCoordinate.push(startCoordinate.lat, startCoordinate.lng);
+              dataCoordinate.push(endCoordinate.lat, endCoordinate.lng);
 
               try {
                 const updateTrek = await api.updateTrek(token, id, userId, updateTitle, updateDescription, updateDistance, updateDuration, updateCity, dataCoordinate, updateDifficulty);
