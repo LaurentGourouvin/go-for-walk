@@ -43,16 +43,12 @@ function Map({
         if (defineStartOrEndPosition === 'start') {
           setStartCoordinate({ lat, lng });
           setStartMarker({ lat, lng });
-
-          console.log("j'arrive à recup mes coorodnées");
           const lineToDraw = trekPolyline;
           lineToDraw[0][0] = lat;
           lineToDraw[0][1] = lng;
 
           setTrekPolyline(lineToDraw);
           setMapPoints(lineToDraw);
-
-          console.log(`Point de départ: lat: ${lat} | lng: ${lng}`);
         }
         if (defineStartOrEndPosition === 'end') {
           setEndCoordinate({ lat, lng });
@@ -64,15 +60,12 @@ function Map({
 
           setTrekPolyline(lineToDraw);
           setMapPoints(lineToDraw);
-
-          console.log(`Point d'arrivée: lat: ${lat} | lng: ${lng}`);
         }
       },
     });
   }
 
   useEffect(() => {
-    console.log('render de la map');
     setShowLine(false);
     if (mapPoints[0].length === 2) {
       if (mapPoints[1].length === 2) {
@@ -80,7 +73,6 @@ function Map({
         lines.push(<Polyline positions={mapPoints} />);
         setPolyline(lines);
         setShowLine(true);
-        console.log(showLine);
       }
     }
   }, [startMarker, endMarker]);

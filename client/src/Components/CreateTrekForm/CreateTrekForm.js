@@ -268,6 +268,7 @@ function CreateTrekForm({ token, isLogged }) {
                   step="0.01"
                   required
                   value={endCoordinate.lat}
+                  disabled
                 />
                 <input
                   className="CreateTrekForm-input shadow-lg rounded-md"
@@ -278,6 +279,7 @@ function CreateTrekForm({ token, isLogged }) {
                   step="0.01"
                   required
                   value={endCoordinate.lng}
+                  disabled
                 />
               </div>
             </label>
