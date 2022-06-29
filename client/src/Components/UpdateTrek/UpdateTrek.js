@@ -325,6 +325,7 @@ function UpdateTrek({ token, isLogged }) {
                     step="0.01"
                     required
                     value={endCoordinate.lat}
+                    disabled
                   />
                   <input
                     className="UpdateTrek-input shadow-lg rounded-md"
@@ -335,6 +336,7 @@ function UpdateTrek({ token, isLogged }) {
                     step="0.01"
                     required
                     value={endCoordinate.lng}
+                    disabled
                   />
                 </div>
               </label>
