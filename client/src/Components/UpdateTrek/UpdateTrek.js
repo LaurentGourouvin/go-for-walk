@@ -121,7 +121,7 @@ function UpdateTrek({ token, isLogged }) {
       <p className="msg-error p-2 bg-amber-50 rounded-md shadow-md"><img src={ImageWarning} alt="logo de warning" />La randonnée n'existe pas.</p>
     );
   }
-  if (isLoading) {
+  if (!isLoading) {
     return (
 
       <div className="UpdateTrek">
@@ -273,7 +273,7 @@ function UpdateTrek({ token, isLogged }) {
               >
                 {/* Faire en sorte que le SELECT provienne de la base de donnée */}
                 <option>Choisir une Difficulté</option>
-                {labelArray.map((label) => <option value={label.id}>{label.label}</option>)}
+                {labelArray.map((label) => <option key={label.id} value={label.id}>{label.label}</option>)}
 
               </select>
             </label>
