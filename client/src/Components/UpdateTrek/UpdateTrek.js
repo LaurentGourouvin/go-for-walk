@@ -167,10 +167,11 @@ function UpdateTrek({ token, isLogged }) {
             </label>
             <label className="UpdateTrek-label" htmlFor="description">
               <span className="UpdateTreklabel-text">Description de la Randonnée:</span>
-              <input
+              <textarea
+                rows="5"
                 id="description"
                 name="description"
-                className="UpdateTrek-input shadow-lg rounded-md"
+                className="UpdateTrek-input UpdateTrek-textarea shadow-lg rounded-md"
                 placeholder={trekData.description}
                 type="text"
                 value={updateDescription}

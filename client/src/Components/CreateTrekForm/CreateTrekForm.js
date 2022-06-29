@@ -128,9 +128,10 @@ function CreateTrekForm({ token, isLogged }) {
         </label>
         <label className="CreateTrekForm-label" htmlFor="description">
           <span className="CreateTrekForm-label-text">Description détaillé de la randonnée :</span>
-          <input
-            className="CreateTrekForm-input shadow-lg rounded-md"
+          <textarea
+            className="CreateTrekForm-input CreateTrekForm-textarea hadow-lg rounded-md"
             placeholder="Ecrivez une Description pour votre Randonnée"
+            rows="5"
             id="description"
             name="description"
             type="text"
