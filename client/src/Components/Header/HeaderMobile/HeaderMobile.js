@@ -1,15 +1,17 @@
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import authentification from '../../../utils/sessionUser/sessionUser';
 
 function HeaderMobile({
-  setMenuOpen,
+  setMenuOpen, setIsLogged,
 }) {
   const closeMenu = () => {
     setMenuOpen(false);
   };
 
   const isLogged = localStorage.getItem('isLogged');
+  const navigate = useNavigate();
+
   return (
     <div className="Header-burger-menu-content">
       <p
@@ -28,7 +30,9 @@ function HeaderMobile({
               className="Header--a ease-linear transform hover:scale-110 transition duration-150 px-6 inline"
               onClick={() => {
                 setMenuOpen(false);
+                setIsLogged(false);
                 authentification.disconnectUser();
+                navigate('/');
               }}
             > Deconnexion
             </Link>
@@ -54,5 +58,7 @@ function HeaderMobile({
 }
 HeaderMobile.propTypes = {
   setMenuOpen: PropTypes.func.isRequired,
+  setIsLogged: PropTypes.func.isRequired,
 };
+
 export default HeaderMobile;

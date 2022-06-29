@@ -2,7 +2,7 @@
 
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import logo from './images/logo.png';
 import './Header.scss';
 import authentification from '../../utils/sessionUser/sessionUser';
@@ -11,6 +11,9 @@ import HeaderMobile from './HeaderMobile/HeaderMobile';
 function Header({ setToken, isLogged, setIsLogged }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
+  useEffect(() => {
+
+  }, [isLogged]);
   // Affichage du menu en mode déconnecté
   if (!isLogged) {
     return (
@@ -34,7 +37,7 @@ function Header({ setToken, isLogged, setIsLogged }) {
                 )}
 
           </div>
-          {menuOpen && <HeaderMobile setMenuOpen={setMenuOpen} />}
+          {menuOpen && <HeaderMobile setMenuOpen={setMenuOpen} setIsLogged={setIsLogged} />}
           <div className="Header-menu">
             <Link
               to="/register"
@@ -72,7 +75,7 @@ function Header({ setToken, isLogged, setIsLogged }) {
         <Link to="/">
           <h1 className="Header--website-title"><img className="Header--Logo" src={logo} alt="Go For Walk Logo Website" /></h1>
         </Link>
-        {menuOpen && <HeaderMobile setMenuOpen={setMenuOpen} />}
+        {menuOpen && <HeaderMobile setMenuOpen={setMenuOpen} setIsLogged={setIsLogged} />}
         <div className="Header--burger-control-menu space-y-2">
           {!menuOpen
                   && (
