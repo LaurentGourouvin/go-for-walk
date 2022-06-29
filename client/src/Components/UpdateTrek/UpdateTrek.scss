@@ -50,6 +50,9 @@
             margin: auto;
             max-width: 60%;
         }
+        &-textarea {
+            min-height: 100px;
+        }
         &-button-container {
             display: flex;
             justify-content: center;

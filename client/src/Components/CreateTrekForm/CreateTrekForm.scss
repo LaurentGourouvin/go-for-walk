@@ -16,6 +16,9 @@
         margin-left: 3rem;
         color: #ccd5ae;
     }
+    &-textarea {
+        min-height: 100px;
+    }
     &-input:focus {
         color: #ccd5ae;
         outline: .15rem solid #ccd5ae;
